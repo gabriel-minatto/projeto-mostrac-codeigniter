@@ -52,11 +52,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $route['default_controller'] = "home";
 
-$route['blog/home/(:num)'] = "blog/homepage/$1";
+//blog
+$route['blog/home'] = "blog/homepage";
+$route['blog/postagens/(:num)'] = 'blog/view_post/$1';
+$route['blog/postagens/salvar-comentario/(:num)'] = 'blog/save_coment/$1';
+
+//login/out
+$route['login'] = "users/login";
+$route['logout'] = "users/logout";
+
+//cadastro
+$route['cadastro'] = "users/register";
+$route['usuario/salvar'] = 'users/save_user';
+
 
 $route['grupos/home/(:num)'] = "groups/homepage/$1";
 
-$route['cadastro'] = "cadastro/users";
+
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

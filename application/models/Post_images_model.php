@@ -30,6 +30,14 @@ class Post_images_model extends CI_Model
         return $query->row(0, "Post_images_model");
     }
     
+    public function select_by_post()
+    {
+        $this->db->from("post_images");
+	    $this->db->where("post", $this->post);
+    	$query = $this->db->get();
+        return $query->result();
+    }
+    
     public function update()
 	{
 		$this->db->where("id", $this->id);

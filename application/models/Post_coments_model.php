@@ -32,6 +32,23 @@ class Post_coments_model extends CI_Model
         return $query->row(0, "Post_coments_model");
     }
     
+    public function select_by_post()
+    {
+        $this->db->from("post_coments");
+	    $this->db->where("post", $this->post);
+    	$query = $this->db->get();
+        return $query->result();
+    }
+    
+    public function select_by_post_with_user()
+    {
+        $this->db->from("post_coments");
+        $this->db->join("users","users.id = post_coments.user");
+	    $this->db->where("post", $this->post);
+    	$query = $this->db->get();
+        return $query->result();
+    }
+    
     public function update()
 	{
 		$this->db->where("id", $this->id);

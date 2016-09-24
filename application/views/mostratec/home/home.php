@@ -78,15 +78,15 @@
                         <strong>Faça login abaixo!</strong>
                     </h2>
                     <hr>
-                    <form class="form-horizontal" method="post" action="php/login.php" id="login_form">
+                    <form class="form-horizontal" method="post" action="<?= base_url("login") ?>" id="login_form">
                         
                         <fieldset>
                         
                         <!-- Text input-->
                         <div class="form-group">
-                          <label class="col-md-4 control-label" for="email">Email:</label>  
+                          <label class="col-md-4 control-label" for="login">Login:</label>  
                           <div class="col-md-4">
-                          <input id="email" name="email" type="email" placeholder="endereço de email" class="form-control input-md" required="">
+                          <input id="login" name="login" type="text" placeholder="endereço de email" class="form-control input-md" required="">
                             
                           </div>
                         </div>
@@ -116,18 +116,8 @@
         </div>
     </div>
     <!-- /.container -->
-
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <p>Copyright &copy; Projeto Mostratec de Iniciação Científica</p>
-                </div>
-            </div>
-        </div>
-    </footer>
     
-    <?php $this->load->view("includes/footer_sources");//carregamos os scripts e plugins da pagina ?>
+    <?php $this->load->view("includes/footer");//carregamos os scripts e plugins da pagina ?>
     
     <!-- Script to Activate the Carousel -->
     <script>

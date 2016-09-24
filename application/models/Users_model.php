@@ -31,14 +31,21 @@ class Users_model extends CI_Model
     public function load_by_id()
     {
     	$sql = "select * from users where id=?";
-    	$query = $this->db->query($sql, array($this->id_usuario));
+    	$query = $this->db->query($sql, array($this->id));
         return $query->row(0, "Users_model");
     }
     
     public function load_obj_login()
     {
-        $sql = "select * from users where login=? or email=? and senha=?";
-    	$query = $this->db->query($sql, array($this->login, $this->email, $this->senha));
+        $this->db->select("*");
+        $this->db->from("users");
+        if($this->login)
+	        $this->db->where("login", $this->login);
+	    if($this->email)
+	        $this->db->where("email", $this->email);
+	    $this->db->where("senha", $this->senha);
+	    $this->db->where("active", 1);
+    	$query = $this->db->get();
         return $query->row(0, "Users_model");
     }
     
@@ -52,9 +59,12 @@ class Users_model extends CI_Model
 	public function check_login()
 	{
 	    $this->db->from("users");
-	    $this->db->where("login", $this->login, false);
-	    $this->db->or_where("email", $this->email, null, false);
+	    if($this->login)
+	        $this->db->where("login", $this->login);
+	    if($this->email)
+	        $this->db->where("email", $this->email);
 	    $this->db->where("senha", $this->senha);
+	    $this->db->where("active", 1);
 	    $query = $this->db->get();
 	    if($query->num_rows() == 1)
 	        return true;

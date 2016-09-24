@@ -21,6 +21,14 @@ class Blog_post_model extends CI_Model
         return $this->db->insert_id();
     }
     
+    public function select_all()
+    {
+        $this->db->select("*, DATE_FORMAT(date,'%e %b %Y') as data");
+        $this->db->from("blog_post");
+        $query = $this->db->get();
+        return $query->result();
+    }
+    
     public function delete()
     {
         $this->db->where("id", $this->id);
@@ -30,7 +38,7 @@ class Blog_post_model extends CI_Model
     public function load_by_id()
     {
     	$sql = "select * from blog_post where id=?";
-    	$query = $this->db->query($sql, array($this->id_usuario));
+    	$query = $this->db->query($sql, array($this->id));
         return $query->row(0, "Blog_post_model");
     }
     

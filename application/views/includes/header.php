@@ -41,7 +41,7 @@
                         <a href="<?= base_url()?>">Home</a>
                     </li>
                     <li>
-                        <a href="<?= base_url("blog/home/1")?>">Blog</a> <!-- mudar 1 para id do user logado -->
+                        <a href="<?= base_url("blog/home")?>">Blog</a> <!-- mudar 1 para id do user logado -->
                     </li>
                     <li>
                         <a href="about.html">About</a>
@@ -53,7 +53,7 @@
                         <a href="<?= base_url('grupos/home/1') ?>">Grupos</a>
                     </li>
                     <li>
-                        <a id='logoff'>Logoff</a>
+                        <a href="<?= base_url('logout') ?>">Logoff</a>
                     </li>
                 </ul>
             </div>

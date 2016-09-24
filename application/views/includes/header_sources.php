@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link href="<?= base_url('assets/css/bootstrap/bootstrap.css')?>" rel="stylesheet">
 
 <!-- Bootstrap Core CSS -->
