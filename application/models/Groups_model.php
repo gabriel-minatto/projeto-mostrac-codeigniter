@@ -29,7 +29,7 @@ class Groups_model extends CI_Model
     public function load_by_id()
     {
     	$sql = "select * from groups where id=?";
-    	$query = $this->db->query($sql, array($this->id_usuario));
+    	$query = $this->db->query($sql, array($this->id));
         return $query->row(0, "Groups_model");
     }
     

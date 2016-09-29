@@ -3,11 +3,8 @@
 class Relatorios_model extends CI_Model
 {
     var $id;
-    var $tema;
-    var $pergunta;
-    var $objetivos;
-    var $dados;
-    var $resultado;
+    var $nome;
+    var $content;
     
     function __construct()
     {
