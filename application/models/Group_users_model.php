@@ -43,6 +43,16 @@ class Group_users_model extends CI_Model
     	$query = $this->db->query($sql, array($this->user));
 	    return $query->result();   
 	}
+	
+	public function select_all_others()
+    {
+        $this->db->select("*");
+        $this->db->from("groups g");
+        $this->db->join("group_users gu","g.id = gu.group");
+        $this->db->where("gu.user !=",$this->user);
+        $query = $this->db->get();
+        return $query->result();
+    }
 }
 
 ?>

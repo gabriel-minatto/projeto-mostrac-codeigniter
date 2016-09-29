@@ -12,18 +12,42 @@
                     </div>
                     <hr>
                     <div id="groups">
-                        <?php foreach($grupos as $grupo){ ?>
-                                <h3><?= $grupo->nome ?></h3>
-                                <div class="panel">
-                                    <div class="col-lg-10">
-                                  <p><?= $grupo->description ?></p>
-                                     </div>
-                                     <div class="col-lg-2">
-                                        <a href="<?= base_url('grupos/posts/'.$grupo->id) ?>">
-                                            <button class="btn btn-default btn-lg">Abrir</button>
-                                        </a>
-                                     </div>
-                                </div>
+                        <?php if(isset($my_groups)){ ?>
+                        <label>Meus Grupos</label>
+                            <div id="my_groups">
+                                <?php foreach($my_groups as $grupo){ ?>
+                                        <h3><?= $grupo->nome ?></h3>
+                                        <div class="panel">
+                                            <div class="col-lg-10">
+                                          <p><?= $grupo->description ?></p>
+                                             </div>
+                                             <div class="col-lg-2">
+                                                <a href="<?= base_url('grupos/posts/'.$grupo->id) ?>">
+                                                    <button class="btn btn-default btn-lg">Abrir</button>
+                                                </a>
+                                             </div>
+                                        </div>
+                                <?php } ?>
+                            </div>
+                        <?php } ?>
+                        <hr>
+                        <?php if(isset($other_groups)){ ?>
+                        <label>Todos os Grupos</label>
+                            <div id="other_groups">
+                                 <?php foreach($other_groups as $grupo){ ?>
+                                        <h3><?= $grupo->nome ?></h3>
+                                        <div class="panel">
+                                            <div class="col-lg-10">
+                                          <p><?= $grupo->description ?></p>
+                                             </div>
+                                             <div class="col-lg-2">
+                                                <a href="<?= base_url('grupos/posts/'.$grupo->id) ?>">
+                                                    <button class="btn btn-default btn-lg">Abrir</button>
+                                                </a>
+                                             </div>
+                                        </div>
+                                <?php } ?>
+                            </div>
                         <?php } ?>
                     </div>
                 </div>
@@ -109,7 +133,9 @@
         $(document).ready(
             function()
             {
-                $("#groups").accordion();
+                $("#my_groups").accordion();
+                
+                $("#other_groups").accordion();
                 
             });
     </script>

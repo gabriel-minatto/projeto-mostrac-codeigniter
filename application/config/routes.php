@@ -66,7 +66,7 @@ $route['usuario/salvar'] = 'users/save_user';
 $route['grupos/home'] = 'groups/homepage';
 $route['grupos/posts/(:num)'] = 'groups/post_group/$1';
 $route['grupos/posts/view/(:num)'] = 'groups/view_post/$1';
-
+$route['grupos/posts/view/salvar-comentario/(:num)'] = 'groups/save_post_coment/$1';
 
 
 $route['404_override'] = '';

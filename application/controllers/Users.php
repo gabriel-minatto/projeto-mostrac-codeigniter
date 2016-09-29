@@ -27,7 +27,7 @@ class Users extends CI_Controller
         $this->session->set_userdata('user_login', $this->user->login);
         $this->session->set_userdata('user_email', $this->user->email);
         $this->session->set_userdata('user_type', $this->user->type);
-        redirect(base_url('blog/home'), 'refresh');
+        redirect(base_url('grupos/home'), 'refresh');
     }
     
     public function logout()

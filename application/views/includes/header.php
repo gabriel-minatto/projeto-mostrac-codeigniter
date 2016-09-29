@@ -41,9 +41,6 @@
                         <a href="<?= base_url()?>">Home</a>
                     </li>
                     <li>
-                        <a href="<?= base_url("blog/home")?>">Blog</a> <!-- mudar 1 para id do user logado -->
-                    </li>
-                    <li>
                         <a href="about.html">About</a>
                     </li>
                     <li>
@@ -52,9 +49,11 @@
                     <li>
                         <a href="<?= base_url('grupos/home') ?>">Grupos</a>
                     </li>
+                    <?php if(logged()){ ?>
                     <li>
                         <a href="<?= base_url('logout') ?>">Logoff</a>
                     </li>
+                    <?php } ?>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

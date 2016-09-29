@@ -10,15 +10,17 @@
                     </h2>
                     <hr>
                 </div>
-                <?php foreach($posts as $post){ ?>
+                <?php foreach($posts as $post){
+                $data = new DateTime($post->date);
+                ?>
                 <div class="col-lg-12 text-center">
                     <img class="img-responsive img-border img-full" src="<?= base_url()?>uploads/home/img/<?= isset($post->image) ? $post->image : 'slide-1.jpg' ?>" alt="">
                     <h2><?= $post->title ?>
                         <br>
-                        <small><?= $post->data ?></small>
+                        <small><?= $data->format('d/m/Y') ?></small>
                     </h2>
                     <p><?= $post->description ?></p>
-                    <a href="<?= base_url('blog/postagens/'.$post->id) ?>" class="btn btn-default btn-lg">Leia Mais</a>
+                    <a href="<?= base_url('grupos/posts/view/'.$post->post_id) ?>" class="btn btn-default btn-lg">Leia Mais</a>
                     <hr>
                 </div>
                 <?php } ?>

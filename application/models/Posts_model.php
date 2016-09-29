@@ -1,12 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Group_post_model extends CI_Model
+class Posts_model extends CI_Model
 {
     var $id;
     var $titulo;
     var $description;
     var $content;
     var $video;
+    var $active;
     var $group;
     var $user;
     var $date;
@@ -18,36 +19,42 @@ class Group_post_model extends CI_Model
     
     public function insert()
     {
-        $this->db->insert("group_post", $this);
+        $this->db->insert("posts", $this);
         return $this->db->insert_id();
     }
     
     public function delete()
     {
         $this->db->where("id", $this->id);
-        $this->db->delete("group_post");
+        $this->db->delete("posts");
     }
     
     public function load_by_id()
     {
-    	$sql = "select * from group_post where id=?";
+    	$sql = "select * from posts where id=?";
     	$query = $this->db->query($sql, array($this->id));
-        return $query->row(0, "Group_post_model");
+        return $query->row(0, "Posts_model");
     }
     
     public function update()
 	{
 		$this->db->where("id", $this->id);
-		$this->db->update("group_post", $this);
+		$this->db->update("posts", $this);
 		return $this->db->trans_status();
 	}
 	
-	public function select_by_user()
+	public function select_by_group_user()
 	{
-	    $sql = "select * from group_users gu inner join groups g on g.id = gu.group where gu.user=? ";
-    	$query = $this->db->query($sql, array($this->user));
-	    return $query->result();   
+	    $this->db->select("*,p.id as post_id");
+	    $this->db->from("posts p");
+	    $this->db->join("group_users gu","gu.group = p.group");
+	    $this->db->where("p.active", 1);
+	   // $this->db->where("gu.user", $this->user);
+	    $this->db->where("gu.group", $this->group);
+	    $query = $this->db->get();
+	    return $query->result();
 	}
+	
 }
 
 ?>
