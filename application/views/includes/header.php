@@ -50,7 +50,7 @@
                         <a href="<?= base_url('cadastro')?>">Cadastro</a>
                     </li>
                     <li>
-                        <a href="<?= base_url('grupos/home/1') ?>">Grupos</a>
+                        <a href="<?= base_url('grupos/home') ?>">Grupos</a>
                     </li>
                     <li>
                         <a href="<?= base_url('logout') ?>">Logoff</a>

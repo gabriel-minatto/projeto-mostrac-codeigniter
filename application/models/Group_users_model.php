@@ -26,7 +26,7 @@ class Group_users_model extends CI_Model
     public function load_by_id()
     {
     	$sql = "select * from group_users where id=?";
-    	$query = $this->db->query($sql, array($this->id_usuario));
+    	$query = $this->db->query($sql, array($this->id));
         return $query->row(0, "Group_users_model");
     }
     
@@ -35,6 +35,13 @@ class Group_users_model extends CI_Model
 		$this->db->where("id", $this->id);
 		$this->db->update("group_users", $this);
 		return $this->db->trans_status();
+	}
+	
+	public function select_by_user()
+	{
+	    $sql = "select * from group_users gu inner join groups g on g.id = gu.group where gu.user=? ";
+    	$query = $this->db->query($sql, array($this->user));
+	    return $query->result();   
 	}
 }
 

@@ -11,46 +11,22 @@
                         <h1>Grupos</h1>
                     </div>
                     <hr>
-                    
                     <div id="groups">
-                        <?php// foreach($grupos as $grupo){ ?>
-                            <div class="col-lg-3 col-sm-6">
-                                <div class="panel panel-default" style="min-height: 267px;">
-                                    <a>
-                                        <div class="panel-heading text-center">
-                                            <span style="font-size:5em;" class="<?="1"// $grupo['icone']; ?>"></span>
-                                        </div>
-                                    </a>
-                                    <div class="panel-body" style="min-height: 150px;">
-                                        <div class="col-md-12 text-center bold" style="min-height: 66px;">
-                                            <p><?="1"// $grupo["nome_grupo"] ?></p>
-                                        </div>
-                                        <div class="col-md-6 text-center" style="font-size: 16px; padding-top: 20px;">
-                                            <div class="col-md-3" style="padding: 0px;">
-                                                <button class="btn btn-danger glyphicon glyphicon-remove delete_group_button" id="<?="1" //$grupo["id_grupo"] ?>"></button>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 text-center" style="font-size: 16px; padding-top: 20px;">
-                                            <div class="col-md-3" style="padding: 0px;">
-                                                <button class="btn btn-info glyphicon glyphicon-pencil edit_group_button"></button>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <?php foreach($grupos as $grupo){ ?>
+                                <h3><?= $grupo->nome ?></h3>
+                                <div class="panel">
+                                    <div class="col-lg-10">
+                                  <p><?= $grupo->description ?></p>
+                                     </div>
+                                     <div class="col-lg-2">
+                                        <a href="<?= base_url('grupos/posts/'.$grupo->id) ?>">
+                                            <button class="btn btn-default btn-lg">Abrir</button>
+                                        </a>
+                                     </div>
                                 </div>
-                            </div>
-                        <?php// } ?>
+                        <?php } ?>
                     </div>
-                    
-                    <button type="button" class="btn btn-default btn-lg" id="update_groups">
-                        <span class="glyphicon glyphicon-refresh"></span>
-                    </button>
-                    
-                    <a type="button" class="btn btn-default btn-lg" id="new_group" data-fancybox-type="iframe" href="includes/forms/group_form.html">
-                        <span class="glyphicon glyphicon-plus"></span>
-                    </a>
-                    
                 </div>
-                
                 <!-- Blog Sidebar Widgets Column -->
                 <div class="col-md-4">
     
@@ -128,8 +104,12 @@
     
         </div>
      
-    <?php $this->load->view("includes/footer_sources"); ?>
-    
-</body>
-
-</html>
+    <?php $this->load->view("includes/footer"); ?>
+    <script>
+        $(document).ready(
+            function()
+            {
+                $("#groups").accordion();
+                
+            });
+    </script>
