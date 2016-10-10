@@ -54,6 +54,11 @@ class Groups extends CI_Controller
                 $this->data["post_images"] = $this->post_images->select_by_post();
                 $this->user->id = $this->data["post"]->user;
                 $this->data["autor"] = $this->user->load_by_id();
+                
+                $this->post->user = $this->session->user_id;
+                $this->post->group = $this->data["post"]->group;
+                $this->data["group_posts"] = $this->post->select_group_posts();
+                
                 $this->load->view('mostratec/grupos/view_post', $this->data);    
             }
     }
@@ -68,6 +73,39 @@ class Groups extends CI_Controller
             $this->post_coments->user = $name = $this->session->userdata('user_id');
             $this->post_coments->insert();
             redirect(base_url('grupos/posts/view/'.$id), 'refresh');
+        }
+    }
+    
+    public function view_report($id)
+    {
+        if(logged())
+        {
+            $this->load->model("Relatorios_model","relatorio");
+            $this->load->model("Relat_coments_model","relat_coments");
+            $this->load->model("Posts_model","post");
+            
+            $this->relatorio->group = $this->relat_coments->group = $id;
+            $this->data["relatorios"] = $this->relatorio->select_with_coments();
+            $this->data["comentarios"] = $this->relat_coments->select_by_group_with_autor();
+            $this->data["group"] = $id;
+            
+            $this->post->user = $this->session->user_id;
+            $this->post->group = $id;
+            $this->data["group_posts"] = $this->post->select_group_posts();
+            $this->load->view('mostratec/grupos/view_reports', $this->data);
+        }
+    }
+    
+    public function save_report_coment($id)
+    {
+        if(logged())
+        {
+            $this->load->model("Relat_coments_model","relat_coments");
+            $this->relat_coments->user = $this->session->userdata('user_id');
+            $this->relat_coments->group = $id;
+            $this->relat_coments->recado = $this->input->post('comentario', TRUE);
+            $this->relat_coments->insert();
+            redirect(base_url('grupos/relatorios/'.$id), 'refresh');
         }
     }
 }   

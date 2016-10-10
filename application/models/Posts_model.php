@@ -55,6 +55,16 @@ class Posts_model extends CI_Model
 	    return $query->result();
 	}
 	
+	public function select_group_posts()
+	{
+	    $this->db->select("*");
+	    $this->db->from("posts p");
+	    $this->db->where("p.active", 1);
+	    $this->db->where("p.group", $this->group);
+	    $query = $this->db->get();
+	    return $query->result();
+	}
+	
 }
 
 ?>

@@ -89,9 +89,10 @@
                         <?php } ?>
                     </div>
                     <a class='btn btn-default btn-block' id='toggle_coments'>Ver/Esconder Comentários</a>
+                    <hr>
                 <?php } ?>
                 
-                <?php if($logged){ ?>
+                <?php if(!isset($logged)){ ?>
                     <!-- Comments Form -->
                     <div class="well">
                         <h4>Deixe um comentário:</h4>
@@ -123,26 +124,13 @@
 
                 <!-- Blog Categories Well -->
                 <div class="well">
-                    <h4>Posts</h4>
+                    <h4>Posts do Grupo</h4>
                     <div class="row">
                         <div class="col-lg-6">
                             <ul class="list-unstyled">
-                                <li><a href="#">grupo 1</a>
-                                </li>
-                                <li><a href="#">grupo 2</a>
-                                </li>
-                                <li><a href="#">grupo 4</a>
-                                </li>
-                                <li><a href="#">grupo 5</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
+                                <?php foreach ($group_posts as $post_link) { ?>
+                                <li><a href="<?= base_url('grupos/posts/view/'.$post_link->id) ?>"><?= $post_link->title ?></a></li>
+                                <?php } ?>
                             </ul>
                         </div>
                     </div>

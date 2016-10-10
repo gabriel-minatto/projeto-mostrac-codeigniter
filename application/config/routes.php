@@ -63,11 +63,15 @@ $route['logout'] = 'users/logout';
 $route['cadastro'] = 'users/register';
 $route['usuario/salvar'] = 'users/save_user';
 
+//grupos
 $route['grupos/home'] = 'groups/homepage';
+//posts
 $route['grupos/posts/(:num)'] = 'groups/post_group/$1';
 $route['grupos/posts/view/(:num)'] = 'groups/view_post/$1';
 $route['grupos/posts/view/salvar-comentario/(:num)'] = 'groups/save_post_coment/$1';
-
+//relatorios
+$route['grupos/relatorios/(:num)'] = 'groups/view_report/$1';
+$route['grupos/relatorios/salvar/comentario/(:num)'] = 'groups/save_report_coment/$1';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

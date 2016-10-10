@@ -14,7 +14,6 @@ class Users extends CI_Controller
     public function login()
     {
         $this->load->model("Users_model","user");
-        $this->user->login = $this->input->post('login', TRUE);
         $this->user->email = $this->input->post('email', TRUE);
         $this->user->senha = md5($this->input->post('senha', TRUE));
         if(!$this->user->check_login())

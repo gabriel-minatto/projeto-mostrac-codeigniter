@@ -4,11 +4,21 @@ class Relatorios_model extends CI_Model
 {
     var $id;
     var $nome;
+    var $group;
     var $content;
     
     function __construct()
     {
         parent::__construct();
+    }
+    
+    public function select_with_coments()
+    {
+        $this->db->select("r.nome as relat_nome, r.content as relatorio");
+        $this->db->from("relatorios r");
+        $this->db->where("r.group",$this->group);
+        $query = $this->db->get();
+        return $query->result();
     }
     
     public function insert()

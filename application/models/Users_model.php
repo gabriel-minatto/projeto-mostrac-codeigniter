@@ -39,10 +39,7 @@ class Users_model extends CI_Model
     {
         $this->db->select("*");
         $this->db->from("users");
-        if($this->login)
-	        $this->db->where("login", $this->login);
-	    if($this->email)
-	        $this->db->where("email", $this->email);
+	    $this->db->where("email", $this->email);
 	    $this->db->where("senha", $this->senha);
 	    $this->db->where("active", 1);
     	$query = $this->db->get();
@@ -58,14 +55,13 @@ class Users_model extends CI_Model
 	
 	public function check_login()
 	{
+	    $this->db->select("*");
 	    $this->db->from("users");
-	    if($this->login)
-	        $this->db->where("login", $this->login);
-	    if($this->email)
-	        $this->db->where("email", $this->email);
+	    $this->db->where("email", $this->email);
 	    $this->db->where("senha", $this->senha);
 	    $this->db->where("active", 1);
 	    $query = $this->db->get();
+	   // echo $this->db->last_query(); exit;
 	    if($query->num_rows() == 1)
 	        return true;
 	    return false;

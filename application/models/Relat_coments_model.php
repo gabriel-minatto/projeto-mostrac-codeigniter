@@ -13,6 +13,16 @@ class Relat_coments_model extends CI_Model
         parent::__construct();
     }
     
+    public function select_by_group_with_autor()
+    {
+        $this->db->select("rc.data as coment_date, rc.recado, u.nome");
+        $this->db->from("relat_coments rc");
+        $this->db->join("users u","u.id = rc.user");
+        $this->db->where("rc.group",$this->group);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    
     public function insert()
     {
         $this->db->insert("relat_coments", $this);

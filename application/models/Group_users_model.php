@@ -39,14 +39,21 @@ class Group_users_model extends CI_Model
 	
 	public function select_by_user()
 	{
-	    $sql = "select * from group_users gu inner join groups g on g.id = gu.group where gu.user=? ";
-    	$query = $this->db->query($sql, array($this->user));
+	    //$sql = "select * from group_users gu inner join groups g on g.id = gu.group where gu.user=? ";
+	    $this->db->select("*");
+	    $this->db->from("group_users gu");
+	    $this->db->join("groups g","g.id = gu.group");
+	    $this->db->where("gu.user",$this->user);
+    	$query = $this->db->get();
 	    return $query->result();   
 	}
 	
 	public function select_all_others()
     {
-        $this->db->select("*");
+       /* select * from group_users gu inner join groups g on g.id = gu.group where gu.user != 2 and
+gu.group not in (select gu.group from group_users gu inner join groups g on g.id = gu.group where gu.user = 2);*/
+
+        $this->db->select("*,g.id as group_id");
         $this->db->from("groups g");
         $this->db->join("group_users gu","g.id = gu.group");
         $this->db->where("gu.user !=",$this->user);
