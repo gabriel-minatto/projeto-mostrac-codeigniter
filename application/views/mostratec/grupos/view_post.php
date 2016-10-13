@@ -89,10 +89,11 @@
                         <?php } ?>
                     </div>
                     <a class='btn btn-default btn-block' id='toggle_coments'>Ver/Esconder Comentários</a>
-                    <hr>
+                    
                 <?php } ?>
                 
                 <?php if(!isset($logged)){ ?>
+                    <hr>
                     <!-- Comments Form -->
                     <div class="well">
                         <h4>Deixe um comentário:</h4>

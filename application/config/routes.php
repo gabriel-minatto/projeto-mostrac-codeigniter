@@ -73,5 +73,15 @@ $route['grupos/posts/view/salvar-comentario/(:num)'] = 'groups/save_post_coment/
 $route['grupos/relatorios/(:num)'] = 'groups/view_report/$1';
 $route['grupos/relatorios/salvar/comentario/(:num)'] = 'groups/save_report_coment/$1';
 
+//admin
+
+//login
+$route['admin'] = 'admin/homepage';
+$route['admin/login'] = 'admin/login';
+$route['admin/logout'] = 'admin/logout';
+$route['admin/painel'] = 'admin/dashboard';
+
+
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

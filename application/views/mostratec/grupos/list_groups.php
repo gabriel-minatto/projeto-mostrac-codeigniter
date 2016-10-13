@@ -7,9 +7,9 @@
                     <div class="text-center">
                         <h1>Grupos</h1>
                     </div>
-                    <hr>
                     <div id="groups">
-                        <?php if(isset($my_groups)){ ?>
+                        <?php if(isset($my_groups) && !isset($logged)){ ?>
+                        <hr>
                         <label>Meus Grupos</label>
                             <div id="my_groups">
                                 <?php foreach($my_groups as $grupo){ ?>
@@ -47,11 +47,11 @@
                                                     <button class="btn btn-default btn-lg">Posts</button>
                                                 </a>
                                              </div>
-                                             <div class="col-lg-2">
-                                                <a href="<?= base_url('grupos/relatorios/'.$grupo->id) ?>">
-                                                    <button class="btn btn-default btn-lg">Relatórios</button>
-                                                </a>
-                                             </div>
+                                             <!--<div class="col-lg-2">-->
+                                             <!--   <a href="<?=""// base_url('grupos/relatorios/'.$grupo->id) ?>">-->
+                                             <!--       <button class="btn btn-default btn-lg">Relatórios</button>-->
+                                             <!--   </a>-->
+                                             <!--</div>-->
                                         </div>
                                 <?php } ?>
                             </div>

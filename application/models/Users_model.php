@@ -61,7 +61,6 @@ class Users_model extends CI_Model
 	    $this->db->where("senha", $this->senha);
 	    $this->db->where("active", 1);
 	    $query = $this->db->get();
-	   // echo $this->db->last_query(); exit;
 	    if($query->num_rows() == 1)
 	        return true;
 	    return false;
