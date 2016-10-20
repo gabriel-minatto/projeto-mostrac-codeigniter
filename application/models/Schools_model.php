@@ -45,6 +45,24 @@ class Schools_model extends CI_Model
 	   $query = $this->db->get();
 	   return $query->result();
 	}
+	
+	public function select_all_with_filter($filter)
+	{
+	   $this->db->select("*");
+	   $this->db->from("schools");
+	   if($filter)
+	   {
+	       foreach($filter as $key=>$value)
+	       {
+	            if(!empty($value))
+	            {
+	                $this->db->like($key,$value);
+	            }
+	       }
+	   }
+	   $query = $this->db->get();
+	   return $query->result();
+	}
 }
 
 ?>

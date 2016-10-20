@@ -84,7 +84,7 @@ $route['admin/painel'] = 'admin/dashboard';
 //schools
 $route['admin/cadastrar-escola'] = 'admin/new_school';
 $route['admin/salvar-escola'] = 'admin/save_school';
-$route['admin/ver-todas'] = 'admin/list_all';
+$route['admin/ver-todas'] = 'admin/list_all_with_filter';
 
 
 

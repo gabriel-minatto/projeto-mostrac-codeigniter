@@ -2,11 +2,6 @@
 // var_dump($this->session); exit;
 $this->load->view("mostratec/admin/includes/header");//carregamos o header e o menu da pagina ?>
 
-
-        <div id="page-wrapper">
-
-            <div class="container-fluid">
-
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
@@ -267,12 +262,4 @@ $this->load->view("mostratec/admin/includes/header");//carregamos o header e o m
                 </div>
                 <!-- /.row -->
 
-            </div>
-            <!-- /.container-fluid -->
-
-        </div>
-        <!-- /#page-wrapper -->
-
-    </div>
-    <!-- /#wrapper -->
 <?php $this->load->view("mostratec/admin/includes/footer");//carregamos o header e o menu da pagina ?>

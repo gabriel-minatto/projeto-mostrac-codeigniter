@@ -85,7 +85,7 @@ class Admin extends CI_Controller
         }
     }
     
-    public function list_all()
+    public function list_all_with_filter()
     {
         if(!is_admin())
         {
@@ -93,7 +93,16 @@ class Admin extends CI_Controller
             redirect(base_url("admin/painel"), 'refresh');
         }
         $this->load->model("Schools_model","school");
-        $this->data["escolas"] = $this->school->select_all();
+        if(!empty($_POST))
+        {
+            $filter = array(
+                'nome' => $this->input->post('name', TRUE),
+                'cidade' => $this->input->post('cidade', TRUE),
+                'tipo' => $this->input->post('rede', TRUE)
+                );
+            
+        }
+        $this->data["escolas"] = $this->school->select_all_with_filter((isset($filter) ? $filter : null ));
         $this->load->view("mostratec/admin/schools/schools_list",$this->data);
     }
     
