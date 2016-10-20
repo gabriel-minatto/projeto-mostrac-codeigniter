@@ -4,9 +4,8 @@ class Schools_model extends CI_Model
 {
     var $id;
     var $nome;
-    var $pais;
-    var $uf;
     var $cidade;
+    var $tipo;
     
     function __construct()
     {
@@ -16,7 +15,7 @@ class Schools_model extends CI_Model
     public function insert()
     {
         $this->db->insert("schools", $this);
-        return $this->db->insert_id();
+        return $this->db->trans_status();
     }
     
     public function delete()
@@ -37,6 +36,14 @@ class Schools_model extends CI_Model
 		$this->db->where("id", $this->id);
 		$this->db->update("schools", $this);
 		return $this->db->trans_status();
+	}
+	
+	public function select_all()
+	{
+	   $this->db->select("*");
+	   $this->db->from("schools");
+	   $query = $this->db->get();
+	   return $query->result();
 	}
 }
 

@@ -81,6 +81,11 @@ $route['admin/login'] = 'admin/login';
 $route['admin/logout'] = 'admin/logout';
 $route['admin/painel'] = 'admin/dashboard';
 
+//schools
+$route['admin/cadastrar-escola'] = 'admin/new_school';
+$route['admin/salvar-escola'] = 'admin/save_school';
+$route['admin/ver-todas'] = 'admin/list_all';
+
 
 
 $route['404_override'] = '';

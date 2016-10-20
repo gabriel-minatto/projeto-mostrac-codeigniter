@@ -3,3 +3,6 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="<?= base_url('assets/js/bootstrap/bootstrap.min.js')?>"></script>
+    
+    <!--sweetalert-->
+    <script src="<?= base_url('assets/js/sweetalert/sweetalert.min.js')?>"></script>

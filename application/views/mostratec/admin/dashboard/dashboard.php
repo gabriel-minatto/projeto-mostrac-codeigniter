@@ -1,4 +1,7 @@
-<?php $this->load->view("mostratec/admin/includes/header");//carregamos o header e o menu da pagina ?>
+<?php 
+// var_dump($this->session); exit;
+$this->load->view("mostratec/admin/includes/header");//carregamos o header e o menu da pagina ?>
+
 
         <div id="page-wrapper">
 
@@ -18,15 +21,7 @@
                     </div>
                 </div>
                 <!-- /.row -->
-
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="alert alert-info alert-dismissable">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <i class="fa fa-info-circle"></i>  <strong>Like SB Admin?</strong> Try out <a href="http://startbootstrap.com/template-overviews/sb-admin-2" class="alert-link">SB Admin 2</a> for additional features!
-                        </div>
-                    </div>
-                </div>
+               
                 <!-- /.row -->
 
                 <div class="row">
@@ -120,7 +115,7 @@
                     </div>
                 </div>
                 <!-- /.row -->
-
+    
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="panel panel-default">

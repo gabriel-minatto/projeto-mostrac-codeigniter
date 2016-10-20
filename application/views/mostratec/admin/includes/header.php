@@ -65,7 +65,7 @@
                                 <a href="<?= base_url('admin/meus-alunos') ?>">Meus Alunos</a>
                             </li>
                             <li>
-                                <a href="<?= base_url('admin/alunos') ?>">Todos os Alunos</a>
+                                <a href="<?= base_url('admin/alunos') ?>">Ver Todos</a>
                             </li>
                         </ul>
                     </li>
@@ -76,7 +76,21 @@
                                 <a href="<?= base_url('admin/meus-alunos') ?>">Meus Grupos</a>
                             </li>
                             <li>
-                                <a href="<?= base_url('admin/alunos') ?>">Todos os Grupos</a>
+                                <a href="<?= base_url('admin/alunos') ?>">Ver Todos</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#schools"><i class="fa fa-fw fa-arrows-v"></i> Escolas <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="schools" class="collapse">
+                            <li>
+                                <!--<a href="<?= base_url('admin/meus-alunos') ?>">Cadastrar Escola</a>-->
+                                <a data-toggle="modal" data-target="#new_school">
+                                    Cadastrar Escola
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?= base_url('admin/ver-todas') ?>">Ver Todas</a>
                             </li>
                         </ul>
                     </li>
@@ -88,4 +102,8 @@
             </div>
             <!-- /.navbar-collapse -->
         </nav>
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                
         <?= show_messages(); ?>
+        

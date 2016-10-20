@@ -1,11 +1,14 @@
 <!-- Bootstrap Core CSS -->
     <link href="<?= base_url('assets/css/bootstrap/bootstrap.min.css')?>" rel="stylesheet">
+    
+    <!--sweetalert-->
+    <link href="<?= base_url('assets/css/sweetalert/sweetalert.css')?>" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="<?= base_url('assets/css/bootstrap/sb-admin.css')?>" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!--<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">-->
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

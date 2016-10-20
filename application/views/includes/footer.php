@@ -7,6 +7,7 @@
             </div>
         </div>
     </footer>
+    
      <?php $this->load->view("includes/footer_sources"); ?>
          
 </body>

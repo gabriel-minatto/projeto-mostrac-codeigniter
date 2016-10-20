@@ -13,12 +13,17 @@ class Admin extends CI_Controller
     
     public function homepage()
     {
+        if(is_teacher())
+            redirect(base_url('admin/painel'), 'refresh');
         unset($this->data["site_area"]);//desativa flag de area do site pra usar o tema do site principal na tela de login
         $this->load->view('mostratec/admin/admin_login', $this->data);
     }
     
     public function login()
     {
+        if(is_teacher())
+            redirect(base_url('admin/painel'), 'refresh');
+            
         $this->load->model("Users_model","user");
         $this->user->email = $this->input->post('email', TRUE);
         $this->user->senha = md5($this->input->post('senha', TRUE));
@@ -54,8 +59,42 @@ class Admin extends CI_Controller
     
     public function dashboard()
     {
-        
+        if(!is_teacher())
+        {
+            $this->session->set_flashdata("error","Você não tem permissão para acessar essa área do site!");
+            redirect(base_url(), 'refresh');
+        }
         $this->load->view('mostratec/admin/dashboard/dashboard', $this->data);
+    }
+    
+    public function new_school()
+    {
+        if(is_admin())
+            $this->load->view('mostratec/admin/cadastros/schools', $this->data);
+    }
+    
+    public function save_school()
+    {
+        if(is_admin())
+        {
+            $this->load->model("Schools_model","school");
+            $this->school->nome = $this->input->post('name', TRUE);
+            $this->school->cidade = $this->input->post('cidade', TRUE);
+            $this->school->tipo = $this->input->post('rede', TRUE);
+            echo $this->school->insert();
+        }
+    }
+    
+    public function list_all()
+    {
+        if(!is_admin())
+        {
+            $this->session->set_flashdata("error","Você não tem permissão para acessar essa área do site!");
+            redirect(base_url("admin/painel"), 'refresh');
+        }
+        $this->load->model("Schools_model","school");
+        $this->data["escolas"] = $this->school->select_all();
+        $this->load->view("mostratec/admin/schools/schools_list",$this->data);
     }
     
 }   
