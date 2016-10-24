@@ -11,7 +11,7 @@
       <div class="modal-footer">
         <div class="form-group">
             <button class="btn btn-secondary close_modal"  data-dismiss="modal">Fechar</button>
-            <button id="submit_<?= $form_id ?>" type="submit" name="submit" class="btn btn-primary">Salvar</button>
+            <button id="submit_<?= $form_id ?>" type="submit" name="submit" class="btn btn-primary">Entrar</button>
         </div>
       </div>
     </div>
@@ -32,18 +32,13 @@
                 function(data){
                     if(data == "1")
                     {
-                        swal({
-                            title: "Concluído,",
-                            text: "<?= $success ?>",
-                            type: "success" });
-                        $("#<?= $form_id ?>").trigger("reset");
-                        $(".close_modal").trigger("click");
+                        location.reload();
                     }
                     else
                     {
                         swal({   
                             title: "Ops,",
-                            text: "Parece que algo deu errado! Tente novamente mais tarde.",
+                            text: "Login e senha não correspondem!",
                             type: "error" });
                     }
                 });

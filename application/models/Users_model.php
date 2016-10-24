@@ -6,7 +6,6 @@ class Users_model extends CI_Model
     var $nome;
     var $school;
     var $email;
-    var $login;
     var $senha;
     var $active;
     var $type;
@@ -19,7 +18,7 @@ class Users_model extends CI_Model
     public function insert()
     {
         $this->db->insert("users", $this);
-        return $this->db->insert_id();
+        return $this->db->trans_status();
     }
     
     public function delete()

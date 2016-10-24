@@ -10,6 +10,7 @@
     
      <?php $this->load->view("includes/footer_sources"); ?>
          
+    <?php print_user_area_modal(); ?>     
 </body>
 
 </html>

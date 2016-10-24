@@ -1,4 +1,4 @@
-<?php $this->load->view("includes/header");//carregamos o header e o menu da pagina ?>
+<?php /*var_dump($other_groups); exit;*/ $this->load->view("includes/header");//carregamos o header e o menu da pagina ?>
     
         <!-- Page Content -->
         <div class="container">
@@ -10,51 +10,88 @@
                     <div id="groups">
                         <?php if(isset($my_groups) && !isset($logged)){ ?>
                         <hr>
-                        <label>Meus Grupos</label>
-                            <div id="my_groups">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    Meus Grupos
+                                </div>
+                                <div class="panel-body">
+                                    <div class="panel-group" id="mygroup">
+                                <!-- .panel-heading -->
                                 <?php foreach($my_groups as $grupo){ ?>
-                                        <h3><?= $grupo->nome ?></h3>
-                                        <div class="panel">
-                                            <div class="col-lg-8">
-                                          <p><?= $grupo->description ?></p>
-                                             </div>
-                                             <div class="col-lg-2">
-                                                <a href="<?= base_url('grupos/posts/'.$grupo->id) ?>">
-                                                    <button class="btn btn-default btn-lg">Posts</button>
-                                                </a>
-                                             </div>
-                                             <div class="col-lg-2">
-                                                <a href="<?= base_url('grupos/relatorios/'.$grupo->id) ?>">
-                                                    <button class="btn btn-default btn-lg">Relatórios</button>
-                                                </a>
-                                             </div>
+                                    <?php if($grupo->have_group != null){ ?>
+                                       <div class="panel panel-default">
+                                           <a data-toggle="collapse" data-parent="#mygroup" href="<?= '#collapse_'.$grupo->id ?>">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <?= $grupo->nome ?>
+                                                    </h4>
+                                                </div>
+                                            </a>
+                                        <div id="<?= 'collapse_'.$grupo->id ?>" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="col-lg-8">
+                                                  <?= $grupo->description ?>
+                                                 </div>
+                                                 <!--<div class="form-group">-->
+                                                        <a href="<?= base_url('grupos/posts/'.$grupo->id) ?>">
+                                                            <button class="btn btn-info btn-sm">Posts</button>
+                                                        </a>
+                                                        <a href="<?= base_url('grupos/relatorios/'.$grupo->id) ?>">
+                                                            <button class="btn btn-success btn-sm">Relatórios</button>
+                                                        </a>
+                                                        <a data-toggle="modal" data-target="<?= '#new_group_post_'.$grupo->id ?>">
+                                                            <button class="btn btn-default btn-sm">Novo Post</button>
+                                                        </a>
+                                                 <!--</div>-->
+                                            </div>
                                         </div>
-                                <?php } ?>
+                                    </div>
+                                <?php 
+                                    } //end if
+                                    } //end foreach ?>
+                                    </div>
+                                </div>
+                                <!-- .panel-body -->
                             </div>
+                            <!-- /.panel -->
                         <?php } ?>
                         <hr>
-                        <?php if(isset($other_groups)){ ?>
-                        <label>Todos os Grupos</label>
-                            <div id="other_groups">
-                                 <?php foreach($other_groups as $grupo){ ?>
-                                        <h3><?= $grupo->nome ?></h3>
-                                        <div class="panel">
-                                            <div class="col-lg-8">
-                                          <p><?= $grupo->description ?></p>
-                                             </div>
-                                             <div class="col-lg-2">
-                                                <a href="<?= base_url('grupos/posts/'.$grupo->group_id) ?>">
-                                                    <button class="btn btn-default btn-lg">Posts</button>
-                                                </a>
-                                             </div>
-                                             <!--<div class="col-lg-2">-->
-                                             <!--   <a href="<?=""// base_url('grupos/relatorios/'.$grupo->id) ?>">-->
-                                             <!--       <button class="btn btn-default btn-lg">Relatórios</button>-->
-                                             <!--   </a>-->
-                                             <!--</div>-->
+                        <?php if(isset($my_groups)){ ?>
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    Todos os Grupos
+                                </div>
+                                <div class="panel-body">
+                                    <div class="panel-group" id="mygroup">
+                                <!-- .panel-heading -->
+                                <?php foreach($my_groups as $grupo){ ?>
+                                    <?php if($grupo->have_group == null){ ?>
+                                       <div class="panel panel-default">
+                                           <a data-toggle="collapse" data-parent="#other_groups" href="<?= '#collapse_'.$grupo->id ?>">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <?= $grupo->nome ?>
+                                                    </h4>
+                                                </div>
+                                            </a>
+                                        <div id="<?= 'collapse_'.$grupo->id ?>" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="col-lg-8">
+                                                  <?= $grupo->description ?>
+                                                 </div>
+                                                        <a href="<?= base_url('grupos/posts/'.$grupo->id) ?>">
+                                                            <button class="btn btn-info btn-sm">Posts</button>
+                                                        </a>
+                                            </div>
                                         </div>
-                                <?php } ?>
+                                    </div>
+                                <?php } //end if
+                                    } //end foreach ?>
+                                </div>
                             </div>
+                            <!-- .panel-body -->
+                        </div>
+                        <!-- /.panel -->
                         <?php } ?>
                     </div>
                 </div>
@@ -99,3 +136,13 @@
                 
             });
     </script>
+    <?php 
+        foreach($my_groups as $grupo)
+        {
+            if($grupo->have_group != null)
+            {
+                print_new_post_modal($grupo);//gera modal de novo post
+            }
+        }
+                
+    ?>

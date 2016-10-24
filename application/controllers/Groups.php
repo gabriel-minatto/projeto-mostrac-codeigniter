@@ -19,7 +19,6 @@ class Groups extends CI_Controller
         $this->load->model("Group_users_model","group_users");
         $this->group_users->user = $this->session->user_id;
         $this->data["my_groups"] = $this->group_users->select_by_user();
-        $this->data["other_groups"] = $this->group_users->select_all_others();
         $this->load->view('mostratec/grupos/list_groups', $this->data);
     }
     
@@ -30,9 +29,11 @@ class Groups extends CI_Controller
             $this->data["logged"] = 0;
         }
         $this->load->model("Posts_model","post");
+        $this->load->helper("format_helper");
         $this->post->user = $this->session->user_id;
         $this->post->group = $id;
-        $this->data["posts"] = $this->post->select_by_group_user();
+        $this->data["cover"] = $this->post->select_group_cover();
+        $this->data["posts"] = $this->post->select_group_posts($this->data["cover"]->id);//passa o id da capa para que ela n seja trazida na busca por outros posts
         $this->load->view('mostratec/grupos/list_posts', $this->data);
     }
     
@@ -63,6 +64,43 @@ class Groups extends CI_Controller
             }
     }
     
+    public function new_post($group)
+    {
+        var_dump($_POST);
+        var_dump($_FILES);
+        exit;
+        /*//upload da thumb
+        if(isset($_FILES['thumb']['name']) && !empty($_FILES['thumb']['name'])) {
+            //upload da imagem da aula
+            $upload_path = 'monitorings/images/';
+            // verificar se existe o diretório
+            if (!is_ftp_folder($upload_path)){
+                create_ftp_folder($upload_path);
+            }
+            $upload_path =  $this->config->item("upload_path").$upload_path;
+            // configurações de upload
+            $config['upload_path'] = $upload_path;
+            $config['file_name'] = $this->monitoring->slug.".".pathinfo($_FILES['thumb']['name'], PATHINFO_EXTENSION);
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+            $config['overwrite'] = TRUE;
+            $this->load->library('upload', $config, 'upload_image');
+            $this->upload_image->initialize($config);
+
+            // se falhar ou não for preenchido a imagem usamos a imagem anterior
+            if (!$this->upload_image->do_upload("thumb")) {
+                $this->session->set_flashdata('error', $this->upload_image->display_errors());
+                $image = "";
+            }else{
+                $uploaded_image = $this->upload_image->data();
+                $image = $uploaded_image["file_name"];
+            }
+        } else {
+            $image = $this->input->post("thumb", TRUE);
+        }
+        $this->monitoring->image = $image;*/
+        
+    }
+    
     public function save_post_coment($id)
     {
         if(logged())
@@ -85,7 +123,7 @@ class Groups extends CI_Controller
             $this->load->model("Posts_model","post");
             
             $this->relatorio->group = $this->relat_coments->group = $id;
-            $this->data["relatorios"] = $this->relatorio->select_with_coments();
+            $this->data["relatorios"] = $this->relatorio->select_by_group();
             $this->data["comentarios"] = $this->relat_coments->select_by_group_with_autor();
             $this->data["group"] = $id;
             

@@ -5,26 +5,40 @@
             <div class="row">
                 <div class="col-lg-8">
                     <div class="well">
-                        <div class="text-center">
-                            <h1>Relatórios</h1>
-                        </div>
-                        <hr>
-                        <div id="reports">
                             <?php if(isset($relatorios) && !empty($relatorios)){ ?>
-                                <div id="my_reports">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    Relatórios
+                                </div>
+                                <div class="panel-body">
+                                    <div class="panel-group" id="reports">
+                                <!-- .panel-heading -->
                                     <?php foreach($relatorios as $relatorio){ ?>
-                                            <h3><?= $relatorio->relat_nome ?></h3>
-                                            <div class="panel">
-                                                <div class="col-lg-10">
-                                              <p><?= $relatorio->relatorio ?></p>
+                                        <div class="panel panel-default">
+                                           <a data-toggle="collapse" data-parent="#reports" href="<?= '#collapse_'.$relatorio->id ?>">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <?= $relatorio->nome ?>
+                                                    </h4>
+                                                </div>
+                                            </a>
+                                        <div id="<?= 'collapse_'.$relatorio->id ?>" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="col-lg-9">
+                                                  <?= $relatorio->content ?>
                                                  </div>
                                             </div>
-                                    <?php } ?>
+                                        </div>
+                                    </div>
+                                <?php } //end foreach ?>
                                 </div>
+                            </div>
+                            <!-- .panel-body -->
+                        </div>
+                        <!-- /.panel -->
                             <?php }else{ ?>
                             Ainda não existem relatórios para este grupo.
                             <?php } ?>
-                        </div>
                     </div>
                     <?php if(isset($comentarios)){ ?>
                         <!-- Posted Comments -->

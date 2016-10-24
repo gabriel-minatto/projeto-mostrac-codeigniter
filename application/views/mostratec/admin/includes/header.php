@@ -59,24 +59,18 @@
                         <a href="<?= base_url('admin/painel')?>"><i class="fa fa-fw fa-dashboard"></i>Painel de Controle</a>
                     </li>
                     <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#alunos"><i class="fa fa-fw fa-arrows-v"></i> Alunos <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="alunos" class="collapse">
-                            <li>
-                                <a href="<?= base_url('admin/meus-alunos') ?>">Meus Alunos</a>
-                            </li>
-                            <li>
-                                <a href="<?= base_url('admin/alunos') ?>">Ver Todos</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#grupos"><i class="fa fa-fw fa-arrows-v"></i> Grupos <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="grupos" class="collapse">
                             <li>
-                                <a href="<?= base_url('admin/meus-alunos') ?>">Meus Grupos</a>
+                                <a data-toggle="modal" data-target="#new_group">
+                                    Cadastrar Grupo
+                                </a>
                             </li>
                             <li>
-                                <a href="<?= base_url('admin/alunos') ?>">Ver Todos</a>
+                                <a href="<?= base_url('admin/grupos/meus-grupos') ?>">Meus Grupos</a>
+                            </li>
+                            <li>
+                                <a href="<?= base_url('admin/grupos/todos') ?>">Ver Todos</a>
                             </li>
                         </ul>
                     </li>
@@ -84,13 +78,15 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#schools"><i class="fa fa-fw fa-arrows-v"></i> Escolas <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="schools" class="collapse">
                             <li>
-                                <!--<a href="<?= base_url('admin/meus-alunos') ?>">Cadastrar Escola</a>-->
                                 <a data-toggle="modal" data-target="#new_school">
                                     Cadastrar Escola
                                 </a>
                             </li>
                             <li>
-                                <a href="<?= base_url('admin/ver-todas') ?>">Ver Todas</a>
+                                <a href="<?= base_url('admin/escolas/minhas-escolas') ?>">Minhas Escolas</a>
+                            </li>
+                            <li>
+                                <a href="<?= base_url('admin/escolas/todas') ?>">Ver Todas</a>
                             </li>
                         </ul>
                     </li>
@@ -102,7 +98,7 @@
             </div>
             <!-- /.navbar-collapse -->
         </nav>
-        <div id="page-wrapper">
+        <div id="page-wrapper" style="min-height: calc(100vh - 2.5em);">
             <div class="container-fluid">
                 
         <?= show_messages(); ?>

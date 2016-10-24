@@ -60,15 +60,17 @@ $route['login'] = 'users/login';
 $route['logout'] = 'users/logout';
 
 //cadastro
-$route['cadastro'] = 'users/register';
 $route['usuario/salvar'] = 'users/save_user';
 
 //grupos
 $route['grupos/home'] = 'groups/homepage';
+
 //posts
+$route['grupos/posts/novo/(:num)'] = 'groups/new_post/$1';
 $route['grupos/posts/(:num)'] = 'groups/post_group/$1';
 $route['grupos/posts/view/(:num)'] = 'groups/view_post/$1';
 $route['grupos/posts/view/salvar-comentario/(:num)'] = 'groups/save_post_coment/$1';
+
 //relatorios
 $route['grupos/relatorios/(:num)'] = 'groups/view_report/$1';
 $route['grupos/relatorios/salvar/comentario/(:num)'] = 'groups/save_report_coment/$1';
@@ -82,9 +84,19 @@ $route['admin/logout'] = 'admin/logout';
 $route['admin/painel'] = 'admin/dashboard';
 
 //schools
-$route['admin/cadastrar-escola'] = 'admin/new_school';
-$route['admin/salvar-escola'] = 'admin/save_school';
-$route['admin/ver-todas'] = 'admin/list_all_with_filter';
+$route['admin/escola/adicionar'] = 'admin/add_school';
+$route['admin/escolas/todas'] = 'admin/list_all_schools_with_filter';
+$route['admin/escolas/minhas-escolas'] = 'admin/my_schools';
+
+//groups
+$route['admin/grupos/alunos/(:num)'] = 'admin/group_users/$1';
+$route['admin/grupos/alunos/remover/(:num)/(:num)'] = 'admin/remove_user_group/$1/$2';
+$route['admin/grupos/gerenciar/(:num)'] = 'admin/manage_group/$1';
+$route['admin/grupos/meus-grupos'] = 'admin/my_groups';
+$route['admin/grupos/adicionar'] = 'admin/add_group';
+$route['admin/grupos/todos'] = 'admin/all_groups';
+$route['admin/grupos/deletar/(:num)'] = 'admin/delete_group/$1';
+
 
 
 

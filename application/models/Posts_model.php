@@ -43,24 +43,25 @@ class Posts_model extends CI_Model
 		return $this->db->trans_status();
 	}
 	
-	public function select_by_group_user()
-	{
-	    $this->db->select("*,p.id as post_id");
-	    $this->db->from("posts p");
-	    $this->db->join("group_users gu","gu.group = p.group");
-	    $this->db->where("p.active", 1);
-	   // $this->db->where("gu.user", $this->user);
-	    $this->db->where("gu.group", $this->group);
-	    $query = $this->db->get();
-	    return $query->result();
-	}
-	
-	public function select_group_posts()
+	public function select_group_cover()
 	{
 	    $this->db->select("*");
 	    $this->db->from("posts p");
 	    $this->db->where("p.active", 1);
 	    $this->db->where("p.group", $this->group);
+	    $this->db->order_by("p.date", "asc");
+	    $query = $this->db->get();
+	    return $query->row();
+	}
+	
+	public function select_group_posts($cover=NULL)
+	{
+	    $this->db->select("*");
+	    $this->db->from("posts p");
+	    $this->db->where("p.active", 1);
+	    $this->db->where("p.group", $this->group);
+	    if($cover)
+	        $this->db->where("p.id !=", $cover);
 	    $query = $this->db->get();
 	    return $query->result();
 	}

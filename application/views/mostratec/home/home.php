@@ -70,50 +70,6 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="box">
-                <div class="col-lg-12">
-                    <hr>
-                    <h2 class="intro-text text-center">Já Possui Um Cadastro?
-                        <strong>Faça login abaixo!</strong>
-                    </h2>
-                    <hr>
-                    <form class="form-horizontal" method="post" action="<?= base_url("login") ?>" id="login_form">
-                        
-                        <fieldset>
-                        
-                        <!-- Text input-->
-                        <div class="form-group">
-                          <label class="col-md-4 control-label" for="email">Email:</label>  
-                          <div class="col-md-4">
-                          <input id="email" name="email" type="email" placeholder="endereço de email" class="form-control input-md" required="">
-                            
-                          </div>
-                        </div>
-                        
-                        <!-- Password input-->
-                        <div class="form-group">
-                          <label class="col-md-4 control-label" for="senha">Senha:</label>
-                          <div class="col-md-4">
-                            <input id="senha" name="senha" type="password" placeholder="senha" class="form-control input-md" required="">
-                            
-                          </div>
-                        </div>
-                        
-                        <!-- Button (Double) -->
-                        <div class="form-group">
-                          <label class="col-md-4 control-label" for="submit"></label>
-                          <div class="col-md-8">
-                            <button id="submit" name="submit" type="submit" class="btn btn-default">Entrar</button>
-                            <button id="reset" name="reset" type="reset" class="btn btn-default">Limpar</button>
-                          </div>
-                        </div>
-                        
-                        </fieldset>
-                    </form>
-                </div>
-            </div>
-        </div>
     </div>
     <!-- /.container -->
     

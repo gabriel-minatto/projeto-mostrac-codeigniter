@@ -8,10 +8,15 @@
 <!-- Custom CSS -->
 <link href="<?= base_url('assets/css/bootstrap/business-casual.css')?>" rel="stylesheet">
 
+<!--sweetalert-->
+<link href="<?= base_url('assets/css/sweetalert/sweetalert.css')?>" rel="stylesheet">
 
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
+
+<!-- Custom Fonts -->
+<link href="<?= base_url('assets/css/font-awesome/css/font-awesome.min.css')?>" rel="stylesheet" type="text/css">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

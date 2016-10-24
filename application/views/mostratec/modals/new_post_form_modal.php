@@ -11,41 +11,60 @@
       <div class="modal-footer">
         <div class="form-group">
             <button class="btn btn-secondary close_modal"  data-dismiss="modal">Fechar</button>
-            <button id="submit_<?= $form_id ?>" type="submit" name="submit" class="btn btn-primary">Salvar</button>
+            <button id="submit_<?= $form_id ?>" type="submit" name="submit" class="btn btn-primary">Criar</button>
         </div>
       </div>
     </div>
   </div>
 </div>
 <script>
-    $("#submit_<?= $form_id ?>").click(
+  /*  $("#submit_<?= $form_id ?>").click(
         function()
         {
-            var dataform = $("#<?= $form_id ?>").serialize();
+            var dataform = new FormData($("#<?= $form_id ?>"));
             $.ajax({
             type: 'post',
             url: '<?= $action ?>',
             data: dataform,
-            dataType: 'html'
+            mimeType:"multipart/form-data"
             })
             .done(
                 function(data){
-                    if(data == "1")
+                    if(data == "0")
                     {
-                        swal({
-                            title: "Concluído,",
-                            text: "<?= $success ?>",
-                            type: "success" });
-                        $("#<?= $form_id ?>").trigger("reset");
-                        $(".close_modal").trigger("click");
+                        location="<?= base_url()?>grupos/posts/view/"+data;
                     }
                     else
                     {
                         swal({   
                             title: "Ops,",
-                            text: "Parece que algo deu errado! Tente novamente mais tarde.",
+                            text: "Algo deu errado, tente novamente mais tarde!",
                             type: "error" });
                     }
+                });
+        });*/
+        
+        $("#submit_<?= $form_id ?>").click(
+        function()
+        {
+            var formData = new FormData($("#<?= $form_id ?>")[0]);
+            var url = "<?= $action ?>";
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data:  formData,
+                mimeType:"multipart/form-data",
+                contentType: false,
+                cache: false,
+                processData:false,
+                success: function(data, textStatus, jqXHR)
+                    {
+                        console.log(data);
+                    },
+                error: function(jqXHR, textStatus, errorThrown) 
+                    {
+                        aler("erro");
+                    }          
                 });
         });
     

@@ -10,29 +10,29 @@
                     </h2>
                     <hr>
                 </div>
+                <div class="col-lg-10 col-lg-offset-1 text-center">
+                    <img class="img-responsive img-border img-full" src="<?= base_url('uploads/home/img/'.$cover->image)?>" alt="">
+                    <h2><?= $cover->title ?>
+                        <br>
+                        <small><?= sql_date_to_br($cover->date) ?></small>
+                    </h2>
+                    <p><?= $cover->description ?></p>
+                    <a href="<?= base_url('grupos/posts/view/'.$cover->id) ?>" class="btn btn-default btn-lg">Leia Mais</a>
+                    <hr>
+                </div>
                 <?php foreach($posts as $post){
-                $data = new DateTime($post->date);
                 ?>
-                <div class="col-lg-12 text-center">
-                    <img class="img-responsive img-border img-full" src="<?= base_url()?>uploads/home/img/<?= isset($post->image) ? $post->image : 'slide-1.jpg' ?>" alt="">
+                <div class="col-lg-6 col-lg-offset-3 text-center">
+                    <img class="img-responsive img-border img-full" src="<?= base_url('uploads/home/img/'.$post->image)?>" alt="">
                     <h2><?= $post->title ?>
                         <br>
-                        <small><?= $data->format('d/m/Y') ?></small>
+                        <small><?= sql_date_to_br($post->date) ?></small>
                     </h2>
                     <p><?= $post->description ?></p>
-                    <a href="<?= base_url('grupos/posts/view/'.$post->post_id) ?>" class="btn btn-default btn-lg">Leia Mais</a>
+                    <a href="<?= base_url('grupos/posts/view/'.$post->id) ?>" class="btn btn-default btn-lg">Leia Mais</a>
                     <hr>
                 </div>
                 <?php } ?>
-                
-                <div class="col-lg-12 text-center">
-                    <ul class="pager">
-                        <li class="previous"><a href="#">&larr; Older</a>
-                        </li>
-                        <li class="next"><a href="#">Newer &rarr;</a>
-                        </li>
-                    </ul>
-                </div>
             </div>
         </div>
 

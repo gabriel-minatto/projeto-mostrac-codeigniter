@@ -12,9 +12,9 @@ class Relatorios_model extends CI_Model
         parent::__construct();
     }
     
-    public function select_with_coments()
+    public function select_by_group()
     {
-        $this->db->select("r.nome as relat_nome, r.content as relatorio");
+        $this->db->select("*");
         $this->db->from("relatorios r");
         $this->db->where("r.group",$this->group);
         $query = $this->db->get();

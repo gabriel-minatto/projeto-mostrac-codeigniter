@@ -44,7 +44,9 @@
                         <a href="about.html">About</a>
                     </li>
                     <li>
-                        <a href="<?= base_url('cadastro')?>">Cadastro</a>
+                        <a data-toggle="modal" data-target="#new_student">
+                            Cadastro
+                        </a>
                     </li>
                     <li>
                         <a href="<?= base_url('grupos/home') ?>">Grupos</a>
@@ -52,6 +54,12 @@
                     <?php if(logged()){ ?>
                     <li>
                         <a href="<?= base_url('logout') ?>">Logoff</a>
+                    </li>
+                    <?php }else{ ?>
+                    <li>
+                        <a data-toggle="modal" data-target="#login_student">
+                            Login
+                        </a>
                     </li>
                     <?php } ?>
                 </ul>

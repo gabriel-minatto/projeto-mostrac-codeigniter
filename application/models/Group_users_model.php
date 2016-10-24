@@ -39,26 +39,42 @@ class Group_users_model extends CI_Model
 	
 	public function select_by_user()
 	{
-	    //$sql = "select * from group_users gu inner join groups g on g.id = gu.group where gu.user=? ";
-	    $this->db->select("*");
+	    $this->db->select("g.*,gu.id as have_group");
 	    $this->db->from("group_users gu");
-	    $this->db->join("groups g","g.id = gu.group");
-	    $this->db->where("gu.user",$this->user);
+	    $this->db->join("groups g","g.id = gu.group and gu.user=".$this->user,"right outer");
     	$query = $this->db->get();
+    // 	var_dump($query->result()); exit;
 	    return $query->result();   
 	}
-	
-	public function select_all_others()
+    
+    public function select_users_by_group($filter)
     {
-       /* select * from group_users gu inner join groups g on g.id = gu.group where gu.user != 2 and
-gu.group not in (select gu.group from group_users gu inner join groups g on g.id = gu.group where gu.user = 2);*/
-
-        $this->db->select("*,g.id as group_id");
-        $this->db->from("groups g");
-        $this->db->join("group_users gu","g.id = gu.group");
-        $this->db->where("gu.user !=",$this->user);
+        $this->db->select("u.*,u.nome as aluno,g.nome as grupo,s.nome as escola,g.categoria as categoria");
+        $this->db->from("group_users gu");
+        $this->db->join("users u","u.id = gu.user");
+        $this->db->join("groups g","g.id = gu.group");
+        $this->db->join("schools s","s.id = g.school");
+        $this->db->where("gu.group",$this->group);
+        if($filter)
+		{
+	       foreach($filter as $key=>$value)
+	       {
+	            if(!empty($value))
+	            {
+	                $this->db->like($key,$value);
+	            }
+	       }
+		}
         $query = $this->db->get();
         return $query->result();
+    }
+    
+    public function delete_by_group_and_user()
+    {
+        $this->db->where("user", $this->user);
+        $this->db->where("group", $this->group);
+        $this->db->delete("group_users");
+        return $this->db->trans_status();
     }
 }
 
