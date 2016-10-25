@@ -44,6 +44,12 @@ class Post_images_model extends CI_Model
 		$this->db->update("post_images", $this);
 		return $this->db->trans_status();
 	}
+	
+	public function delete_by_post()
+	{
+	    $this->db->where("post", $this->post);
+	    $this->db->delete("post_images");
+	}
 }
 
 ?>

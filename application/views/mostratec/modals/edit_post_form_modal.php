@@ -21,9 +21,7 @@
     $("#submit_<?= $form_id ?>").click(
         function()
         {
-            $(".container-fluid,.bd-example-row").block({message:"Processando, aguarde..."});
-            $("button").block({message:""});
-            
+            $("html").block({message:"Processando, aguarde..."});
             var formData = new FormData($("#<?= $form_id ?>")[0]);
             var url = "<?= $action ?>";
             $.ajax({
@@ -36,7 +34,7 @@
                 processData:false,
                 success: function(data, textStatus, jqXHR)
                     {
-                        $(".container-fluid,.bd-example-row, button").unblock();
+                        $("html").unblock();
                         if(data != "0")
                         {
                             swal({
@@ -45,7 +43,7 @@
                                 type: "success" },
                                 function()
                                 {
-                                    location="<?= base_url('grupos/posts/'.$grupo) ?>";
+                                    location.reload();
                                 });
                             $("#<?= $form_id ?>").trigger("reset");
                             $(".close_modal").trigger("click");

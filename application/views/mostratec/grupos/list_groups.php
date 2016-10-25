@@ -71,6 +71,7 @@
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">
                                                         <?= $grupo->nome ?>
+                                                        <?= (is_moderator($grupo->id) || is_admin() ? "<p class='btn btn-info btn-xs' style='float:right;'>Moderador</p>" : "") ?>
                                                     </h4>
                                                 </div>
                                             </a>
@@ -82,6 +83,14 @@
                                                         <a href="<?= base_url('grupos/posts/'.$grupo->id) ?>">
                                                             <button class="btn btn-info btn-sm">Posts</button>
                                                         </a>
+                                                        <?php if(is_moderator($grupo->id) || is_admin()){ ?>
+                                                        <a href="<?= base_url('grupos/relatorios/'.$grupo->id) ?>">
+                                                            <button class="btn btn-success btn-sm">Relatórios</button>
+                                                        </a>
+                                                        <a data-toggle="modal" data-target="<?= '#new_group_post_'.$grupo->id ?>">
+                                                            <button class="btn btn-default btn-sm">Novo Post</button>
+                                                        </a>
+                                                        <?php } ?>
                                             </div>
                                         </div>
                                     </div>

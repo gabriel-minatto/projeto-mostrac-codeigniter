@@ -18,11 +18,14 @@
                         <small><?= sql_date_to_br($cover->date) ?></small>
                     </h2>
                     <p><?= $cover->description ?></p>
+                    <?php if(!isset($logged) && is_author($cover->id,$cover->group)){ ?>
+                            <a data-toggle="modal" data-target="#edit_group_post_<?= $cover->id ?>" class="btn btn-info btn-lg">Editar</a>
+                    <?php } ?>
                     <a href="<?= base_url('grupos/posts/view/'.$cover->id) ?>" class="btn btn-default btn-lg">Leia Mais</a>
                     <hr>
                 </div>
             <?php }
-                 if(isset($cover) && !empty($cover)){ 
+                 if(isset($posts) && !empty($posts)){
                      foreach($posts as $post){ ?>
                         <div class="col-lg-6 col-lg-offset-3 text-center">
                             <img class="img-responsive img-border img-full" src="<?= base_url('uploads/groups/posts/'.string_to_slug($post->title).'_'.$post->id.'/cover/'.$post->image)?>" alt="">
@@ -31,8 +34,11 @@
                                 <small><?= sql_date_to_br($post->date) ?></small>
                             </h2>
                             <p><?= $post->description ?></p>
-                            <a href="<?= base_url('grupos/posts/view/'.$post->id) ?>" class="btn btn-default btn-lg">Leia Mais</a>
-                            <hr>
+                                <?php if(!isset($logged) && is_author($post->id,$post->group)){ ?>
+                                    <a data-toggle="modal" data-target="#edit_group_post_<?= $post->id ?>" class="btn btn-info btn-lg">Editar</a>
+                                <?php } ?>
+                                <a href="<?= base_url('grupos/posts/view/'.$post->id) ?>" class="btn btn-default btn-lg">Leia Mais</a>
+                                <hr>
                         </div>
                 <?php } 
                  }else{ ?>
@@ -45,4 +51,18 @@
     <!-- /.container -->
     
     <?php $this->load->view("includes/footer"); ?>
+    <?php
+    if(isset($cover) && !empty($cover))
+    {
+        print_edit_post_modal($cover);
+    }
+    if(isset($posts) && !empty($posts))
+    {
+        foreach($posts as $post)
+        {
+            print_edit_post_modal($post);
+        }
+    }                
+    
+    ?>
     

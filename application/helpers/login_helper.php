@@ -74,4 +74,19 @@
 		}
 	}
 	
+	if( !function_exists( 'is_author' ) )
+	{
+		function is_author($post,$grupo)
+		{
+			$CI =& get_instance();
+			$CI->load->helper('login');
+			$CI->load->model("Posts_model","post");
+			$CI->post->id = $post;
+			$CI->post->user = $CI->session->user_id;
+			if($CI->post->check_author() || is_moderator($grupo))
+				return true;
+			return false;
+		}
+	}
+	
 ?>

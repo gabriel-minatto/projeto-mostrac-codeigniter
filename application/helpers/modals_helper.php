@@ -146,4 +146,26 @@
 		}
 	}
 	
+	if( !function_exists( 'print_edit_post_modal' ) ) 
+	{
+		function print_edit_post_modal($post)
+		{
+			$CI =& get_instance();
+			//modal para cadastro de grupos
+			$CI->data = array();
+	        $edit_post = array(
+	          "formulario"=>"mostratec/forms/edit_post",
+	          "action"=>base_url('grupos/posts/editar/'.$post->id),
+	          "title"=>"Editar Post / ".$post->title,
+	          "modal_id"=>"edit_group_post_".$post->id,
+	          "form_id"=>"edit_group_post_form_".$post->id,
+	          "success"=>"Post editado com sucesso, clique em ok para recarregar a página.",
+	          "post"=>$post,
+	          "data"=>$CI->data
+	          );
+	        $CI->load->view("mostratec/modals/edit_post_form_modal",$edit_post);
+	        // #end //
+		}
+	}
+	
 ?>

@@ -90,8 +90,8 @@ class Groups extends CI_Controller
             $postagem = $this->post->insert_with_image($_FILES['capa']['name']);
             
             $post_dir = $upload_path.string_to_slug($this->post->title)."_".$postagem;
-            $cover_dir = $upload_path.string_to_slug($this->post->title)."_".$postagem."/cover/";
-            $carrossel_dir = $upload_path.string_to_slug($this->post->title)."_".$postagem."/carrossel/";
+            $cover_dir = $post_dir."/cover/";
+            $carrossel_dir = $post_dir."/carrossel/";
             
             if(!is_dir($cover_dir))
             {
@@ -119,7 +119,7 @@ class Groups extends CI_Controller
                 exit;
             }
         }
-        if(isset($_FILES['carrossel']['name']) && !empty($_FILES['carrossel']['name']))
+        if(isset($_FILES['carrossel']['name'][0]) && (!empty($_FILES['carrossel']['name'][0])))
         {
             $imagem = array();
             $imagens = array();
@@ -135,7 +135,7 @@ class Groups extends CI_Controller
                 $imagens[$names] = $imagem;
             }
             $_FILES = $imagens;
-            $cont = 0;
+            echo 0;
             foreach($imagens as $imagem)
             {
                 $this->load->model("Post_images_model","post_images");
@@ -156,7 +156,8 @@ class Groups extends CI_Controller
                 
                 if (!$this->upload_image->do_upload($imagem["name"]))
                 {
-                    var_dump($this->upload_image->display_errors());
+                    $this->post_images->delete_by_post();
+                    $this->post->delete();
                     echo 0;
                     exit;
                 }
@@ -164,6 +165,76 @@ class Groups extends CI_Controller
             }
         }
         echo 1;
+    }
+    
+    public function edit_post($post)
+    {
+        $this->load->model("Posts_model","post");
+        $this->post->id = $post;
+        if(!is_author($post, $this->post->group))
+        {
+            echo 0;
+            exit;
+        }
+        $this->load->helper("format_helper");
+        
+        $upload_path = "./uploads/groups/posts/";
+        
+        $this->post = $this->post->load_by_id();
+        
+        $post_dir = $upload_path.string_to_slug($this->post->title)."_".$post;
+        $new_post_dir = $upload_path.string_to_slug($this->input->post('title', TRUE))."_".$post;
+        
+        $cover_dir = $post_dir."/cover/";
+        
+        $new_cover_dir = $new_post_dir."/cover/";
+        $new_carrossel_dir = $new_post_dir."/carrossel/";
+        
+        if(!is_dir($new_cover_dir))
+        {
+            if(!is_dir($new_post_dir))
+            {
+                rename($post_dir,$new_post_dir);
+            }
+            rename($cover_dir,$new_cover_dir);
+        }
+        
+        if(!is_dir($new_carrossel_dir))
+        {
+            mkdir($new_carrossel_dir);
+        }
+        
+        $this->post->title = $this->input->post('title', TRUE);
+        $this->post->description = $this->input->post('description', TRUE);
+        $this->post->content = $this->input->post('content', TRUE);
+        $this->post->video = $this->input->post('video', TRUE);
+        
+        if($this->post->update_with_image(isset($_FILES['capa']['name']) ? $_FILES['capa']['name'] : null));
+        {
+            if(isset($_FILES['capa']['name']) && !empty($_FILES['capa']['name']))
+            {
+                // configurações de upload
+                $config['upload_path'] = $cover_dir;
+                $config['file_name'] = $this->post->image;
+                $config['allowed_types'] = 'gif|jpg|png|jpeg';
+                $config['overwrite'] = TRUE;
+                $this->load->library('upload', $config, 'upload_image');
+                $this->upload_image->initialize($config);
+                
+                if (!$this->upload_image->do_upload("capa"))
+                {
+                    $this->post->delete();
+                    echo 0;
+                    exit;
+                }
+            
+            }
+            
+        }
+        
+        
+        echo 1;
+        
     }
     
     public function save_post_coment($id)
