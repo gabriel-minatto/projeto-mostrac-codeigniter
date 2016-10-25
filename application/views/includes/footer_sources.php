@@ -9,3 +9,6 @@
 
 <!--sweetalert-->
 <script src="<?= base_url('assets/js/sweetalert/sweetalert.min.js')?>"></script>
+
+<!--block-ui-->
+<script src="<?= base_url('assets/js/blockui/blockUI.js')?>"></script>

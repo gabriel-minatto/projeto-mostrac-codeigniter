@@ -1,9 +1,9 @@
-<?php /*var_dump($other_groups); exit;*/ $this->load->view("includes/header");//carregamos o header e o menu da pagina ?>
+<?php $this->load->view("includes/header");//carregamos o header e o menu da pagina ?>
     
         <!-- Page Content -->
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 well">
+                <div class="col-lg-8 well clearfix">
                     <div class="text-center">
                         <h1>Grupos</h1>
                     </div>
@@ -18,7 +18,7 @@
                                     <div class="panel-group" id="mygroup">
                                 <!-- .panel-heading -->
                                 <?php foreach($my_groups as $grupo){ ?>
-                                    <?php if($grupo->have_group != null){ ?>
+                                    <?php if(isset($grupo->have_group) && $grupo->have_group != null){ ?>
                                        <div class="panel panel-default">
                                            <a data-toggle="collapse" data-parent="#mygroup" href="<?= '#collapse_'.$grupo->id ?>">
                                                 <div class="panel-heading">
@@ -65,7 +65,7 @@
                                     <div class="panel-group" id="mygroup">
                                 <!-- .panel-heading -->
                                 <?php foreach($my_groups as $grupo){ ?>
-                                    <?php if($grupo->have_group == null){ ?>
+                                    <?php if(!isset($grupo->have_group)){ ?>
                                        <div class="panel panel-default">
                                            <a data-toggle="collapse" data-parent="#other_groups" href="<?= '#collapse_'.$grupo->id ?>">
                                                 <div class="panel-heading">
@@ -139,7 +139,7 @@
     <?php 
         foreach($my_groups as $grupo)
         {
-            if($grupo->have_group != null)
+            if(isset($grupo->have_group) && $grupo->have_group != null)
             {
                 print_new_post_modal($grupo);//gera modal de novo post
             }

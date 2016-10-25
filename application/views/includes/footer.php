@@ -2,7 +2,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <p>Copyright &copy; Projeto Mostratec de Iniciação Científica</p>
+                    <p>Projeto Mostratec de Iniciação Científica</p>
+                    <p>Copyright &copy; Gabriel Minatto</p>
                 </div>
             </div>
         </div>

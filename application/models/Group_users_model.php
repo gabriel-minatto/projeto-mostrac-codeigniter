@@ -39,11 +39,15 @@ class Group_users_model extends CI_Model
 	
 	public function select_by_user()
 	{
-	    $this->db->select("g.*,gu.id as have_group");
-	    $this->db->from("group_users gu");
-	    $this->db->join("groups g","g.id = gu.group and gu.user=".$this->user,"right outer");
+	    $this->db->from("groups g");
+	    if($this->user)
+	    {
+	        $this->db->select("g.*,gu.id as have_group");
+	        $this->db->join("group_users gu","g.id = gu.group and gu.user=".$this->user,"left outer");
+	    }
+	    else
+	        $this->db->select("g.*");
     	$query = $this->db->get();
-    // 	var_dump($query->result()); exit;
 	    return $query->result();   
 	}
     
@@ -68,6 +72,18 @@ class Group_users_model extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+    
+    public function check_user()
+	{
+	   $this->db->select("*");
+	   $this->db->from("group_users");
+	   $this->db->where("user", $this->user);
+	   $this->db->where("group", $this->group);
+	   $query = $this->db->get();
+	   if($query->num_rows() > 0)
+	        return true;
+	   return false;
+	}
     
     public function delete_by_group_and_user()
     {

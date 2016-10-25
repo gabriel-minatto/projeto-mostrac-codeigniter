@@ -32,9 +32,9 @@
                 
                 <!-- Text input-->
                 <div class="form-group">
-                    <label class="btn btn-info btn-file" for="image">
+                    <label class="btn btn-info btn-file" for="capa">
                          Enviar Capa&nbsp;&nbsp;&nbsp;<i class="fa fa-upload"></i>
-                        <input id="image" name="image" type="file" placeholder="" class="form-control input-md" required="" style="/*display: none;*/">
+                        <input id="capa" name="capa" type="file" placeholder="" class="form-control input-md" required="" style="/*display: none;*/">
                     </label>
                 </div>
                 

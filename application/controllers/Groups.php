@@ -33,7 +33,7 @@ class Groups extends CI_Controller
         $this->post->user = $this->session->user_id;
         $this->post->group = $id;
         $this->data["cover"] = $this->post->select_group_cover();
-        $this->data["posts"] = $this->post->select_group_posts($this->data["cover"]->id);//passa o id da capa para que ela n seja trazida na busca por outros posts
+        $this->data["posts"] = $this->post->select_group_posts((isset($this->data["cover"]->id) ? $this->data["cover"]->id :null));//passa o id da capa para que ela n seja trazida na busca por outros posts
         $this->load->view('mostratec/grupos/list_posts', $this->data);
     }
     
@@ -47,6 +47,8 @@ class Groups extends CI_Controller
         $this->load->model("Post_coments_model","post_coments");
         $this->load->model("Post_images_model","post_images");
         $this->load->model("Users_model","user");
+        $this->load->helper("format_helper");
+        
         $this->post->id = $this->post_coments->post = $this->post_images->post = $id;
         $this->data["post"] = $this->post->load_by_id();
             if($this->data["post"])
@@ -64,41 +66,104 @@ class Groups extends CI_Controller
             }
     }
     
-    public function new_post($group)
+    public function new_post($grupo)
     {
-        var_dump($_POST);
-        var_dump($_FILES);
-        exit;
-        /*//upload da thumb
-        if(isset($_FILES['thumb']['name']) && !empty($_FILES['thumb']['name'])) {
-            //upload da imagem da aula
-            $upload_path = 'monitorings/images/';
-            // verificar se existe o diretório
-            if (!is_ftp_folder($upload_path)){
-                create_ftp_folder($upload_path);
+        if(!is_user($grupo))
+        {
+            echo 0;
+            exit;
+        }
+        $upload_path = "./uploads/groups/posts/";
+        
+        if(isset($_FILES['capa']['name']) && !empty($_FILES['capa']['name']))
+        {
+            $this->load->model("Posts_model","post");
+            $this->load->helper("format_helper");
+            
+            $this->post->title = $this->input->post('title', TRUE);
+            $this->post->description = $this->input->post('description', TRUE);
+            $this->post->content = $this->input->post('content', TRUE);
+            $this->post->video = $this->input->post('video', TRUE);
+            $this->post->active = 1;
+            $this->post->group = $grupo;
+            $this->post->user = $this->session->user_id;
+            $postagem = $this->post->insert_with_image($_FILES['capa']['name']);
+            
+            $post_dir = $upload_path.string_to_slug($this->post->title)."_".$postagem;
+            $cover_dir = $upload_path.string_to_slug($this->post->title)."_".$postagem."/cover/";
+            $carrossel_dir = $upload_path.string_to_slug($this->post->title)."_".$postagem."/carrossel/";
+            
+            if(!is_dir($cover_dir))
+            {
+                if(!is_dir($post_dir))
+                    mkdir($post_dir);
+                mkdir($cover_dir);
             }
-            $upload_path =  $this->config->item("upload_path").$upload_path;
+            if(!is_dir($carrossel_dir))
+            {
+                mkdir($carrossel_dir);
+            }
+            
             // configurações de upload
-            $config['upload_path'] = $upload_path;
-            $config['file_name'] = $this->monitoring->slug.".".pathinfo($_FILES['thumb']['name'], PATHINFO_EXTENSION);
+            $config['upload_path'] = $cover_dir;
+            $config['file_name'] = $this->post->image;
             $config['allowed_types'] = 'gif|jpg|png|jpeg';
             $config['overwrite'] = TRUE;
             $this->load->library('upload', $config, 'upload_image');
             $this->upload_image->initialize($config);
-
-            // se falhar ou não for preenchido a imagem usamos a imagem anterior
-            if (!$this->upload_image->do_upload("thumb")) {
-                $this->session->set_flashdata('error', $this->upload_image->display_errors());
-                $image = "";
-            }else{
-                $uploaded_image = $this->upload_image->data();
-                $image = $uploaded_image["file_name"];
+            
+            if (!$this->upload_image->do_upload("capa"))
+            {
+                $this->post->delete();
+                echo 0;
+                exit;
             }
-        } else {
-            $image = $this->input->post("thumb", TRUE);
         }
-        $this->monitoring->image = $image;*/
-        
+        if(isset($_FILES['carrossel']['name']) && !empty($_FILES['carrossel']['name']))
+        {
+            $imagem = array();
+            $imagens = array();
+            $files = $_FILES['carrossel'];
+            
+            foreach($files['name'] as $names)
+            {
+                $imagem = array();
+                foreach($files as $key=>&$dados)
+                {
+                    $imagem[$key]= array_shift($dados);
+                }
+                $imagens[$names] = $imagem;
+            }
+            $_FILES = $imagens;
+            $cont = 0;
+            foreach($imagens as $imagem)
+            {
+                $this->load->model("Post_images_model","post_images");
+                
+                $nome_file = string_to_slug($this->post->title)."_".$cont.".".pathinfo($imagem['name'],PATHINFO_EXTENSION);
+                
+                $this->post_images->nome = $nome_file;
+                $this->post_images->post = $postagem;
+                $this->post_images->insert();
+                
+                // configurações de upload
+                $config['upload_path'] = $carrossel_dir;
+                $config['file_name'] = $nome_file;
+                $config['allowed_types'] = 'gif|jpg|png|jpeg';
+                $config['overwrite'] = TRUE;
+                $this->load->library('upload', $config, 'upload_image');
+                $this->upload_image->initialize($config);
+                
+                if (!$this->upload_image->do_upload($imagem["name"]))
+                {
+                    var_dump($this->upload_image->display_errors());
+                    echo 0;
+                    exit;
+                }
+                $cont++;
+            }
+        }
+        echo 1;
     }
     
     public function save_post_coment($id)

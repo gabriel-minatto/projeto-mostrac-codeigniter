@@ -21,6 +21,7 @@
     $("#submit_<?= $form_id ?>").click(
         function()
         {
+            $("#<?= $modal_id ?>").block({message:"Processando, aguarde..."});
             var dataform = $("#<?= $form_id ?>").serialize();
             $.ajax({
             type: 'post',
@@ -30,6 +31,7 @@
             })
             .done(
                 function(data){
+                    $("#<?= $modal_id ?>").unblock();
                     if(data == "1")
                     {
                         swal({

@@ -59,4 +59,19 @@
 		}
 	}
 	
+	if( !function_exists( 'is_user' ) )
+	{
+		function is_user($grupo)
+		{
+			$CI =& get_instance();
+			$CI->load->helper('login');
+			$CI->load->model("Group_users_model","group_user");
+			$CI->group_user->group = $grupo;
+			$CI->group_user->user = $CI->session->user_id;
+			if(is_admin() || $CI->group_user->check_user() || is_moderator($grupo))
+				return true;
+			return false;
+		}
+	}
+	
 ?>

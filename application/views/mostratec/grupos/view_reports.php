@@ -4,7 +4,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
-                    <div class="well">
+                    <div class="well clearfix">
                             <?php if(isset($relatorios) && !empty($relatorios)){ ?>
                             <div class="panel panel-primary">
                                 <div class="panel-heading">

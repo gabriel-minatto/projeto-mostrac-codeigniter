@@ -3,10 +3,11 @@
 class Posts_model extends CI_Model
 {
     var $id;
-    var $titulo;
+    var $title;
     var $description;
     var $content;
     var $video;
+    var $image;
     var $active;
     var $group;
     var $user;
@@ -21,6 +22,17 @@ class Posts_model extends CI_Model
     {
         $this->db->insert("posts", $this);
         return $this->db->insert_id();
+    }
+    
+    public function insert_with_image($image)
+    {
+        $this->db->insert("posts", $this);
+        $this->id = $this->db->insert_id();
+        $insert_id = $this->db->insert_id();
+        $this->image = string_to_slug($this->title)."_".$this->id;
+        $this->image .= ".".pathinfo($image, PATHINFO_EXTENSION);
+        $this->update();
+        return $insert_id;
     }
     
     public function delete()

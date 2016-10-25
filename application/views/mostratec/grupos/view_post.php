@@ -1,4 +1,4 @@
-<?php $this->load->view("includes/header");//carregamos o header e o menu da pagina ?>
+<?php /*var_dump($post_images); exit;*/ $this->load->view("includes/header");//carregamos o header e o menu da pagina ?>
 
     <!-- Page Content -->
     <div class="container">
@@ -24,11 +24,11 @@
                 <hr>
 
                 <!-- Post Content -->
-				<div class='well'>
+				<div class='well clearfix'>
 				    <?php if($post->video){ ?>
     				    <div class="col-sm-6">
                             <div class="embed-responsive embed-responsive-16by9">
-                                <iframe class="embed-responsive-item" src="<?= $post->video ?>" allowfullscreen></iframe>
+                                <iframe class="embed-responsive-item" src="<?= 'https://www.youtube.com/embed/'.$post->video ?>" allowfullscreen></iframe>
                             </div>
                         </div>
                     <?php } ?>
@@ -52,7 +52,7 @@
                                 $i=0;
                                 for($i=0;$i<sizeof($post_images);$i++){ ?>
                                 <div class="<?= ($i==0) ? 'item active' : "item" ?>">
-                                    <img class="img-responsive img-full" src="<?= base_url('uploads/groups/pictures/'.$post_images[$i]->nome)?>" alt="">
+                                    <img class="img-responsive img-full" src="<?= base_url('uploads/groups/posts/'.string_to_slug($post->title).'_'.$post->id.'/carrossel/'.$post_images[$i]->nome)?>" alt="">
                                 </div>
                                 <?php } ?>
                             </div>

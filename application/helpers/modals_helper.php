@@ -37,8 +37,6 @@
         	
         	print_student_register_modal();
         	print_login_student_modal();
-        	print_new_post_modal();
-		
 		}
 	}
 	
@@ -139,6 +137,8 @@
 	          "title"=>"Nova Postagem / ".$grupo->nome,
 	          "modal_id"=>"new_group_post_".$grupo->id,
 	          "form_id"=>"new_group_post_form_".$grupo->id,
+	          "grupo"=>$grupo->id,
+	          "success"=>"Post criado com sucesso, clique em ok para ser redirecionado para área de postagens.",
 	          "data"=>$CI->data
 	          );
 	        $CI->load->view("mostratec/modals/new_post_form_modal",$new_post);

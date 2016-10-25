@@ -18,35 +18,10 @@
   </div>
 </div>
 <script>
-  /*  $("#submit_<?= $form_id ?>").click(
+    $("#submit_<?= $form_id ?>").click(
         function()
         {
-            var dataform = new FormData($("#<?= $form_id ?>"));
-            $.ajax({
-            type: 'post',
-            url: '<?= $action ?>',
-            data: dataform,
-            mimeType:"multipart/form-data"
-            })
-            .done(
-                function(data){
-                    if(data == "0")
-                    {
-                        location="<?= base_url()?>grupos/posts/view/"+data;
-                    }
-                    else
-                    {
-                        swal({   
-                            title: "Ops,",
-                            text: "Algo deu errado, tente novamente mais tarde!",
-                            type: "error" });
-                    }
-                });
-        });*/
-        
-        $("#submit_<?= $form_id ?>").click(
-        function()
-        {
+            $("#<?= $modal_id ?>").block({message:"Processando, aguarde..."});
             var formData = new FormData($("#<?= $form_id ?>")[0]);
             var url = "<?= $action ?>";
             $.ajax({
@@ -59,11 +34,35 @@
                 processData:false,
                 success: function(data, textStatus, jqXHR)
                     {
-                        console.log(data);
+                        $("#<?= $modal_id ?>").unblock();
+                        if(data != "0")
+                        {
+                            swal({
+                                title: "Concluído,",
+                                text: "<?= $success ?>",
+                                type: "success" },
+                                function()
+                                {
+                                    location="<?= base_url('grupos/posts/'.$grupo) ?>";
+                                });
+                            $("#<?= $form_id ?>").trigger("reset");
+                            $(".close_modal").trigger("click");
+                        }
+                        else
+                        {
+                            swal({   
+                                title: "Ops,",
+                                text: "Parece que algo deu errado! Tente novamente mais tarde.",
+                                type: "error" });
+                        }
                     },
                 error: function(jqXHR, textStatus, errorThrown) 
                     {
-                        aler("erro");
+                        $("#<?= $modal_id ?>").unblock();
+                        swal({   
+                            title: "Ops,",
+                            text: "Parece que algo deu errado! Tente novamente mais tarde.",
+                            type: "error" });
                     }          
                 });
         });
