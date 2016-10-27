@@ -2,11 +2,10 @@
     <div class="container-fluid bd-example-row">
         <div class="col-lg-10 col-lg-offset-1">
             <form class="form-horizontal" id="<?= $form_id ?>" method="post">
-                 Text input
+                <!-- Text input-->
                 <div class="form-group">
                   <label for="textinput">Título:</label>  
                       <input id="title" name="title" type="text" placeholder="nome da postagem" class="form-control input-md" value="<?= $post->title ?>" required="">
-                      <!--<small>*Se você alterar este campo, todos os arquivos anteriores serão perdidos.</small>-->
                 </div>
                 
                 <!-- Text input-->

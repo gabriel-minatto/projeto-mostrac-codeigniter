@@ -15,6 +15,7 @@ class Admin extends CI_Controller
     {
         if(is_teacher())
             redirect(base_url('admin/painel'), 'refresh');
+        
         unset($this->data["site_area"]);//desativa flag de area do site pra usar o tema do site principal na tela de login
         $this->load->view('mostratec/admin/admin_login', $this->data);
     }
@@ -23,7 +24,9 @@ class Admin extends CI_Controller
     {
         if(is_teacher())
             redirect(base_url('admin/painel'), 'refresh');
-            
+        if(is_student())
+            $this->session->sess_destroy();
+        
         $this->load->model("Users_model","user");
         $this->user->email = $this->input->post('email', TRUE);
         $this->user->senha = md5($this->input->post('senha', TRUE));
@@ -44,7 +47,6 @@ class Admin extends CI_Controller
         
         $this->session->set_userdata('user_id', $this->user->id);
         $this->session->set_userdata('user_nome', $this->user->nome);
-        $this->session->set_userdata('user_login', $this->user->login);
         $this->session->set_userdata('user_email', $this->user->email);
         $this->session->set_userdata('user_type', $this->user->type);
         redirect(base_url('admin/painel'), 'refresh');
@@ -76,7 +78,9 @@ class Admin extends CI_Controller
             $this->school->cidade = $this->input->post('cidade', TRUE);
             $this->school->tipo = $this->input->post('rede', TRUE);
             echo $this->school->insert();
+            exit;
         }
+        echo 0;
     }
     
     public function list_all_schools_with_filter()

@@ -21,7 +21,8 @@
     $("#submit_<?= $form_id ?>").click(
         function()
         {
-            $("#<?= $modal_id ?>").block({message:"Processando, aguarde..."});
+            $(".container-fluid,.bd-example-row").block({message:"Processando, aguarde..."});
+            $(".modal-footer button").block({message:""});
             var dataform = $("#<?= $form_id ?>").serialize();
             $.ajax({
             type: 'post',
@@ -31,7 +32,7 @@
             })
             .done(
                 function(data){
-                    $("#<?= $modal_id ?>").unblock();
+                    $(".container-fluid,.bd-example-row, button").unblock();
                     if(data == "1")
                     {
                         swal({
@@ -51,4 +52,12 @@
                 });
         });
     
-</script>
+        $("#<?= $form_id ?>").keypress(function(tecla)
+        {
+            if(tecla.which == 13)
+            {
+                $("#submit_<?= $form_id ?>").trigger("click");
+            }
+        });
+        
+    </script>

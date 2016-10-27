@@ -22,6 +22,14 @@
 		}
 	}
 	
+	if( !function_exists( 'is_student' ) )
+	{
+		function is_student()
+		{
+			return (logged() && !is_teacher());
+		}
+	}
+	
 	if( !function_exists( 'is_admin' ) )
 	{
 		function is_admin()

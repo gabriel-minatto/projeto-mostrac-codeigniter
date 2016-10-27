@@ -3,13 +3,25 @@
         <!-- Page Content -->
         <div class="container">
             <div class="row">
+                <div class="col-lg-8 well">
+                    <nav class="breadcrumb" style="margin-bottom: 0px;">
+                        <a class="breadcrumb-item" href="<?= base_url() ?>">
+                            Home
+                        </a>
+                        <span class="breadcrumb-item active">
+                           / Grupos
+                        </span>
+                    </nav>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-lg-8 well clearfix">
                     <div class="text-center">
                         <h1>Grupos</h1>
                     </div>
                     <div id="groups">
                         <?php if(isset($my_groups) && !isset($logged)){ ?>
-                        <hr>
+                        <br>
                             <div class="panel panel-primary">
                                 <div class="panel-heading">
                                     Meus Grupos
@@ -148,7 +160,7 @@
     <?php 
         foreach($my_groups as $grupo)
         {
-            if(isset($grupo->have_group) && $grupo->have_group != null)
+            if((isset($grupo->have_group) && $grupo->have_group != null) || is_moderator($grupo->id) || is_admin())
             {
                 print_new_post_modal($grupo);//gera modal de novo post
             }

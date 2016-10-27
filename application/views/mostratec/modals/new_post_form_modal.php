@@ -22,7 +22,7 @@
         function()
         {
             $(".container-fluid,.bd-example-row").block({message:"Processando, aguarde..."});
-            $("button").block({message:""});
+            $(".modal-footer button").block({message:""});
             
             var formData = new FormData($("#<?= $form_id ?>")[0]);
             var url = "<?= $action ?>";
@@ -68,5 +68,13 @@
                     }          
                 });
         });
-    
+        
+        $("#<?= $form_id ?>").keypress(function(tecla)
+        {
+            if(tecla.which == 13)
+            {
+                $("#submit_<?= $form_id ?>").trigger("click");
+            }
+        });
+        
 </script>

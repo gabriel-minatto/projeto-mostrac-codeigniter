@@ -1,10 +1,27 @@
-<?php /*var_dump($post_images); exit;*/ $this->load->view("includes/header");//carregamos o header e o menu da pagina ?>
+<?php $this->load->view("includes/header");//carregamos o header e o menu da pagina ?>
 
     <!-- Page Content -->
     <div class="container">
 
         <div class="row">
-
+            <div class="col-lg-8 well">
+                <nav class="breadcrumb" style="margin-bottom: 0px;">
+                    <a class="breadcrumb-item" href="<?= base_url() ?>">
+                        Home
+                    </a>
+                    <a class="breadcrumb-item" href="<?= base_url('grupos/home') ?>">
+                       / Grupos
+                    </a>
+                    <a class="breadcrumb-item" href="<?= base_url('grupos/posts/'.$post->group) ?>">
+                        / <?= $group->nome ?>
+                    </a>
+                    <span class="breadcrumb-item active">
+                        / <?= $post->title ?>
+                    </span>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
             <!-- Blog Post Content Column -->
             <div class="col-lg-8">
 
@@ -33,10 +50,10 @@
                         </div>
                     <?php } ?>
                     
-                    <?= $post->content ?>
+                    <p><?= $post->content ?></p>
                     
                     <?php if($post_images){ ?>
-                        <div id="carousel-example-generic" class="carousel slide">
+                        <div id="carousel-example-generic" class="carousel slide clearfix">
                             <!-- Indicators -->
                             <ol class="carousel-indicators hidden-xs">
                                 <?php

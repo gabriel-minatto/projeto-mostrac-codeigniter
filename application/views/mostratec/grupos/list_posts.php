@@ -1,12 +1,27 @@
 <?php $this->load->view("includes/header");//carregamos o header e o menu da pagina ?>
     <div class="container">
-
+        <div class="row">
+            <div class="col-lg-12 well">
+                <nav class="breadcrumb" style="margin-bottom: 0px;">
+                    <a class="breadcrumb-item" href="<?= base_url() ?>">
+                        Home
+                    </a>
+                    <a class="breadcrumb-item" href="<?= base_url('grupos/home') ?>">
+                       / Grupos
+                    </a>
+                    <span class="breadcrumb-item active">
+                        / <?= $group->nome ?>
+                    </span>
+                </nav>
+            </div>
+        </div>
         <div class="row">
             <div class="box">
+                    
                 <div class="col-lg-12">
                     <hr>
-                    <h2 class="intro-text text-center">Mostratec
-                        <strong>blog</strong>
+                    <h2 class="intro-text text-center">
+                        <strong><?= $group->nome ?></strong>
                     </h2>
                     <hr>
                 </div>

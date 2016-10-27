@@ -29,9 +29,11 @@ class Groups extends CI_Controller
             $this->data["logged"] = 0;
         }
         $this->load->model("Posts_model","post");
+        $this->load->model("Groups_model","group");
         $this->load->helper("format_helper");
         $this->post->user = $this->session->user_id;
-        $this->post->group = $id;
+        $this->group->id = $this->post->group = $id;
+        $this->data["group"] = $this->group->select_by_id();
         $this->data["cover"] = $this->post->select_group_cover();
         $this->data["posts"] = $this->post->select_group_posts((isset($this->data["cover"]->id) ? $this->data["cover"]->id :null));//passa o id da capa para que ela n seja trazida na busca por outros posts
         $this->load->view('mostratec/grupos/list_posts', $this->data);
@@ -47,6 +49,7 @@ class Groups extends CI_Controller
         $this->load->model("Post_coments_model","post_coments");
         $this->load->model("Post_images_model","post_images");
         $this->load->model("Users_model","user");
+        $this->load->model("Groups_model","group");
         $this->load->helper("format_helper");
         
         $this->post->id = $this->post_coments->post = $this->post_images->post = $id;
@@ -59,8 +62,9 @@ class Groups extends CI_Controller
                 $this->data["autor"] = $this->user->load_by_id();
                 
                 $this->post->user = $this->session->user_id;
-                $this->post->group = $this->data["post"]->group;
+                $this->group->id = $this->post->group = $this->data["post"]->group;
                 $this->data["group_posts"] = $this->post->select_group_posts();
+                $this->data["group"] = $this->group->select_by_id();
                 
                 $this->load->view('mostratec/grupos/view_post', $this->data);    
             }
@@ -255,16 +259,17 @@ class Groups extends CI_Controller
         if(logged())
         {
             $this->load->model("Relatorios_model","relatorio");
+            $this->load->model("Groups_model","group");
             $this->load->model("Relat_coments_model","relat_coments");
             $this->load->model("Posts_model","post");
             
-            $this->relatorio->group = $this->relat_coments->group = $id;
+            $this->group->id = $this->post->group = $this->relatorio->group = $this->relat_coments->group = $id;
             $this->data["relatorios"] = $this->relatorio->select_by_group();
             $this->data["comentarios"] = $this->relat_coments->select_by_group_with_autor();
-            $this->data["group"] = $id;
+            $this->data["group"] = $this->group->load_by_id();
             
             $this->post->user = $this->session->user_id;
-            $this->post->group = $id;
+             
             $this->data["group_posts"] = $this->post->select_group_posts();
             $this->load->view('mostratec/grupos/view_reports', $this->data);
         }

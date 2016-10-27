@@ -27,8 +27,10 @@ class Groups_model extends CI_Model
     
     public function load_by_id()
     {
-    	$sql = "select * from groups where id=?";
-    	$query = $this->db->query($sql, array($this->id));
+    	$this->db->select("*");
+    	$this->db->from("groups");
+    	$this->db->where("id", $this->id);
+    	$query = $this->db->get();
         return $query->row(0, "Groups_model");
     }
     
@@ -37,6 +39,15 @@ class Groups_model extends CI_Model
 		$this->db->where("id", $this->id);
 		$this->db->update("groups", $this);
 		return $this->db->trans_status();
+	}
+	
+	public function select_by_id()
+	{
+	    $this->db->select("*");
+    	$this->db->from("groups");
+    	$this->db->where("id", $this->id);
+    	$query = $this->db->get();
+    	return $query->row();
 	}
 	
 	public function select_groups_with_filter($filter)

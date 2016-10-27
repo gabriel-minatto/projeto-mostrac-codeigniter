@@ -11,7 +11,7 @@
       <div class="modal-footer">
         <div class="form-group">
             <button class="btn btn-secondary close_modal"  data-dismiss="modal">Fechar</button>
-            <button id="submit_<?= $form_id ?>" type="submit" name="submit" class="btn btn-primary">Criar</button>
+            <button id="submit_<?= $form_id ?>" type="submit" name="submit" class="btn btn-primary">Salvar</button>
         </div>
       </div>
     </div>
@@ -21,7 +21,8 @@
     $("#submit_<?= $form_id ?>").click(
         function()
         {
-            $("html").block({message:"Processando, aguarde..."});
+            $(".container-fluid,.bd-example-row").block({message:"Processando, aguarde..."});
+            $(".modal-footer button").block({message:""});
             var formData = new FormData($("#<?= $form_id ?>")[0]);
             var url = "<?= $action ?>";
             $.ajax({
@@ -34,7 +35,7 @@
                 processData:false,
                 success: function(data, textStatus, jqXHR)
                     {
-                        $("html").unblock();
+                        $(".container-fluid,.bd-example-row, button").unblock();
                         if(data != "0")
                         {
                             swal({
@@ -65,6 +66,14 @@
                             type: "error" });
                     }          
                 });
+        });
+        
+        $("#<?= $form_id ?>").keypress(function(tecla)
+        {
+            if(tecla.which == 13)
+            {
+                $("#submit_<?= $form_id ?>").trigger("click");
+            }
         });
     
 </script>

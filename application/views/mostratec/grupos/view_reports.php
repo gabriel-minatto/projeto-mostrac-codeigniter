@@ -3,8 +3,22 @@
         <!-- Page Content -->
         <div class="container">
             <div class="row">
-                <div class="col-lg-8">
-                    <div class="well clearfix">
+                <div class="col-lg-8 well">
+                    <nav class="breadcrumb" style="margin-bottom: 0px;">
+                        <a class="breadcrumb-item" href="<?= base_url() ?>">
+                            Home
+                        </a>
+                        <a class="breadcrumb-item" href="<?= base_url('grupos/home') ?>">
+                           / Grupos
+                        </a>
+                        <span class="breadcrumb-item active">
+                            / Relatórios - <?= $group->nome ?>
+                        </span>
+                    </nav>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 clearfix">
                             <?php if(isset($relatorios) && !empty($relatorios)){ ?>
                             <div class="panel panel-primary">
                                 <div class="panel-heading">
@@ -39,7 +53,6 @@
                             <?php }else{ ?>
                             Ainda não existem relatórios para este grupo.
                             <?php } ?>
-                    </div>
                     <?php if(isset($comentarios)){ ?>
                         <!-- Posted Comments -->
                         <div id='report_coments'>
@@ -65,7 +78,7 @@
                     <!-- Comments Form -->
                     <div class="well">
                         <h4>Deixe um comentário:</h4>
-                        <form role="form" method="POST" action="<?= base_url('grupos/relatorios/salvar/comentario/'.$group) ?>">
+                        <form role="form" method="POST" action="<?= base_url('grupos/relatorios/salvar/comentario/'.$group->id) ?>">
                             <div class="form-group">
                                 <textarea class="form-control" rows="3" name="comentario"></textarea>
                             </div>
