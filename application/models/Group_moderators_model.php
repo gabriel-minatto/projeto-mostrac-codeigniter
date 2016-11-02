@@ -14,7 +14,7 @@ class Group_moderators_model extends CI_Model
     public function insert()
     {
         $this->db->insert("group_moderators", $this);
-        return $this->db->insert_id();
+        return $this->db->trans_status();
     }
     
     public function delete()

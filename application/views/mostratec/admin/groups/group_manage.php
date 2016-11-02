@@ -25,7 +25,7 @@
     </div>
 <!-- /.row -->
     <div class="row">
-        <div class="col-lg-10">
+        <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <?= $grupo->nome ?>
@@ -34,111 +34,44 @@
                         <div class="panel-body">
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs">
-                                <li class="active"><a href="#alunos" data-toggle="tab">Alunos</a>
-                                </li>
-                                <li><a href="#posts" data-toggle="tab">Posts</a>
-                                </li>
-                                <li><a href="#relatorios" data-toggle="tab">Relatórios</a>
-                                </li>
-                                <li><a href="#moderadores" data-toggle="tab">Moderadores</a>
-                                </li>
-                            </ul>
+                                
+                                <?php if(empty($this->session->flashdata("selected_tab"))){  ?>
+                                        <li class="active"><a href="#alunos" data-toggle="tab">Alunos</a></li>
+                                <?php }else{ ?>
+                                        <li><a href="#alunos" data-toggle="tab">Alunos</a></li>
+                                <?php } ?>
+                                
+                                <?php if($this->session->flashdata("selected_tab") == "posts"){  ?>
+                                        <li class="active"><a href="#posts" data-toggle="tab">Posts</a></li>
+                                <?php }else{ ?>
+                                        <li><a href="#posts" data-toggle="tab">Posts</a></li>
+                                <?php } ?>
+                                
+                                <?php if($this->session->flashdata("selected_tab") == "relatorios"){  ?>
+                                        <li class="active"><a href="#relatorios" data-toggle="tab">Relatórios</a></li>
+                                <?php }else{ ?>
+                                        <li><a href="#relatorios" data-toggle="tab">Relatórios</a></li>
+                                <?php } ?>
+                                
+                                <?php if($this->session->flashdata("selected_tab") == "moderadores"){  ?>
+                                        <li class="active"><a href="#moderadores" data-toggle="tab">Moderadores</a></li>
+                                <?php }else{ ?>
+                                        <li><a href="#moderadores" data-toggle="tab">Moderadores</a></li>
+                                <?php } ?>
+                                
+                            </ul><!-- ativa a aba de acordo com o flashdata selected tab ou deixa alunos por default -->
 
                             <!-- tab de alunos -->
                             <div class="tab-content">
-                                <div class="tab-pane fade in active" id="alunos">
-                                    <div class="row">
-                                        <div class="col-lg-4">
-                                            <div class="jumbotron">
-                                                <form class="form-horizontal" method="post">
-                                                        <!-- Text input-->
-                                                        <div class="form-group">
-                                                          <label for="name">Nome:</label>
-                                                          <input id="name" name="name" type="text" placeholder="nome do aluno" class="form-control input-md">
-                                                        </div>
-                                                        <!-- Text input-->
-                                                        <div class="form-group">
-                                                          <label for="email">Email:</label>
-                                                          <input id="email" name="email" type="text" placeholder="email do aluno" class="form-control input-md">
-                                                        </div>
-                                                        <!-- Text input-->
-                                                        <div class="form-group">
-                                                          <label for="escola">Escola:</label>
-                                                          <input id="escola" name="escola" type="text" placeholder="escola do grupo" class="form-control input-md">
-                                                        </div>
-                                                        <!-- Text input-->
-                                                        <div class="form-group">
-                                                          <label for="categoria">Categoria:</label>
-                                                          <input id="categoria" name="categoria" type="text" placeholder="categoria do grupo" class="form-control input-md">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <button class="btn btn-default">Filtrar</button>
-                                                        </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-lg-offset-1">
-                                            <div style="overflow: auto; max-height: 400px;">
-                                                <table class="table table-bordered table-striped table-hover table-responsive">
-                                                	<thead>
-                                                		<tr>
-                                                			<th>
-                                                				Aluno
-                                                			</th>
-                                                			<th>
-                                                			    Email
-                                                			</th>
-                                                			<th>
-                                                			    Escola
-                                                			</th>
-                                                			<th colspan='2'>
-                                                				Categoria
-                                                			</th>
-                                                		</tr>
-                                                	</thead>
-                                                	<tbody>
-                                                	    <?php foreach($alunos as $aluno){ ?>
-                                                		<tr>
-                                                			<td>
-                                                				<?= $aluno->aluno ?>
-                                                			</td>
-                                                			<td>
-                                                				<?= $aluno->email ?>
-                                                			</td>
-                                                			<td>
-                                                				<?= $aluno->escola ?>
-                                                			</td>
-                                                			<td>
-                                                				<?= $aluno->categoria ?>
-                                                			</td>
-                                                			<td>
-                                                    			 <a href='<?= base_url("admin/grupos/alunos/remover/".$grupo->id."/".$aluno->id) ?>'>
-                                                        			 <button type="button" class="btn btn-warning btn-circle btn-xl confirmation">
-                                                        			      <i class="fa fa-times"></i>
-                                                        			 </button>
-                                                    			 </a>
-                                                			</td>
-                                                		</tr>
-                                                		<?php } ?>
-                                                	</tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- fim tab de alunos -->
-                                <div class="tab-pane fade" id="posts">
-                                    <h4>Profile Tab</h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                </div>
-                                <div class="tab-pane fade" id="relatorios">
-                                    <h4>Messages Tab</h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                </div>
-                                <div class="tab-pane fade" id="moderadores">
-                                    <h4>Settings Tab</h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                </div>
+                                
+                                <?php $this->load->view("mostratec/admin/includes/group_manage/student",array('alunos'=>$alunos,'group'=>$grupo)); ?>
+                                
+                                <?php $this->load->view("mostratec/admin/includes/group_manage/posts",array('posts'=>$posts,'group'=>$grupo)); ?>
+                                
+                                <?php $this->load->view("mostratec/admin/includes/group_manage/reports",array('alunos'=>$alunos,'group'=>$grupo)); ?>
+                                
+                                <?php $this->load->view("mostratec/admin/includes/group_manage/moderators",array('alunos'=>$alunos,'group'=>$grupo)); ?>
+                                
                             </div>
                         </div>
                         <!-- /.panel-body -->
@@ -148,3 +81,41 @@
     </div>
 <!-- /.row -->
 <?php $this->load->view("mostratec/admin/includes/footer");//carregamos o header e o menu da pagina ?>
+
+<div id="add_student_to_group_modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add_student_to_group_label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="add_student_to_group_label">Adicionar Aluno ao grupo <?= $grupo->nome ?></h4>
+      </div>
+      <div id="add_student_to_group_modal_body" class="modal-body">
+          <div class="container-fluid bd-example-row">
+            </div>
+      </div>
+      <div class="modal-footer">
+        <div class="form-group">
+            <button class="btn btn-secondary close_modal"  data-dismiss="modal">Fechar</button>
+            <button id="add_student_to_group_submit" type="submit" name="submit" class="btn btn-primary">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    //load_add_student_to_group
+    $("#new_student_group").click(
+        function()
+        {
+            $("#student_to_group_filter,#student_field").block({message:"Processando, aguarde..."});
+            $(".modal-footer button").block({message:""});
+            dataform = {grupo:"<?= $grupo->id ?>"};
+            $.post("<?= base_url('admin/grupos/alunos/carregar-add-form') ?>",dataform)
+            .done(
+                function(form)
+                {
+                    $("#student_to_group_filter,#student_field, button").unblock();
+                    $("#add_student_to_group_modal_body div").html(form);
+                });
+        });
+</script>

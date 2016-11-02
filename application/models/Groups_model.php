@@ -16,7 +16,7 @@ class Groups_model extends CI_Model
     public function insert()
     {
         $this->db->insert("groups", $this);
-        return $this->db->trans_status();
+        return $this->db->insert_id();
     }
     
     public function delete()

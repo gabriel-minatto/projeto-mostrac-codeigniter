@@ -38,6 +38,7 @@ class Posts_model extends CI_Model
     {
         $this->db->where("id", $this->id);
         $this->db->delete("posts");
+        return $this->db->trans_status();
     }
     
     public function load_by_id()
@@ -92,6 +93,17 @@ class Posts_model extends CI_Model
 	    return $query->result();
 	}
 	
+	public function select_manage_group_posts()
+	{
+	    $this->db->select("*,p.id as post_id,p.active as post_status");
+	    $this->db->from("posts p");
+	    $this->db->join("users u","u.id = p.user");
+	    $this->db->where("p.group", $this->group);
+        $this->db->order_by("p.date", "desc");
+	    $query = $this->db->get();
+	    return $query->result();
+	}
+	
 	public function check_author()
 	{
 	   $this->db->select("*");
@@ -102,6 +114,22 @@ class Posts_model extends CI_Model
 	   if($query->num_rows() > 0)
 	        return true;
 	   return false;
+	}
+	
+	public function activate_by_id()
+	{
+		$this->db->set('active', 1);
+		$this->db->where("id", $this->id);
+		$this->db->update('posts');
+		return $this->db->trans_status();
+	}
+	
+	public function deactivate_by_id()
+	{
+		$this->db->set('active', 0);
+		$this->db->where("id", $this->id);
+		$this->db->update('posts');
+		return $this->db->trans_status();
 	}
 	
 }

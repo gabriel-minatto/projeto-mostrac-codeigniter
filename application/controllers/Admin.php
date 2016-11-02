@@ -147,21 +147,6 @@ class Admin extends CI_Controller
         $this->load->view("mostratec/admin/groups/my_groups_list",$this->data);
     }
     
-    public function group_users($id)
-    {
-        if(!is_moderator($id))
-        {
-            $this->session->set_flashdata("error","Você não tem permissão para acessar essa área do site!");
-            redirect(base_url(), 'refresh');
-        }
-        $this->load->model("Group_users_model","group_user");
-        $this->load->model("Groups_model","group");
-        $this->group->id = $this->group_user->group = $id;
-        $this->data["alunos"] = $this->group_user->select_users_by_group();
-        $this->data["grupo"] = $this->group->load_by_id();
-        $this->load->view("mostratec/admin/groups/group_users_list",$this->data);
-    }
-    
     public function add_group()
     {
         if(is_teacher())
@@ -171,7 +156,11 @@ class Admin extends CI_Controller
             $this->group->nome = $this->input->post('name', TRUE);
             $this->group->school = $this->input->post('escola', TRUE);
             $this->group->categoria = $this->input->post('categoria', TRUE);
-            echo $this->group->insert();
+            
+            $this->load->model("Group_moderators_model","group_moderator");
+            $this->group_moderator->group = $this->group->insert();
+            $this->group_moderator->user =  $this->session->user_id;
+            echo $this->group_moderator->insert();
         }
     }
     
@@ -205,19 +194,35 @@ class Admin extends CI_Controller
         }
         $this->load->model("Group_users_model","group_user");
         $this->load->model("Groups_model","group");
-        $this->group->id = $this->group_user->group = $id;
-        if(!empty($_POST))
+        $this->load->model("Posts_model","post");
+        $this->post->group = $this->group->id = $this->group_user->group = $id;
+        if(!empty($_POST["student_filter"]))
         {
-            $filter = array(
+            $student_filter = array(
                 'u.nome' => $this->input->post('name', TRUE),
                 'u.email' => $this->input->post('email', TRUE),
-                's.nome' => $this->input->post('escola', TRUE),
-                'g.categoria' => $this->input->post('categoria', TRUE)
+                's.nome' => $this->input->post('escola', TRUE)
                 );
         }
-        $this->data["alunos"] = $this->group_user->select_users_by_group((isset($filter) ? $filter : null ));
+        
+        $this->data["posts"] = $this->post->select_manage_group_posts();
+        $this->data["alunos"] = $this->group_user->select_users_by_group((isset($student_filter) ? $student_filter : null ));
         $this->data["grupo"] = $this->group->load_by_id();
         $this->load->view("mostratec/admin/groups/group_manage",$this->data);
+    }
+    
+    public function add_user_group()
+    {
+        $this->load->model("Group_users_model","group_user");
+        $this->group_user->group = $this->input->post("grupo",true);
+        
+        if(!is_moderator($this->group_user->group))
+        {
+            $this->session->set_flashdata("error","Você não tem permissão para acessar essa área do site!");
+            redirect(base_url(), 'refresh');
+        }
+        $this->group_user->user = $this->input->post("aluno",true);
+        echo $this->group_user->insert();
     }
     
     public function remove_user_group($grupo,$user)
@@ -236,4 +241,86 @@ class Admin extends CI_Controller
             redirect(base_url('admin/grupos/gerenciar/'.$grupo), 'refresh');
         }
     }
+    
+    public function load_add_student_to_group()
+    {
+        $this->load->model("Groups_model","group");
+        $this->group->id = $this->input->post("grupo",TRUE);
+        $this->group = $this->group->load_by_id();
+        print_add_student_to_group_modal(
+            $this->group, 
+            json_decode($this->input->post("form")),
+            $this->input->post("refresh"));
+    }
+    
+    public function activate_post($grupo,$id)
+    {
+        if(!is_moderator($grupo))
+        {
+            $this->session->set_flashdata("error","Você não tem permissão para acessar essa área do site!");
+            redirect(base_url(), 'refresh');
+        }
+        $this->load->model("Posts_model","post");
+        $this->post->id = $id;
+        if($this->post->activate_by_id())
+        {
+            $this->session->set_flashdata("success","Post ativado com sucesso.");
+            $this->session->set_flashdata("selected_tab","posts");
+            redirect(base_url('admin/grupos/gerenciar/'.$grupo), 'refresh');
+        }
+        $this->session->set_flashdata("success","Algo deu errado durante a operação, tente novamente mais tarde.");
+        $this->session->set_flashdata("selected_tab","posts");
+        redirect(base_url('admin/grupos/gerenciar/'.$grupo), 'refresh');
+    }
+    
+    
+    public function deactivate_post($grupo,$id)
+    {
+        if(!is_moderator($grupo))
+        {
+            $this->session->set_flashdata("error","Você não tem permissão para acessar essa área do site!");
+            redirect(base_url(), 'refresh');
+        }
+        $this->load->model("Posts_model","post");
+        $this->post->id = $id;
+        if($this->post->deactivate_by_id())
+        {
+            $this->session->set_flashdata("success","Post desativado com sucesso.");
+            $this->session->set_flashdata("selected_tab","posts");
+            redirect(base_url('admin/grupos/gerenciar/'.$grupo), 'refresh');
+        }
+        $this->session->set_flashdata("success","Algo deu errado durante a operação, tente novamente mais tarde.");
+        $this->session->set_flashdata("selected_tab","posts");
+        redirect(base_url('admin/grupos/gerenciar/'.$grupo), 'refresh');
+    }
+    
+    public function delete_post($grupo,$id)
+    {
+        if(!is_moderator($grupo))
+        {
+            $this->session->set_flashdata("error","Você não tem permissão para acessar essa área do site!");
+            redirect(base_url(), 'refresh');
+        }
+        $this->load->model("Posts_model","post");
+        $this->load->helper("file");
+        $this->post->id = $id;
+        $this->post = $this->post->load_by_id();
+        $post_dir = './uploads/groups/posts/'.string_to_slug($this->post->title).'_'.$this->post->id;
+        if($this->post->delete())
+        {
+            if(delete_files($post_dir, true))
+            {
+                if(rmdir($post_dir))
+                {
+                    $this->session->set_flashdata("success","Post deletado com sucesso.");
+                    $this->session->set_flashdata("selected_tab","posts");
+                    redirect(base_url('admin/grupos/gerenciar/'.$grupo), 'refresh');
+                }
+            }
+        }
+        $this->session->set_flashdata("success","Algo deu errado durante a operação, tente novamente mais tarde.");
+        $this->session->set_flashdata("selected_tab","posts");
+        redirect(base_url('admin/grupos/gerenciar/'.$grupo), 'refresh');
+    }
+    
 }   

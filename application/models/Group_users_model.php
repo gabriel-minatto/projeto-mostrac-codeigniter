@@ -14,7 +14,7 @@ class Group_users_model extends CI_Model
     public function insert()
     {
         $this->db->insert("group_users", $this);
-        return $this->db->insert_id();
+        return $this->db->trans_status();
     }
     
     public function delete()
@@ -53,11 +53,10 @@ class Group_users_model extends CI_Model
     
     public function select_users_by_group($filter)
     {
-        $this->db->select("u.*,u.nome as aluno,g.nome as grupo,s.nome as escola,g.categoria as categoria");
+        $this->db->select("u.*,u.nome as aluno,g.nome as grupo");
         $this->db->from("group_users gu");
         $this->db->join("users u","u.id = gu.user");
         $this->db->join("groups g","g.id = gu.group");
-        $this->db->join("schools s","s.id = g.school");
         $this->db->where("gu.group",$this->group);
         if($filter)
 		{
@@ -69,6 +68,7 @@ class Group_users_model extends CI_Model
 	            }
 	       }
 		}
+		$this->db->order_by("aluno","asc");
         $query = $this->db->get();
         return $query->result();
     }
@@ -91,6 +91,32 @@ class Group_users_model extends CI_Model
         $this->db->where("group", $this->group);
         $this->db->delete("group_users");
         return $this->db->trans_status();
+    }
+    
+    public function select_all_other_active($filter) //seleciona todos os q estiverem ativos mas n estao no grupo
+    {
+        $this->db->select("u.*,gu.group AS is_on_group");
+        $this->db->from("users u");
+        $this->db->join("group_users gu","u.id = gu.user and gu.group=$this->group","left outer");
+        $this->db->where("u.active", 1);
+        if($filter)
+		{
+	       foreach($filter as $value)
+	       {
+	            if(!empty($value))
+	            {
+	                $this->db->like($value->name,$value->value);
+	            }
+	       }
+		}
+		$this->db->order_by("u.nome","asc");
+        $query = $this->db->get();
+        if($query->num_rows() == 0)
+        {
+            echo 0;
+            exit;
+        }
+        return $query->result();
     }
 }
 

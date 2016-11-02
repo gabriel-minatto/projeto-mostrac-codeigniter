@@ -236,7 +236,6 @@ class Groups extends CI_Controller
             
         }
         
-        
         echo 1;
         
     }

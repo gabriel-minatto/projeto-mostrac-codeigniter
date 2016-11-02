@@ -2,7 +2,6 @@
 
     <!-- Page Content -->
     <div class="container">
-
         <div class="row">
             <div class="col-lg-8 well">
                 <nav class="breadcrumb" style="margin-bottom: 0px;">

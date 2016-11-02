@@ -90,14 +90,21 @@ $route['admin/escolas/todas'] = 'admin/list_all_schools_with_filter';
 $route['admin/escolas/minhas-escolas'] = 'admin/my_schools';
 
 //groups
-$route['admin/grupos/alunos/(:num)'] = 'admin/group_users/$1';
-$route['admin/grupos/alunos/remover/(:num)/(:num)'] = 'admin/remove_user_group/$1/$2';
-$route['admin/grupos/gerenciar/(:num)'] = 'admin/manage_group/$1';
 $route['admin/grupos/meus-grupos'] = 'admin/my_groups';
-$route['admin/grupos/adicionar'] = 'admin/add_group';
 $route['admin/grupos/todos'] = 'admin/all_groups';
+$route['admin/grupos/adicionar'] = 'admin/add_group';
 $route['admin/grupos/deletar/(:num)'] = 'admin/delete_group/$1';
 
+//groups -> gerenciamento
+$route['admin/grupos/gerenciar/(:num)'] = 'admin/manage_group/$1';
+//groups -> gerenciamento -> alunos
+$route['admin/grupos/alunos/carregar-add-form'] = 'admin/load_add_student_to_group';
+$route['admin/grupos/alunos/adicionar'] = 'admin/add_user_group';
+$route['admin/grupos/alunos/remover/(:num)/(:num)'] = 'admin/remove_user_group/$1/$2';
+//groups -> gerenciamento -> posts
+$route['admin/grupos/posts/ativar/(:num)/(:num)'] = 'admin/activate_post/$1/$2';
+$route['admin/grupos/posts/desativar/(:num)/(:num)'] = 'admin/deactivate_post/$1/$2';
+$route['admin/grupos/posts/deletar/(:num)/(:num)'] = 'admin/delete_post/$1/$2';
 
 
 

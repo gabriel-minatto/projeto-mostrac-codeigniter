@@ -168,4 +168,27 @@
 		}
 	}
 	
+	if( !function_exists( 'print_add_student_to_group_modal' ) ) 
+	{
+		function print_add_student_to_group_modal($grupo,$form,$refresh)
+		{
+			$CI =& get_instance();
+			$CI->data = array();
+			//modal para cadastro de estudantes nos grupos
+			$CI->load->model("Group_users_model","group_user");
+			$CI->group_user->group = $grupo->id;
+			$CI->data["alunos"] = $CI->group_user->select_all_other_active($form);
+	        $add_student = array(
+	          "formulario"=>"mostratec/forms/add_student_to_group",
+	          "action"=>base_url('admin/grupos/alunos/adicionar/'.$grupo->id),
+	          "success"=>"Aluno adicionado com sucesso, clique em ok para recarregar a página.",
+	          "refresh"=>$refresh,
+	          "grupo"=>$grupo,
+	          "data"=>$CI->data
+	          );
+	        $CI->load->view("mostratec/forms/add_student_to_group",$add_student);
+	        // #end //
+		}
+	}
+	
 ?>
