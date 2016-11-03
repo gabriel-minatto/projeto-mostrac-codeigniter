@@ -40,7 +40,7 @@
                             			 </a>
                             			 <?php } ?>
                             			 <a href='<?= base_url("admin/grupos/posts/deletar/".$grupo->id."/".$post->post_id) ?>'>
-                                            <button type="button" class="btn btn-warning btn-circle confirmation">
+                                            <button type="button" class="btn btn-danger btn-circle confirmation">
                                 			      <i class="fa fa-times"></i>
                                 			 </button>
                             			 </a>

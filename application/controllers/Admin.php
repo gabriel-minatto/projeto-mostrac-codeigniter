@@ -195,7 +195,8 @@ class Admin extends CI_Controller
         $this->load->model("Group_users_model","group_user");
         $this->load->model("Groups_model","group");
         $this->load->model("Posts_model","post");
-        $this->post->group = $this->group->id = $this->group_user->group = $id;
+        $this->load->model("Relatorios_model","relatorio");
+        $this->relatorio->group = $this->post->group = $this->group->id = $this->group_user->group = $id;
         if(!empty($_POST["student_filter"]))
         {
             $student_filter = array(
@@ -204,7 +205,7 @@ class Admin extends CI_Controller
                 's.nome' => $this->input->post('escola', TRUE)
                 );
         }
-        
+        $this->data["reports"] = $this->relatorio->select_by_group_with_group();
         $this->data["posts"] = $this->post->select_manage_group_posts();
         $this->data["alunos"] = $this->group_user->select_users_by_group((isset($student_filter) ? $student_filter : null ));
         $this->data["grupo"] = $this->group->load_by_id();
@@ -268,7 +269,7 @@ class Admin extends CI_Controller
             $this->session->set_flashdata("selected_tab","posts");
             redirect(base_url('admin/grupos/gerenciar/'.$grupo), 'refresh');
         }
-        $this->session->set_flashdata("success","Algo deu errado durante a operação, tente novamente mais tarde.");
+        $this->session->set_flashdata("error","Algo deu errado durante a operação, tente novamente mais tarde.");
         $this->session->set_flashdata("selected_tab","posts");
         redirect(base_url('admin/grupos/gerenciar/'.$grupo), 'refresh');
     }
@@ -289,7 +290,7 @@ class Admin extends CI_Controller
             $this->session->set_flashdata("selected_tab","posts");
             redirect(base_url('admin/grupos/gerenciar/'.$grupo), 'refresh');
         }
-        $this->session->set_flashdata("success","Algo deu errado durante a operação, tente novamente mais tarde.");
+        $this->session->set_flashdata("error","Algo deu errado durante a operação, tente novamente mais tarde.");
         $this->session->set_flashdata("selected_tab","posts");
         redirect(base_url('admin/grupos/gerenciar/'.$grupo), 'refresh');
     }
@@ -318,8 +319,59 @@ class Admin extends CI_Controller
                 }
             }
         }
-        $this->session->set_flashdata("success","Algo deu errado durante a operação, tente novamente mais tarde.");
+        $this->session->set_flashdata("error","Algo deu errado durante a operação, tente novamente mais tarde.");
         $this->session->set_flashdata("selected_tab","posts");
+        redirect(base_url('admin/grupos/gerenciar/'.$grupo), 'refresh');
+    }
+    
+    public function add_report($grupo)
+    {
+        if(!is_moderator($grupo))
+        {
+            echo 0;
+            exit;
+        }
+        $this->load->model("Relatorios_model","relatorio");
+        $this->relatorio->group = $grupo;
+        $this->relatorio->nome = $this->input->post("title",TRUE);
+        $this->relatorio->content = $this->input->post("content",TRUE);
+        $this->session->set_flashdata("selected_tab","relatorios");
+        echo $this->relatorio->insert();
+    }
+    
+    public function edit_report($grupo,$id)
+    {
+        if(!is_moderator($grupo))
+        {
+            echo 0;
+            exit;
+        }
+        $this->load->model("Relatorios_model","relatorio");
+        $this->relatorio->id = $id;
+        $this->relatorio = $this->relatorio->load_by_id();
+        $this->relatorio->nome = $this->input->post("title",TRUE);
+        $this->relatorio->content = $this->input->post("content",TRUE);
+        $this->session->set_flashdata("selected_tab","relatorios");
+        echo $this->relatorio->update();
+    }
+    
+    public function delete_report($grupo,$id)
+    {
+        if(!is_moderator($grupo))
+        {
+            $this->session->set_flashdata("error","Você não tem permissão para acessar essa área do site!");
+            redirect(base_url(), 'refresh');
+        }
+        $this->load->model("Relatorios_model","relatorio");
+        $this->relatorio->id = $id;
+        if($this->relatorio->delete())
+        {
+            $this->session->set_flashdata("success","Relatório deletado com sucesso.");
+            $this->session->set_flashdata("selected_tab","relatorios");
+            redirect(base_url('admin/grupos/gerenciar/'.$grupo), 'refresh');
+        }
+        $this->session->set_flashdata("error","Algo deu errado durante a operação, tente novamente mais tarde.");
+        $this->session->set_flashdata("selected_tab","relatorios");
         redirect(base_url('admin/grupos/gerenciar/'.$grupo), 'refresh');
     }
     

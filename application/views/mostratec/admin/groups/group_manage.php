@@ -68,7 +68,7 @@
                                 
                                 <?php $this->load->view("mostratec/admin/includes/group_manage/posts",array('posts'=>$posts,'group'=>$grupo)); ?>
                                 
-                                <?php $this->load->view("mostratec/admin/includes/group_manage/reports",array('alunos'=>$alunos,'group'=>$grupo)); ?>
+                                <?php $this->load->view("mostratec/admin/includes/group_manage/reports",array('reports'=>$reports,'group'=>$grupo)); ?>
                                 
                                 <?php $this->load->view("mostratec/admin/includes/group_manage/moderators",array('alunos'=>$alunos,'group'=>$grupo)); ?>
                                 
@@ -102,6 +102,15 @@
     </div>
   </div>
 </div>
+
+<?php print_add_report_modal($grupo);
+
+foreach($reports as $report)
+{
+    print_edit_report_modal($grupo,$report);
+}
+?>
+
 <script>
     //load_add_student_to_group
     $("#new_student_group").click(

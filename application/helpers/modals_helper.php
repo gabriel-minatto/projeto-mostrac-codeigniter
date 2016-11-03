@@ -191,4 +191,48 @@
 		}
 	}
 	
+	if( !function_exists( 'print_add_report_modal' ) ) 
+	{
+		function print_add_report_modal($grupo)
+		{
+			$CI =& get_instance();
+			//modal para cadastro de grupos
+			$CI->data = array();
+	        $new_report = array(
+	          "formulario"=>"mostratec/forms/new_report",
+	          "action"=>base_url('admin/grupos/reports/adicionar/'.$grupo->id),
+	          "title"=>"Novo Relatório / ".$grupo->nome,
+	          "modal_id"=>"new_report_".$grupo->id,
+	          "form_id"=>"new_report_form",
+	          "success"=>"Relatório criado com sucesso.",
+	          "reload"=>1,
+	          "data"=>$CI->data
+	          );
+	        $CI->load->view("mostratec/modals/form_modal",$new_report);
+	        // #end //
+		}
+	}
+	
+	if( !function_exists( 'print_edit_report_modal' ) ) 
+	{
+		function print_edit_report_modal($grupo,$report)
+		{
+			$CI =& get_instance();
+			//modal para cadastro de grupos
+			$CI->data = array("report"=>$report);
+	        $edit_report = array(
+	          "formulario"=>"mostratec/forms/edit_report",
+	          "action"=>base_url('admin/grupos/reports/editar/'.$grupo->id.'/'.$report->id),
+	          "title"=>"Editar Relatório ".$report->nome,
+	          "modal_id"=>"edit_report_".$report->id,
+	          "form_id"=>"edit_report_form_".$report->id,
+	          "success"=>"Relatório editado com sucesso.",
+	          "reload"=>1,
+	          "data"=>$CI->data
+	          );
+	        $CI->load->view("mostratec/modals/form_modal",$edit_report);
+	        // #end //
+		}
+	}
+	
 ?>

@@ -55,7 +55,7 @@
                 			</td>
                 			<td>
                     			 <a href='<?= base_url("admin/grupos/alunos/remover/".$grupo->id."/".$aluno->id) ?>'>
-                        			 <button type="button" class="btn btn-warning btn-circle btn-xs confirmation">
+                        			 <button type="button" class="btn btn-danger btn-circle btn-xs confirmation">
                         			      <i class="fa fa-times"></i>
                         			 </button>
                     			 </a>

@@ -21,22 +21,34 @@ class Relatorios_model extends CI_Model
         return $query->result();
     }
     
+    public function select_by_group_with_group()
+    {
+        $this->db->select("r.*");
+        $this->db->from("relatorios r");
+        $this->db->where("r.group",$this->group);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    
     public function insert()
     {
         $this->db->insert("relatorios", $this);
-        return $this->db->insert_id();
+        return $this->db->trans_status();
     }
     
     public function delete()
     {
         $this->db->where("id", $this->id);
         $this->db->delete("relatorios");
+        return $this->db->trans_status();
     }
     
     public function load_by_id()
     {
-    	$sql = "select * from relatorios where id=?";
-    	$query = $this->db->query($sql, array($this->id_usuario));
+        $this->db->select("*");
+    	$this->db->from("relatorios");
+    	$this->db->where("id", $this->id);
+    	$query = $this->db->get();
         return $query->row(0, "Relatorios_model");
     }
     

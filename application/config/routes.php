@@ -105,8 +105,10 @@ $route['admin/grupos/alunos/remover/(:num)/(:num)'] = 'admin/remove_user_group/$
 $route['admin/grupos/posts/ativar/(:num)/(:num)'] = 'admin/activate_post/$1/$2';
 $route['admin/grupos/posts/desativar/(:num)/(:num)'] = 'admin/deactivate_post/$1/$2';
 $route['admin/grupos/posts/deletar/(:num)/(:num)'] = 'admin/delete_post/$1/$2';
-
-
+//groups -> gerenciamento -> reports
+$route['admin/grupos/reports/adicionar/(:num)'] = 'admin/add_report/$1';
+$route['admin/grupos/reports/editar/(:num)/(:num)'] = 'admin/edit_report/$1/$2';
+$route['admin/grupos/reports/deletar/(:num)/(:num)'] = 'admin/delete_report/$1/$2';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

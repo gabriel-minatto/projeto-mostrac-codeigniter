@@ -38,7 +38,14 @@
                         swal({
                             title: "Concluído,",
                             text: "<?= $success ?>",
-                            type: "success" });
+                            type: "success" },
+                                function()
+                                {
+                                    <?php if(isset($reload) && $reload==1){ ?>
+                                        location.reload();
+                                    <?php } ?>
+                                });
+                                
                         $("#<?= $form_id ?>").trigger("reset");
                         $(".close_modal").trigger("click");
                     }
