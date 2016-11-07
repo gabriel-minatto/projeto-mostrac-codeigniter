@@ -109,6 +109,8 @@ $route['admin/grupos/posts/deletar/(:num)/(:num)'] = 'admin/delete_post/$1/$2';
 $route['admin/grupos/reports/adicionar/(:num)'] = 'admin/add_report/$1';
 $route['admin/grupos/reports/editar/(:num)/(:num)'] = 'admin/edit_report/$1/$2';
 $route['admin/grupos/reports/deletar/(:num)/(:num)'] = 'admin/delete_report/$1/$2';
+//groups -> gerenciamento -> moderators
+$route['admin/grupos/moderadores/deletar/(:num)'] = 'admin/delete_group_moderator/$1';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

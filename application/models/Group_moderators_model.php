@@ -21,12 +21,14 @@ class Group_moderators_model extends CI_Model
     {
         $this->db->where("id", $this->id);
         $this->db->delete("group_moderators");
+        return $this->db->trans_status();
     }
     
     public function load_by_id()
     {
-    	$sql = "select * from group_moderators where id=?";
-    	$query = $this->db->query($sql, array($this->id));
+    	$this->db->from("group_moderators");
+    	$this->db->where("id",$this->id);
+    	$query = $this->db->get();
         return $query->row(0, "Group_moderators_model");
     }
     
@@ -87,6 +89,16 @@ class Group_moderators_model extends CI_Model
 	            }
 	       }
 		}
+		$query = $this->db->get();
+		return $query->result();
+	}
+	
+	public function select_group_moderators()
+	{
+		$this->db->select("gm.id as moderation_id,u.*");
+		$this->db->from("group_moderators gm");
+		$this->db->join("users u","u.id = gm.user");
+		$this->db->where("gm.group",$this->group);
 		$query = $this->db->get();
 		return $query->result();
 	}

@@ -196,7 +196,8 @@ class Admin extends CI_Controller
         $this->load->model("Groups_model","group");
         $this->load->model("Posts_model","post");
         $this->load->model("Relatorios_model","relatorio");
-        $this->relatorio->group = $this->post->group = $this->group->id = $this->group_user->group = $id;
+        $this->load->model("Group_moderators_model","group_moderator");
+        $this->group_moderator->group = $this->relatorio->group = $this->post->group = $this->group->id = $this->group_user->group = $id;
         if(!empty($_POST["student_filter"]))
         {
             $student_filter = array(
@@ -205,6 +206,7 @@ class Admin extends CI_Controller
                 's.nome' => $this->input->post('escola', TRUE)
                 );
         }
+        $this->data["moderators"] = $this->group_moderator->select_group_moderators();
         $this->data["reports"] = $this->relatorio->select_by_group_with_group();
         $this->data["posts"] = $this->post->select_manage_group_posts();
         $this->data["alunos"] = $this->group_user->select_users_by_group((isset($student_filter) ? $student_filter : null ));
@@ -373,6 +375,27 @@ class Admin extends CI_Controller
         $this->session->set_flashdata("error","Algo deu errado durante a operação, tente novamente mais tarde.");
         $this->session->set_flashdata("selected_tab","relatorios");
         redirect(base_url('admin/grupos/gerenciar/'.$grupo), 'refresh');
+    }
+    
+    public function delete_group_moderator($id)
+    {
+        if(!is_admin())
+        {
+            $this->session->set_flashdata("error","Você não tem permissão para acessar essa área do site!");
+            redirect(base_url(), 'refresh');
+        }
+        $this->load->model("Group_moderators_model","group_moderator");
+        $this->group_moderator->id = $id;
+        $this->group_moderator = $this->group_moderator->load_by_id();
+        if($this->group_moderator->delete())
+        {
+            $this->session->set_flashdata("success","Moderador deletado com sucesso.");
+            $this->session->set_flashdata("selected_tab","moderadores");
+            redirect(base_url('admin/grupos/gerenciar/'.$this->group_moderator->group), 'refresh');
+        }
+        $this->session->set_flashdata("error","Algo deu errado durante a operação, tente novamente mais tarde.");
+        $this->session->set_flashdata("selected_tab","moderadores");
+        redirect(base_url('admin/grupos/gerenciar/'.$this->group_moderator->group), 'refresh');
     }
     
 }   

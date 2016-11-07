@@ -70,7 +70,7 @@
                                 
                                 <?php $this->load->view("mostratec/admin/includes/group_manage/reports",array('reports'=>$reports,'group'=>$grupo)); ?>
                                 
-                                <?php $this->load->view("mostratec/admin/includes/group_manage/moderators",array('alunos'=>$alunos,'group'=>$grupo)); ?>
+                                <?php $this->load->view("mostratec/admin/includes/group_manage/moderators",array('alunos'=>$moderators,'group'=>$grupo)); ?>
                                 
                             </div>
                         </div>
