@@ -191,6 +191,28 @@
 		}
 	}
 	
+	if( !function_exists( 'print_add_moderator_to_group_modal' ) ) 
+	{
+		function print_add_moderator_to_group_modal($grupo,$form,$refresh)
+		{
+			$CI =& get_instance();
+			$CI->data = array();
+			//modal para cadastro de moderadores nos grupos
+			$CI->load->model("Group_moderators_model","group_moderator");
+			$CI->group_moderator->group = $grupo->id;
+			$CI->data["moderators"] = $CI->group_moderator->select_all_other_active($form);
+	        $add_moderator = array(
+	          "action"=>base_url('admin/grupos/moderadores/adicionar/'.$grupo->id),
+	          "success"=>"Moderador adicionado com sucesso, clique em ok para recarregar a página.",
+	          "refresh"=>$refresh,
+	          "grupo"=>$grupo,
+	          "data"=>$CI->data
+	          );
+	        $CI->load->view("mostratec/forms/add_moderator_to_group",$add_moderator);
+	        // #end //
+		}
+	}
+	
 	if( !function_exists( 'print_add_report_modal' ) ) 
 	{
 		function print_add_report_modal($grupo)

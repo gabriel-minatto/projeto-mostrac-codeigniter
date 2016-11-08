@@ -201,12 +201,19 @@ class Admin extends CI_Controller
         if(!empty($_POST["student_filter"]))
         {
             $student_filter = array(
-                'u.nome' => $this->input->post('name', TRUE),
-                'u.email' => $this->input->post('email', TRUE),
-                's.nome' => $this->input->post('escola', TRUE)
+                'u.nome' => $this->input->post('student_name', TRUE),
+                'u.email' => $this->input->post('student_email', TRUE)
                 );
         }
-        $this->data["moderators"] = $this->group_moderator->select_group_moderators();
+        if(!empty($_POST["moderator_filter"]))
+        {
+            $moderator_filter = array(
+                'u.nome' => $this->input->post('moderator_name', TRUE),
+                'u.email' => $this->input->post('moderator_email', TRUE)
+                );
+                $this->session->set_flashdata("selected_tab","moderadores");
+        }
+        $this->data["moderators"] = $this->group_moderator->select_group_moderators((isset($moderator_filter) ? $moderator_filter : null ));
         $this->data["reports"] = $this->relatorio->select_by_group_with_group();
         $this->data["posts"] = $this->post->select_manage_group_posts();
         $this->data["alunos"] = $this->group_user->select_users_by_group((isset($student_filter) ? $student_filter : null ));
@@ -226,6 +233,21 @@ class Admin extends CI_Controller
         }
         $this->group_user->user = $this->input->post("aluno",true);
         echo $this->group_user->insert();
+    }
+    
+    public function add_moderator_group()
+    {
+        $this->load->model("Group_moderators_model","group_moderator");
+        $this->group_moderator->group = $this->input->post("grupo",true);
+        
+        if(!is_moderator($this->group_moderator->group))
+        {
+            $this->session->set_flashdata("error","Você não tem permissão para acessar essa área do site!");
+            redirect(base_url(), 'refresh');
+        }
+        $this->session->set_flashdata("selected_tab","moderadores");
+        $this->group_moderator->user = $this->input->post("moderador",true);
+        echo $this->group_moderator->insert();
     }
     
     public function remove_user_group($grupo,$user)
@@ -250,9 +272,38 @@ class Admin extends CI_Controller
         $this->load->model("Groups_model","group");
         $this->group->id = $this->input->post("grupo",TRUE);
         $this->group = $this->group->load_by_id();
+        $student_form = json_decode($this->input->post("student_form"));
+        if($student_form)
+        {
+            $student_filter = array(
+                "u.nome" => $student_form[0]->value,
+                "u.email" => $student_form[1]->value
+                );
+            $student_form = $student_filter;
+        }
         print_add_student_to_group_modal(
             $this->group, 
-            json_decode($this->input->post("form")),
+            $student_form,
+            $this->input->post("refresh"));
+    }
+    
+    public function load_add_moderator_to_group()
+    {
+        $this->load->model("Groups_model","group");
+        $this->group->id = $this->input->post("grupo",TRUE);
+        $this->group = $this->group->load_by_id();
+        $moderator_form = json_decode($this->input->post("moderator_form"));
+        if($moderator_form)
+        {
+            $moderator_filter = array(
+                "u.nome" => $moderator_form[0]->value,
+                "u.email" => $moderator_form[1]->value
+                );
+            $moderator_form = $moderator_filter;
+        }
+        print_add_moderator_to_group_modal(
+            $this->group, 
+            $moderator_form,
             $this->input->post("refresh"));
     }
     
@@ -273,6 +324,24 @@ class Admin extends CI_Controller
         }
         $this->session->set_flashdata("error","Algo deu errado durante a operação, tente novamente mais tarde.");
         $this->session->set_flashdata("selected_tab","posts");
+        redirect(base_url('admin/grupos/gerenciar/'.$grupo), 'refresh');
+    }
+    
+    public function deactivate_group($grupo)
+    {
+        if(!is_moderator($grupo))
+        {
+            $this->session->set_flashdata("error","Você não tem permissão para acessar essa área do site!");
+            redirect(base_url(), 'refresh');
+        }
+        $this->load->model("Groups_model","group");
+        $this->group->id = $grupo;
+        if($this->group->deactivate_by_id())
+        {
+            $this->session->set_flashdata("success","Grupo desativado com sucesso.");
+            redirect(base_url('admin/grupos/meus-grupos'), 'refresh');
+        }
+        $this->session->set_flashdata("error","Algo deu errado durante a operação, tente novamente mais tarde.");
         redirect(base_url('admin/grupos/gerenciar/'.$grupo), 'refresh');
     }
     

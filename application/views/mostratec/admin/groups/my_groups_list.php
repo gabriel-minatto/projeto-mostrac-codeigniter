@@ -9,11 +9,11 @@
             <ol class="breadcrumb">
                     <li>
                         <a href="<?= base_url('admin/painel') ?>">
-                        <i class="fa fa-dashboard"></i> Painel de Controle
+                        Painel de Controle
                         </a>
                     </li>
                     <li class="active">
-                        <i class="fa fa-dashboard"></i>Meus Grupos
+                        Meus Grupos
                     </li>
             </ol>
             

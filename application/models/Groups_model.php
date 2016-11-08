@@ -7,6 +7,7 @@ class Groups_model extends CI_Model
     var $nome;
     var $school;
     var $categoria;
+    var $active;
     
     function __construct()
     {

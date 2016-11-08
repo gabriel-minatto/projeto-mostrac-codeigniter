@@ -10,13 +10,13 @@
                 <form class="form-horizontal" method="post">
                         <!-- Text input-->
                         <div class="form-group">
-                          <label for="name">Nome:</label>
-                          <input id="name" name="name" type="text" placeholder="nome do aluno" class="form-control input-md">
+                          <label for="student_name">Nome:</label>
+                          <input id="student_name" name="student_name" type="text" placeholder="nome do aluno" class="form-control input-md">
                         </div>
                         <!-- Text input-->
                         <div class="form-group">
-                          <label for="email">Email:</label>
-                          <input id="email" name="email" type="text" placeholder="email do aluno" class="form-control input-md">
+                          <label for="student_email">Email:</label>
+                          <input id="student_email" name="student_email" type="text" placeholder="email do aluno" class="form-control input-md">
                         </div>
                         <input type="hidden" name="student_filter" value="active">
                         <div class="form-group">
@@ -50,7 +50,7 @@
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
-                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse_<?= $aluno->id ?>"><?= $aluno->aluno ?></a>
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse_student_<?= $aluno->id ?>"><?= $aluno->aluno ?></a>
                                                 <a href='<?= base_url("admin/grupos/alunos/remover/".$grupo->id."/".$aluno->id) ?>'>
                                         			 <button type="button" class="btn btn-danger btn-circle btn-xs confirmation pull-right">
                                         			      <i class="fa fa-times"></i>
@@ -58,7 +58,7 @@
                                     			 </a>
                                             </h4>
                                         </div>
-                                        <div id="collapse_<?= $aluno->id ?>" class="panel-collapse collapse">
+                                        <div id="collapse_student_<?= $aluno->id ?>" class="panel-collapse collapse">
                                             <div class="panel-body">
                                                 <?= $aluno->email ?>
                                             </div>

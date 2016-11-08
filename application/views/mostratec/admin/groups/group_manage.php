@@ -9,16 +9,16 @@
             <ol class="breadcrumb">
                     <li>
                         <a href="<?= base_url('admin/painel') ?>">
-                            <i class="fa fa-dashboard"></i> Painel de Controle
+                            Painel de Controle
                         </a>
                     </li>
                     <li>
                         <a href="<?= base_url('admin/grupos/meus-grupos') ?>">
-                            <i class="fa fa-dashboard"></i>Meus Grupos
+                            Meus Grupos
                         </a>
                     </li>
                     <li class="active">
-                        <i class="fa fa-dashboard"></i>Gerenciamento
+                        Gerenciamento
                     </li>
             </ol>
         </div>
@@ -28,7 +28,25 @@
         <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <?= $grupo->nome ?>
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <?= $grupo->nome ?>
+                                    <?php if(is_moderator($grupo->id)){ ?>
+                                        <!--<div >-->
+                                            <a href='<?= base_url("admin/grupos/deletar/".$grupo->id) ?>'>
+                                    			 <button type="button" class="btn btn-danger btn-circle btn-xs confirmation pull-right" style="margin-left: 5px; margin-top: -10px;">
+                                    			      <i class="fa fa-times"></i>
+                                    			 </button>
+                                			 </a>
+                                            <a href='<?= base_url("admin/grupos/editar/".$grupo->id) ?>'>
+                                    			<button type="button" class="btn btn-info pull-right" style="margin-top: -10px;">
+                                        		    Desativar
+                                        		</button>
+                                			 </a>
+                            			 <!--</div>-->
+                        			 <?php } ?>
+                        		</h4>
+                            </div>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -103,13 +121,61 @@
   </div>
 </div>
 
-<?php print_add_report_modal($grupo);
+<div id="add_moderator_to_group_modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add_moderator_to_group_label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="add_moderator_to_group_label">Adicionar Moderador ao grupo <?= $grupo->nome ?></h4>
+      </div>
+      <div id="add_moderator_to_group_modal_body" class="modal-body">
+          <div class="container-fluid bd-example-row">
+            </div>
+      </div>
+      <div class="modal-footer">
+        <div class="form-group">
+            <button class="btn btn-secondary close_modal"  data-dismiss="modal">Fechar</button>
+            <button id="add_moderator_to_group_submit" type="submit" name="submit" class="btn btn-primary">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<?php 
+
+print_add_report_modal($grupo);
 
 foreach($reports as $report)
 {
     print_edit_report_modal($grupo,$report);
 }
+
 ?>
+
+<script>
+
+    $(".close_modal").click(function()
+    {
+        $("#add_moderator_to_group_modal_body div,#add_student_to_group_modal_body div").empty();
+    });
+
+    //load_add_moderator_to_group
+    $("#new_moderator_group").click(
+        function()
+        {
+            $("#moderator_to_group_filter,#moderator_field").block({message:"Processando, aguarde..."});
+            $(".modal-footer button").block({message:""});
+            dataform = {grupo:"<?= $grupo->id ?>"};
+            $.post("<?= base_url('admin/grupos/moderadores/carregar-add-form') ?>",dataform)
+            .done(
+                function(form)
+                {
+                    $("#moderator_to_group_filter,#moderator_field, button").unblock();
+                    $("#add_moderator_to_group_modal_body div").html(form);
+                });
+        });
+</script>
 
 <script>
     //load_add_student_to_group

@@ -29,7 +29,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Mostratec - Painel de Controle</a>
+                <a class="navbar-brand" href="<?= base_url('admin') ?>">Mostratec - Painel de Controle</a>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
@@ -56,10 +56,10 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li class="active">
-                        <a href="<?= base_url('admin/painel')?>"><i class="fa fa-fw fa-dashboard"></i>Painel de Controle</a>
+                        <a href="<?= base_url('admin/painel')?>">Painel de Controle</a>
                     </li>
                     <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#grupos"><i class="fa fa-fw fa-arrows-v"></i> Grupos <i class="fa fa-fw fa-caret-down"></i></a>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#grupos">Grupos <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="grupos" class="collapse">
                             <li>
                                 <a data-toggle="modal" data-target="#new_group">
@@ -69,25 +69,31 @@
                             <li>
                                 <a href="<?= base_url('admin/grupos/meus-grupos') ?>">Meus Grupos</a>
                             </li>
-                            <li>
-                                <a href="<?= base_url('admin/grupos/todos') ?>">Ver Todos</a>
-                            </li>
+                            <?php if(is_admin()){ ?>
+                                <li>
+                                    <a href="<?= base_url('admin/grupos/todos') ?>">Ver Todos</a>
+                                </li>
+                            <?php } ?>
                         </ul>
                     </li>
                     <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#schools"><i class="fa fa-fw fa-arrows-v"></i> Escolas <i class="fa fa-fw fa-caret-down"></i></a>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#schools">Escolas <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="schools" class="collapse">
-                            <li>
-                                <a data-toggle="modal" data-target="#new_school">
-                                    Cadastrar Escola
-                                </a>
-                            </li>
+                            <?php if(is_admin()){ ?>
+                                <li>
+                                    <a data-toggle="modal" data-target="#new_school">
+                                        Cadastrar Escola
+                                    </a>
+                                </li>
+                            <?php } ?>
                             <li>
                                 <a href="<?= base_url('admin/escolas/minhas-escolas') ?>">Minhas Escolas</a>
                             </li>
-                            <li>
-                                <a href="<?= base_url('admin/escolas/todas') ?>">Ver Todas</a>
-                            </li>
+                            <?php if(is_admin()){ ?>
+                                <li>
+                                    <a href="<?= base_url('admin/escolas/todas') ?>">Ver Todas</a>
+                                </li>
+                            <?php } ?>
                         </ul>
                     </li>
                     

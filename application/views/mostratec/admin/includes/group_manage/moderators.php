@@ -9,22 +9,17 @@
                 <form class="form-horizontal" method="post">
                         <!-- Text input-->
                         <div class="form-group">
-                            <div class='col-lg-12'>
-                          <label for="name">Nome:</label>
-                          <input id="name" name="name" type="text" placeholder="nome do aluno" class="form-control input-md">
-                            </div>
+                          <label for="moderator_name">Nome:</label>
+                          <input id="moderator_name" name="moderator_name" type="text" placeholder="nome do moderador" class="form-control input-md">
                         </div>
                         <!-- Text input-->
                         <div class="form-group">
-                            <div class='col-lg-12'>
-                              <label for="email">Email:</label>
-                              <input id="email" name="email" type="text" placeholder="email do aluno" class="form-control input-md">
-                            </div>
+                          <label for="moderator_email">Email:</label>
+                          <input id="moderator_email" name="moderator_email" type="text" placeholder="email do moderador" class="form-control input-md">
                         </div>
+                        <input type="hidden" name="moderator_filter" value="active">
                         <div class="form-group">
-                            <div class='col-lg-12'>
-                                <button class="btn btn-default">Filtrar</button>
-                            </div>
+                            <button class="btn btn-default">Filtrar</button>
                         </div>
                 </form>
             </div>
@@ -38,9 +33,11 @@
                     <b><?= $grupo->nome ?></b>
                     <div class="pull-right action-buttons">
                         <div class="btn-group pull-right">
-                            <button id="" type="button" class="btn btn-success btn-circle btn-xs">
-                                <i class="fa fa-plus"></i>
-                            </button>
+                            <a data-toggle="modal" data-target="#add_moderator_to_group_modal">
+                                <button id="new_moderator_group" type="button" class="btn btn-success btn-circle btn-xs">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -51,15 +48,17 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse_<?= $moderator->moderation_id ?>"><?= $moderator->nome ?></a>
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse_moderator_<?= $moderator->moderation_id ?>"><?= $moderator->nome ?></a>
+                                            <?php if(is_admin()){ ?>
                                             <a href="<?= base_url('admin/grupos/moderadores/deletar/'.$moderator->moderation_id) ?>">
                                     			 <button type="button" class="btn btn-danger btn-circle btn-xs confirmation pull-right">
                                     			      <i class="fa fa-times"></i>
                                     			 </button>
                                 			 </a>
+                                			 <?php } ?>
                                         </h4>
                                     </div>
-                                    <div id="collapse_<?= $moderator->moderation_id ?>" class="panel-collapse collapse">
+                                    <div id="collapse_moderator_<?= $moderator->moderation_id ?>" class="panel-collapse collapse">
                                         <div class="panel-body">
                                             <?= $moderator->email ?>
                                         </div>

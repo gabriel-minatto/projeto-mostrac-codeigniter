@@ -93,15 +93,53 @@ class Group_moderators_model extends CI_Model
 		return $query->result();
 	}
 	
-	public function select_group_moderators()
+	public function select_group_moderators($filter)
 	{
 		$this->db->select("gm.id as moderation_id,u.*");
 		$this->db->from("group_moderators gm");
 		$this->db->join("users u","u.id = gm.user");
 		$this->db->where("gm.group",$this->group);
+		if($filter)
+		{
+	       foreach($filter as $key=>$value)
+	       {
+	            if(!empty($value))
+	            {
+	                $this->db->like($key, $value);
+	            }
+	       }
+		}
+		$this->db->order_by("u.nome");
 		$query = $this->db->get();
 		return $query->result();
 	}
+	
+	public function select_all_other_active($filter) //seleciona todos os q estiverem ativos mas n estao no grupo
+    {
+        $this->db->select("u.*,gm.group AS is_on_group");
+        $this->db->from("users u");
+        $this->db->join("group_moderators gm","u.id = gm.user and gm.group=$this->group","left outer");
+        $this->db->where("u.active", 1);
+        $this->db->where("u.type !=", 'student');
+        if($filter)
+		{
+	       foreach($filter as $key=>$value)
+	       {
+	            if(!empty($value))
+	            {
+	                $this->db->like($key, $value);
+	            }
+	       }
+		}
+		$this->db->order_by("u.nome","asc");
+        $query = $this->db->get();
+        if($query->num_rows() == 0)
+        {
+            echo 0;
+            exit;
+        }
+        return $query->result();
+    }
 	
 }
 

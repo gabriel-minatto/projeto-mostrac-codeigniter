@@ -96,6 +96,8 @@ $route['admin/grupos/adicionar'] = 'admin/add_group';
 $route['admin/grupos/deletar/(:num)'] = 'admin/delete_group/$1';
 
 //groups -> gerenciamento
+$route['admin/grupos/desativar/(:num)'] = 'admin/deactivate_group/$1';
+$route['admin/grupos/deletar/(:num)'] = 'admin/delete_group/$1';
 $route['admin/grupos/gerenciar/(:num)'] = 'admin/manage_group/$1';
 //groups -> gerenciamento -> alunos
 $route['admin/grupos/alunos/carregar-add-form'] = 'admin/load_add_student_to_group';
@@ -110,6 +112,8 @@ $route['admin/grupos/reports/adicionar/(:num)'] = 'admin/add_report/$1';
 $route['admin/grupos/reports/editar/(:num)/(:num)'] = 'admin/edit_report/$1/$2';
 $route['admin/grupos/reports/deletar/(:num)/(:num)'] = 'admin/delete_report/$1/$2';
 //groups -> gerenciamento -> moderators
+$route['admin/grupos/moderadores/carregar-add-form'] = 'admin/load_add_moderator_to_group';
+$route['admin/grupos/moderadores/adicionar'] = 'admin/add_moderator_group';
 $route['admin/grupos/moderadores/deletar/(:num)'] = 'admin/delete_group_moderator/$1';
 
 $route['404_override'] = '';

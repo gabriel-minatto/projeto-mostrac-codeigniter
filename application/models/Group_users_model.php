@@ -99,13 +99,14 @@ class Group_users_model extends CI_Model
         $this->db->from("users u");
         $this->db->join("group_users gu","u.id = gu.user and gu.group=$this->group","left outer");
         $this->db->where("u.active", 1);
+        $this->db->where("u.type", 'student');
         if($filter)
 		{
-	       foreach($filter as $value)
+	       foreach($filter as $key=>$value)
 	       {
 	            if(!empty($value))
 	            {
-	                $this->db->like($value->name,$value->value);
+	                $this->db->like($key, $value);
 	            }
 	       }
 		}
