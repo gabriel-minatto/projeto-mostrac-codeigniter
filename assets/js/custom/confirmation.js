@@ -14,14 +14,7 @@ $('.confirmation').click(
             },
             function()
             {
-              swal({
-                  title: "Concluído!",
-                  text: "Deletado com sucesso.",
-                  type:"success"},
-                  function()
-                  {
-                     location=link; 
-                  });
+                location=link;
             });
         });
     
