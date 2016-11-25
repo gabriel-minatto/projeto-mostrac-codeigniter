@@ -33,7 +33,7 @@
                         <small><?= sql_date_to_br($cover->date) ?></small>
                     </h2>
                     <p><?= $cover->description ?></p>
-                    <?php if(!isset($logged) && is_author($cover->id,$cover->group)){ ?>
+                    <?php if(!isset($logged) && is_author($cover->id,$cover->group) && $group->active != 0 && $group->closed != 1){ ?>
                             <a data-toggle="modal" data-target="#edit_group_post_<?= $cover->id ?>" class="btn btn-info btn-lg">Editar</a>
                     <?php } ?>
                     <a href="<?= base_url('grupos/posts/view/'.$cover->id) ?>" class="btn btn-default btn-lg">Leia Mais</a>
@@ -49,14 +49,14 @@
                                 <small><?= sql_date_to_br($post->date) ?></small>
                             </h2>
                             <p><?= $post->description ?></p>
-                                <?php if(!isset($logged) && is_author($post->id,$post->group)){ ?>
+                                <?php if(!isset($logged) && is_author($post->id,$post->group) && $group->active != 0 && $group->closed != 1){ ?>
                                     <a data-toggle="modal" data-target="#edit_group_post_<?= $post->id ?>" class="btn btn-info btn-lg">Editar</a>
                                 <?php } ?>
                                 <a href="<?= base_url('grupos/posts/view/'.$post->id) ?>" class="btn btn-default btn-lg">Leia Mais</a>
                                 <hr>
                         </div>
                 <?php } 
-                 }else{ ?>
+                 }else if(!isset($cover) && empty($cover)){ ?>
                  Este grupo ainda não possui postagens ;(
                  <?php } ?>
             </div>

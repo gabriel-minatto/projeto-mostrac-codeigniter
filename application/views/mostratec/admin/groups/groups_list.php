@@ -45,7 +45,7 @@
                     </form>
             </div>
             </div>
-        <div class="col-lg-6 col-lg-offset-1">
+        <div class="col-lg-7">
             <div style="overflow: auto; max-height: 400px;">
                 <table class="table table-bordered table-striped table-hover table-responsive">
                 	<thead>
@@ -58,6 +58,12 @@
                 			</th>
                 			<th>
                 				Categoria
+                			</th>
+            				<th>
+                				Ativo
+                			</th>
+                			<th>
+                				Status
                 			</th>
                 			<th colspan='2'>
                 			    &nbsp;
@@ -75,6 +81,12 @@
                 			</td>
                 			<td>
                 				<?= $grupo->categoria ?>
+                			</td>
+                			<td>
+                				<?= (($grupo->active) ? "Sim" : "Não") ?>
+                			</td>
+                			<td>
+                				<?= (($grupo->closed) ? "Finalizado" : "Em Andamento") ?>
                 			</td>
                 		    <td>
                 			    <a href='<?= base_url("admin/grupos/gerenciar/".$grupo->id) ?>'>

@@ -48,12 +48,14 @@
                                                         <a href="<?= base_url('grupos/posts/'.$grupo->id) ?>">
                                                             <button class="btn btn-info btn-sm">Posts</button>
                                                         </a>
-                                                        <a href="<?= base_url('grupos/relatorios/'.$grupo->id) ?>">
-                                                            <button class="btn btn-success btn-sm">Relatórios</button>
-                                                        </a>
-                                                        <a data-toggle="modal" data-target="<?= '#new_group_post_'.$grupo->id ?>">
-                                                            <button class="btn btn-default btn-sm">Novo Post</button>
-                                                        </a>
+                                                        <?php if($grupo->active != 0 && $grupo->closed != 1){ ?>
+                                                            <a href="<?= base_url('grupos/relatorios/'.$grupo->id) ?>">
+                                                                <button class="btn btn-success btn-sm">Relatórios</button>
+                                                            </a>
+                                                            <a data-toggle="modal" data-target="<?= '#new_group_post_'.$grupo->id ?>">
+                                                                <button class="btn btn-default btn-sm">Novo Post</button>
+                                                            </a>
+                                                        <?php } ?>
                                                  <!--</div>-->
                                             </div>
                                         </div>
@@ -95,7 +97,7 @@
                                                         <a href="<?= base_url('grupos/posts/'.$grupo->id) ?>">
                                                             <button class="btn btn-info btn-sm">Posts</button>
                                                         </a>
-                                                        <?php if(is_moderator($grupo->id) || is_admin()){ ?>
+                                                        <?php if(is_moderator($grupo->id) && $grupo->active != 0 && $grupo->closed != 1){ ?>
                                                         <a href="<?= base_url('grupos/relatorios/'.$grupo->id) ?>">
                                                             <button class="btn btn-success btn-sm">Relatórios</button>
                                                         </a>

@@ -26,74 +26,103 @@
 <!-- /.row -->
     <div class="row">
         <div class="col-lg-12">
-                    <div class="panel panel-default">
+			 <br>
+			 <div class="row">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
                         <div class="panel-heading">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <?= $grupo->nome ?>
-                                    <?php if(is_moderator($grupo->id)){ ?>
-                                        <!--<div >-->
-                                            <a href='<?= base_url("admin/grupos/deletar/".$grupo->id) ?>'>
-                                    			 <button type="button" class="btn btn-danger btn-circle btn-xs confirmation pull-right" style="margin-left: 5px; margin-top: -10px;">
-                                    			      <i class="fa fa-times"></i>
-                                    			 </button>
-                                			 </a>
-                                            <a href='<?= base_url("admin/grupos/editar/".$grupo->id) ?>'>
-                                    			<button type="button" class="btn btn-info pull-right" style="margin-top: -10px;">
-                                        		    Desativar
-                                        		</button>
-                                			 </a>
-                            			 <!--</div>-->
-                        			 <?php } ?>
-                        		</h4>
-                            </div>
+                            <h4 class="panel-title">
+                                <?= $grupo->nome ?>
+                    		</h4>
                         </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-tabs">
-                                
-                                <?php if(empty($this->session->flashdata("selected_tab"))){  ?>
-                                        <li class="active"><a href="#alunos" data-toggle="tab">Alunos</a></li>
-                                <?php }else{ ?>
-                                        <li><a href="#alunos" data-toggle="tab">Alunos</a></li>
-                                <?php } ?>
-                                
-                                <?php if($this->session->flashdata("selected_tab") == "posts"){  ?>
-                                        <li class="active"><a href="#posts" data-toggle="tab">Posts</a></li>
-                                <?php }else{ ?>
-                                        <li><a href="#posts" data-toggle="tab">Posts</a></li>
-                                <?php } ?>
-                                
-                                <?php if($this->session->flashdata("selected_tab") == "relatorios"){  ?>
-                                        <li class="active"><a href="#relatorios" data-toggle="tab">Relatórios</a></li>
-                                <?php }else{ ?>
-                                        <li><a href="#relatorios" data-toggle="tab">Relatórios</a></li>
-                                <?php } ?>
-                                
-                                <?php if($this->session->flashdata("selected_tab") == "moderadores"){  ?>
-                                        <li class="active"><a href="#moderadores" data-toggle="tab">Moderadores</a></li>
-                                <?php }else{ ?>
-                                        <li><a href="#moderadores" data-toggle="tab">Moderadores</a></li>
-                                <?php } ?>
-                                
-                            </ul><!-- ativa a aba de acordo com o flashdata selected tab ou deixa alunos por default -->
-
-                            <!-- tab de alunos -->
-                            <div class="tab-content">
-                                
-                                <?php $this->load->view("mostratec/admin/includes/group_manage/student",array('alunos'=>$alunos,'group'=>$grupo)); ?>
-                                
-                                <?php $this->load->view("mostratec/admin/includes/group_manage/posts",array('posts'=>$posts,'group'=>$grupo)); ?>
-                                
-                                <?php $this->load->view("mostratec/admin/includes/group_manage/reports",array('reports'=>$reports,'group'=>$grupo)); ?>
-                                
-                                <?php $this->load->view("mostratec/admin/includes/group_manage/moderators",array('alunos'=>$moderators,'group'=>$grupo)); ?>
-                                
-                            </div>
-                        </div>
-                        <!-- /.panel-body -->
                     </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-3 col-lg-offset-9">
+                                <?php if(is_moderator($grupo->id)){ ?>
+                                    <?php if($grupo->closed != 1){ ?>
+                                        <a href='<?= base_url("admin/grupos/finalizar/".$grupo->id) ?>'>
+                                			<button type="button" class="btn btn-info confirmation">
+                                    		    Finalizar
+                                    		</button>
+                            			</a>
+                        			<?php }else if(is_superadmin() && $grupo->closed != 0){ ?>
+                                        <a href='<?= base_url("admin/grupos/reabrir/".$grupo->id) ?>'>
+                                			<button type="button" class="btn btn-info confirmation">
+                                    		    Reabrir
+                                    		</button>
+                        			    </a>
+                        			 <?php } ?>
+                        			 <?php if(is_admin($grupo->id)){
+                                                if($grupo->active != 0){
+                        			 ?>
+                            			 <a href='<?= base_url("admin/grupos/desativar/".$grupo->id) ?>'>
+                                			<button type="button" class="btn btn-warning confirmation">
+                                    		    Desativar
+                                    		</button>
+                            			 </a>
+                        			 <?php }else{ ?>
+                        			     <a href='<?= base_url("admin/grupos/ativar/".$grupo->id) ?>'>
+                                			<button type="button" class="btn btn-success confirmation">
+                                    		    Ativar
+                                    		</button>
+                            			 </a>
+                        			 <?php } } ?>
+                        			 <a href='<?= base_url("admin/grupos/deletar/".$grupo->id) ?>'>
+                            			 <button type="button" class="btn btn-danger btn-circle btn-xs confirmation">
+                            			      <i class="fa fa-times"></i>
+                            			 </button>
+                        			 </a>
+                        			 <!--</div>-->
+                    			 <?php } ?>
+                			 </div>
+        			     </div>
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs">
+                            
+                            <?php if(empty($this->session->flashdata("selected_tab"))){  ?>
+                                    <li class="active"><a href="#alunos" data-toggle="tab">Alunos</a></li>
+                            <?php }else{ ?>
+                                    <li><a href="#alunos" data-toggle="tab">Alunos</a></li>
+                            <?php } ?>
+                            
+                            <?php if($this->session->flashdata("selected_tab") == "posts"){  ?>
+                                    <li class="active"><a href="#posts" data-toggle="tab">Posts</a></li>
+                            <?php }else{ ?>
+                                    <li><a href="#posts" data-toggle="tab">Posts</a></li>
+                            <?php } ?>
+                            
+                            <?php if($this->session->flashdata("selected_tab") == "relatorios"){  ?>
+                                    <li class="active"><a href="#relatorios" data-toggle="tab">Relatórios</a></li>
+                            <?php }else{ ?>
+                                    <li><a href="#relatorios" data-toggle="tab">Relatórios</a></li>
+                            <?php } ?>
+                            
+                            <?php if($this->session->flashdata("selected_tab") == "moderadores"){  ?>
+                                    <li class="active"><a href="#moderadores" data-toggle="tab">Moderadores</a></li>
+                            <?php }else{ ?>
+                                    <li><a href="#moderadores" data-toggle="tab">Moderadores</a></li>
+                            <?php } ?>
+                            
+                        </ul><!-- ativa a aba de acordo com o flashdata selected tab ou deixa alunos por default -->
+
+                        <!-- tab de alunos -->
+                        <div class="tab-content">
+                            
+                            <?php $this->load->view("mostratec/admin/includes/group_manage/student",array('alunos'=>$alunos,'group'=>$grupo)); ?>
+                            
+                            <?php $this->load->view("mostratec/admin/includes/group_manage/posts",array('posts'=>$posts,'group'=>$grupo)); ?>
+                            
+                            <?php $this->load->view("mostratec/admin/includes/group_manage/reports",array('reports'=>$reports,'group'=>$grupo)); ?>
+                            
+                            <?php $this->load->view("mostratec/admin/includes/group_manage/moderators",array('alunos'=>$moderators,'group'=>$grupo)); ?>
+                            
+                        </div>
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+            </div>
                     <!-- /.panel -->
                 </div>
     </div>

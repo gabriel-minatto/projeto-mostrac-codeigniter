@@ -43,6 +43,9 @@
                                                             <div class="col-lg-9">
                                                               <?= $relatorio->content ?>
                                                              </div>
+                                                             <div class="col-lg-2">
+                                                                 <button class="btn btn-info">Discussão</button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

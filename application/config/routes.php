@@ -96,9 +96,11 @@ $route['admin/grupos/adicionar'] = 'admin/add_group';
 $route['admin/grupos/deletar/(:num)'] = 'admin/delete_group/$1';
 
 //groups -> gerenciamento
+$route['admin/grupos/ativar/(:num)'] = 'admin/activate_group/$1';
 $route['admin/grupos/desativar/(:num)'] = 'admin/deactivate_group/$1';
 $route['admin/grupos/deletar/(:num)'] = 'admin/delete_group/$1';
 $route['admin/grupos/gerenciar/(:num)'] = 'admin/manage_group/$1';
+$route['admin/grupos/finalizar/(:num)'] = 'admin/finish_group/$1';
 //groups -> gerenciamento -> alunos
 $route['admin/grupos/alunos/carregar-add-form'] = 'admin/load_add_student_to_group';
 $route['admin/grupos/alunos/adicionar'] = 'admin/add_user_group';

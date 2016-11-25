@@ -59,6 +59,12 @@
                 			<th>
                 				Categoria
                 			</th>
+                			<th>
+                				Ativo
+                			</th>
+                			<th>
+                				Status
+                			</th>
                 			<th colspan='2'>
                 			    &nbsp;
                 			</th>
@@ -75,6 +81,12 @@
                 			</td>
                 			<td>
                 				<?= $grupo->categoria ?>
+                			</td>
+                			<td>
+                				<?= (($grupo->active) ? "Sim" : "Não") ?>
+                			</td>
+                			<td>
+                				<?= (($grupo->closed) ? "Finalizado" : "Em Andamento") ?>
                 			</td>
                 			<td>
                 			    <a href='<?= base_url("admin/grupos/gerenciar/".$grupo->id) ?>'>

@@ -46,6 +46,7 @@ class Group_moderators_model extends CI_Model
 	   $this->db->join("groups g","gm.group = g.id");
 	   $this->db->join("schools s","g.school = s.id");
 	   $this->db->where("gm.user", $this->user);
+	   $this->db->where("g.closed", 0);
 	   if($filter)
 	   {
 	       foreach($filter as $key=>$value)

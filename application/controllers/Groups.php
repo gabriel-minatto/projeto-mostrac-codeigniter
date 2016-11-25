@@ -88,7 +88,7 @@ class Groups extends CI_Controller
             $this->post->description = $this->input->post('description', TRUE);
             $this->post->content = $this->input->post('content', TRUE);
             $this->post->video = $this->input->post('video', TRUE);
-            $this->post->active = 1;
+            $this->post->active = 0;
             $this->post->group = $grupo;
             $this->post->user = $this->session->user_id;
             $postagem = $this->post->insert_with_image($_FILES['capa']['name']);

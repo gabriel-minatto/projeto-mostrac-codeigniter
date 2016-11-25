@@ -47,6 +47,7 @@ class Group_users_model extends CI_Model
 	    }
 	    else
 	        $this->db->select("g.*");
+        $this->db->where("active", 1);
     	$query = $this->db->get();
 	    return $query->result();   
 	}
