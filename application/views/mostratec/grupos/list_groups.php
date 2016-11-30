@@ -22,6 +22,7 @@
                     <div id="groups">
                         <?php if(isset($my_groups) && !isset($logged)){ ?>
                         <br>
+                            <?php// if(1 == 1){ ?>
                             <div class="panel panel-primary">
                                 <div class="panel-heading">
                                     Meus Grupos
@@ -36,6 +37,7 @@
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">
                                                         <?= $grupo->nome ?>
+                                                            <?= (is_moderator($grupo->id) || is_admin() ? "<p class='btn btn-warning btn-xs' style='float:right;'>Moderador</p>" : "") ?>
                                                     </h4>
                                                 </div>
                                             </a>
@@ -67,6 +69,7 @@
                                 </div>
                                 <!-- .panel-body -->
                             </div>
+                            <?php // }//end meus grupos ?>    
                             <!-- /.panel -->
                         <?php } ?>
                         <hr>

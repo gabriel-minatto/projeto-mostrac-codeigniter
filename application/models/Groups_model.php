@@ -83,6 +83,14 @@ class Groups_model extends CI_Model
 		return $this->db->trans_status();
 	}
 	
+	public function unfinish_group()
+	{
+		$this->db->set('closed', 0);
+		$this->db->where('id',$this->id);
+		$this->db->update('groups');
+		return $this->db->trans_status();
+	}
+	
 	public function activate_by_id()
 	{
 		$this->db->set('active', 1);

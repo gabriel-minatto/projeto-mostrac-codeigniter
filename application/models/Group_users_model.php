@@ -42,8 +42,16 @@ class Group_users_model extends CI_Model
 	    $this->db->from("groups g");
 	    if($this->user)
 	    {
-	        $this->db->select("g.*,gu.id as have_group");
-	        $this->db->join("group_users gu","g.id = gu.group and gu.user=".$this->user,"left outer");
+	        if(!is_teacher())
+	        {
+	            $this->db->select("g.*,gu.id as have_group");
+	            $this->db->join("group_users gu","g.id = gu.group and gu.user=".$this->user,"left outer");
+	        }
+            else
+            {
+                $this->db->select("g.*,gm.id as have_group");
+                $this->db->join("group_moderators gm","g.id = gm.group and gm.user=".$this->user,"left outer");
+            }
 	    }
 	    else
 	        $this->db->select("g.*");

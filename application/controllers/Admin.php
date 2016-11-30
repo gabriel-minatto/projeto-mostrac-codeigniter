@@ -548,4 +548,23 @@ class Admin extends CI_Controller
         $this->session->set_flashdata("error","Algo deu errado durante a operação, tente novamente mais tarde.");
         redirect(base_url('admin/grupos/gerenciar/'.$id), 'refresh');
     }
+    
+    public function unfinish_group($id)
+    {
+        if(!is_superadmin())
+        {
+            $this->session->set_flashdata("error","Você não tem permissão para acessar essa área do site!");
+            redirect(base_url(), 'refresh');
+        }
+        $this->load->model("Groups_model","group");
+        $this->group->id = $id;
+        if($this->group->unfinish_group())
+        {
+            $this->session->set_flashdata("success","Grupo reaberto com sucesso.");
+            redirect(base_url('admin/grupos/gerenciar/'.$grupo), 'refresh');
+        }
+        $this->session->set_flashdata("error","Algo deu errado durante a operação, tente novamente mais tarde.");
+        redirect(base_url('admin/grupos/gerenciar/'.$grupo), 'refresh');
+        
+    }
 }
