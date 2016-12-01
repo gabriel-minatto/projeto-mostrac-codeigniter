@@ -157,6 +157,7 @@ class Admin extends CI_Controller
             $this->group->school = $this->input->post('escola', TRUE);
             $this->group->categoria = $this->input->post('categoria', TRUE);
             $this->group->active = 1;
+            $this->group->closed = 0;
             
             $this->load->model("Group_moderators_model","group_moderator");
             $this->group_moderator->group = $this->group->insert();
