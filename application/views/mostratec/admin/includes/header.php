@@ -96,9 +96,10 @@
                             <?php } ?>
                         </ul>
                     </li>
-                    
                     <li>
-                        <a href="index-rtl.html"><i class="fa fa-fw fa-dashboard"></i> RTL Dashboard</a>
+                        <a data-toggle="modal" data-target="#new_teacher_admin">
+                            Cadastrar Professor/Admin
+                        </a>
                     </li>
                 </ul>
             </div>

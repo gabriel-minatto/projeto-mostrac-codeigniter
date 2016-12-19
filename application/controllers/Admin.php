@@ -69,6 +69,43 @@ class Admin extends CI_Controller
         $this->load->view('mostratec/admin/dashboard/dashboard', $this->data);
     }
     
+    public function save_new_user()
+    {
+        $type = $this->input->post("type",null);
+        if(!is_teacher() || (!is_admin() && $type == 'admin'))
+        {
+            echo 0;
+            exit;
+        }
+        $this->load->model("Users_model","user");
+        $name = $this->input->post('name', TRUE);
+        
+        $this->user->nome = $name;
+        $this->user->email = $this->input->post('email', TRUE);
+        $this->user->senha = md5($this->input->post('senha', TRUE));
+        $this->user->active = 1;
+        $this->user->type = $type;
+        $insert = $this->user->insert();
+        if($insert)
+        {
+            $this->user->id = $insert;
+            $this->user->code = explode(' ',strtolower($name))[0].substr($insert,0,4);
+            $this->user->update();
+            //area para envio de email de confirmacao aos usuarios
+            // $this->load->library('email');
+            // $this->email->from('gab0496@hotmail.com', 'Instituto Liberato');
+            // $this->email->to($this->user->email);
+            // $this->email->cc($this->session->user_email);
+            // $this->email->subject('Conta criada - Liberato - Mostratec');
+            // $this->email->message('Email confirmando que sua conta foi criada e atribuindo o código '.$this->user->code.' para criação de alunos.');
+            // $this->email->send();
+            echo 1;
+            exit;
+        }
+        echo 0;
+        exit;
+    }
+    
     public function add_school()
     {
         if(is_admin())

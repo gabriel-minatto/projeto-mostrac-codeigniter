@@ -37,7 +37,7 @@ class Group_users_model extends CI_Model
 		return $this->db->trans_status();
 	}
 	
-	public function select_by_user()
+	public function select_by_user($filter)
 	{
 	    $this->db->from("groups g");
 	    if($this->user)
@@ -56,6 +56,8 @@ class Group_users_model extends CI_Model
 	    else
 	        $this->db->select("g.*");
         $this->db->where("active", 1);
+        if($filter)
+            $this->db->like('g.nome',$filter);
     	$query = $this->db->get();
 	    return $query->result();   
 	}

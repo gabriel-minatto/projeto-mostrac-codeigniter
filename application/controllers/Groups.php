@@ -18,7 +18,9 @@ class Groups extends CI_Controller
         }
         $this->load->model("Group_users_model","group_users");
         $this->group_users->user = $this->session->user_id;
-        $this->data["my_groups"] = $this->group_users->select_by_user();
+        if(!empty($_POST))
+            $filter = $this->input->post('pesquisar',null);
+        $this->data["my_groups"] = $this->group_users->select_by_user((isset($filter)) ? $filter : null);
         $this->load->view('mostratec/grupos/list_groups', $this->data);
     }
     

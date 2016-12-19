@@ -86,6 +86,9 @@ $route['admin/login'] = 'admin/login';
 $route['admin/logout'] = 'admin/logout';
 $route['admin/painel'] = 'admin/dashboard';
 
+//users
+$route['admin/usuarios/salvar'] = 'admin/save_new_user';
+
 //schools
 $route['admin/escola/adicionar'] = 'admin/add_school';
 $route['admin/escolas/todas'] = 'admin/list_all_schools_with_filter';

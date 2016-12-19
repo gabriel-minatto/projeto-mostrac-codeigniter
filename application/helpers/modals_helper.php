@@ -25,6 +25,8 @@
 			print_school_modal();
         
         	print_group_modal();
+        	
+        	print_teacher_admin_register_modal();
 		
 		}
 	}
@@ -99,6 +101,27 @@
 	          "data"=>$CI->data
 	          );
 	        $CI->load->view("mostratec/modals/form_modal",$new_student);
+	        // #end //
+		}
+	}
+	
+	if( !function_exists( 'print_teacher_admin_register_modal' ) ) 
+	{
+		function print_teacher_admin_register_modal()
+		{
+			$CI =& get_instance();
+			//modal para cadastro de grupos
+			$CI->data = array();
+	        $new_teacher_admin = array(
+	          "formulario"=>"mostratec/forms/new_teacher_admin",
+	          "action"=>base_url('admin/usuarios/salvar'),
+	          "title"=>"Cadastro de Usuários Administrativos",
+	          "modal_id"=>"new_teacher_admin",
+	          "form_id"=>"new_teacher_admin_form",
+	          "success"=>"Cadastro efetuado com sucesso.",
+	          "data"=>$CI->data
+	          );
+	        $CI->load->view("mostratec/modals/form_modal",$new_teacher_admin);
 	        // #end //
 		}
 	}

@@ -4,7 +4,6 @@ class Users_model extends CI_Model
 {
     var $id;
     var $nome;
-    var $school;
     var $email;
     var $senha;
     var $active;
