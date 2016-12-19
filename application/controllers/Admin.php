@@ -562,10 +562,10 @@ class Admin extends CI_Controller
         if($this->group->unfinish_group())
         {
             $this->session->set_flashdata("success","Grupo reaberto com sucesso.");
-            redirect(base_url('admin/grupos/gerenciar/'.$grupo), 'refresh');
+            redirect(base_url('admin/grupos/gerenciar/'.$id), 'refresh');
         }
         $this->session->set_flashdata("error","Algo deu errado durante a operação, tente novamente mais tarde.");
-        redirect(base_url('admin/grupos/gerenciar/'.$grupo), 'refresh');
+        redirect(base_url('admin/grupos/gerenciar/'.$id), 'refresh');
         
     }
 }

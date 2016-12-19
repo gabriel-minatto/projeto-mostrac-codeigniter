@@ -44,12 +44,30 @@ class Users extends CI_Controller
     public function save_user()
     {
         $this->load->model("Users_model","user");
-        $this->user->nome = $this->input->post('name', TRUE);
+        $this->load->model("Users_model","teacher");
+        $this->teacher->code = $this->input->post('teacher_code', TRUE);
+        if(!$this->teacher->check_code() || $this->input->post('terms', TRUE) != 1)
+        {
+            echo 0;
+            exit;
+        }
+        $name = $this->input->post('name', TRUE);
+        
+        $this->user->nome = $name;
         $this->user->email = $this->input->post('email', TRUE);
         $this->user->senha = md5($this->input->post('senha', TRUE));
-        $this->user->active = 0;
+        $this->user->active = 1;
         $this->user->type = "student";
-        echo $this->user->insert();
+        $insert = $this->user->insert();
+        if($insert)
+        {
+            $this->user->id = $insert;
+            $this->user->code = explode(' ',strtolower($name))[0].substr($insert,0,4);
+            $this->user->update();
+            echo 1;
+            exit;
+        }
+        echo 0;
     }
         
 }   

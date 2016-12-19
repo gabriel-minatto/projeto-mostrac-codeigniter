@@ -43,9 +43,11 @@
                                                             <div class="col-lg-9">
                                                               <?= $relatorio->content ?>
                                                              </div>
-                                                             <div class="col-lg-2">
-                                                                 <button class="btn btn-info">Discussão</button>
-                                                            </div>
+                                                             <a href="<?= base_url('/grupos/relatorios/discutir/'.$relatorio->id.'/'.$relatorio->group) ?>">
+                                                                 <div class="col-lg-2">
+                                                                     <button class="btn btn-info">Discussão</button>
+                                                                </div>
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -60,41 +62,41 @@
                                     <?php } ?>
                         </div>
                     </div>
-                    <div class="row">
-                        <?php if(isset($comentarios)){ ?>
+                <!--    <div class="row">-->
+                <!--        <?php //if(isset($comentarios)){ ?>-->
                             <!-- Posted Comments -->
-                            <div id='report_coments'>
-                                <?php foreach($comentarios as $comentario){ ?>
+                <!--            <div id='report_coments'>-->
+                <!--                <?php //foreach($comentarios as $comentario){ ?>-->
                                 <!-- Comment -->
-                                <div class="well media">
-                                    <a class="pull-left" href="#">
-                                        <img class="media-object" src="http://placehold.it/64x64" alt="">
-                                    </a>
-                                    <div class="media-body">
-                                        <h4 class="media-heading"><?= $comentario->nome ?></font>
-                                            <small><?= mdate('%d/%m/%Y as %H:%i',strtotime($comentario->coment_date)) ?></small>
-                                        </h4>
-                                        <?= $comentario->recado ?>
-                                        </font>
-                                    </div>
-                                </div>
-                                <?php } ?>
-                            </div>
-                            <a class='btn btn-default btn-block' id='toggle_coments'>Ver/Esconder Comentários</a>
-                        <?php } ?>
-                        <br>
+                <!--                <div class="well media">-->
+                <!--                    <a class="pull-left" href="#">-->
+                <!--                        <img class="media-object" src="http://placehold.it/64x64" alt="">-->
+                <!--                    </a>-->
+                <!--                    <div class="media-body">-->
+                <!--                        <h4 class="media-heading"><//?= $comentario->nome ?></font>-->
+                <!--                            <small><//?= mdate('%d/%m/%Y as %H:%i',strtotime($comentario->coment_date)) ?></small>-->
+                <!--                        </h4>-->
+                <!--                        <//?= //$comentario->recado ?>-->
+                <!--                        </font>-->
+                <!--                    </div>-->
+                <!--                </div>-->
+                <!--                <?php //} ?>-->
+                <!--            </div>-->
+                <!--            <a class='btn btn-default btn-block' id='toggle_coments'>Ver/Esconder Comentários</a>-->
+                <!--        <?php //} ?>-->
+                <!--        <br>-->
                         <!-- Comments Form -->
-                        <div class="well">
-                            <h4>Deixe um comentário:</h4>
-                            <form role="form" method="POST" action="<?= base_url('grupos/relatorios/salvar/comentario/'.$group->id) ?>">
-                                <div class="form-group">
-                                    <textarea class="form-control" rows="3" name="comentario"></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Salvar</button>
-                            </form>
-                        </div>
-                        <hr>
-                </div>
+                <!--        <div class="well">-->
+                <!--            <h4>Deixe um comentário:</h4>-->
+                <!--            <form role="form" method="POST" action="<//?=// base_url('grupos/relatorios/salvar/comentario/'.$group->id) ?>">-->
+                <!--                <div class="form-group">-->
+                <!--                    <textarea class="form-control" rows="3" name="comentario"></textarea>-->
+                <!--                </div>-->
+                <!--                <button type="submit" class="btn btn-primary">Salvar</button>-->
+                <!--            </form>-->
+                <!--        </div>-->
+                <!--        <hr>-->
+                <!--</div>-->
             </div>
                 <!-- Blog Sidebar Widgets Column -->
                 <div class="col-md-4">

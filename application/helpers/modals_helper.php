@@ -95,7 +95,7 @@
 	          "title"=>"Cadastro de Alunos",
 	          "modal_id"=>"new_student",
 	          "form_id"=>"new_student_form",
-	          "success"=>"Cadastro efetuado com sucesso, verifique sua caixa de entrada para confirmar seu email.",
+	          "success"=>"Cadastro efetuado com sucesso.",
 	          "data"=>$CI->data
 	          );
 	        $CI->load->view("mostratec/modals/form_modal",$new_student);

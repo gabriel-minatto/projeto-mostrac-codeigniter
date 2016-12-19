@@ -10,6 +10,15 @@
 		}
 	}
 	
+	if( !function_exists( 'sql_date_to_br_with_time' ) )
+	{
+		function sql_date_to_br_with_time($data_sql)
+		{
+			$data = new DateTime($data_sql);
+			return $data->format('d/m/Y \à\s h:i');
+		}
+	}
+	
 	if( !function_exists( 'youtube_url_to_embed' ) ) 
 	{
 		function youtube_url_to_embed($url)

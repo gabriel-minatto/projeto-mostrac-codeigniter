@@ -4,7 +4,7 @@ class Relat_coments_model extends CI_Model
 {
     var $id;
     var $user;
-    var $group;
+    var $relatorio;
     var $recado;
     var $data;
     
@@ -13,12 +13,12 @@ class Relat_coments_model extends CI_Model
         parent::__construct();
     }
     
-    public function select_by_group_with_autor()
+    public function select_by_relat_with_autor()
     {
-        $this->db->select("rc.data as coment_date, rc.recado, u.nome");
+        $this->db->select("rc.id,rc.data as coment_date, rc.recado, u.nome,u.id as user");
         $this->db->from("relat_coments rc");
         $this->db->join("users u","u.id = rc.user");
-        $this->db->where("rc.group",$this->group);
+        $this->db->where("rc.relatorio",$this->relatorio);
         $query = $this->db->get();
         return $query->result();
     }
@@ -33,6 +33,7 @@ class Relat_coments_model extends CI_Model
     {
         $this->db->where("id", $this->id);
         $this->db->delete("relat_coments");
+        return $this->db->trans_status();
     }
     
     public function load_by_id()

@@ -23,6 +23,26 @@
                       <input id="senha" name="senha" type="password" class="form-control input-md" required="">
                     </div>
                 </div>
+                <div class="row">
+                    <!-- Text input-->
+                    <div class="form-group">
+                      <label for="senha">Código do Professor:</label> 
+                      <input id="teacher_code" name="teacher_code" type="text" class="form-control input-md" required="">
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <input id="terms" name="terms" type="checkbox" value='1' required="">
+                        <label for="terms">
+                            Li e concordo com os 
+                            <a href="<?= base_url('uploads/termos/terms.txt') ?>">
+                                termos
+                            </a>
+                            da Fundação Liberato.
+                        </label> 
+                    </div>
+                </div>
             </form>
         </div>
     </div>

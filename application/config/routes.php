@@ -74,7 +74,9 @@ $route['grupos/posts/view/salvar-comentario/(:num)'] = 'groups/save_post_coment/
 
 //relatorios
 $route['grupos/relatorios/(:num)'] = 'groups/view_report/$1';
-$route['grupos/relatorios/salvar/comentario/(:num)'] = 'groups/save_report_coment/$1';
+$route['grupos/relatorios/salvar/comentario/(:num)/(:num)'] = 'groups/save_report_coment/$1/$2';
+$route['grupos/relatorios/excluir/comentario/(:num)/(:num)'] = 'groups/delete_report_coment/$1/$2';
+$route['grupos/relatorios/discutir/(:num)/(:num)'] = 'groups/discuss_report/$1/$2';
 
 //admin
 

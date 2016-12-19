@@ -255,8 +255,11 @@ class Groups extends CI_Controller
     
     public function view_report($id)
     {
-        if(logged())
+        if(!is_user($id))
         {
+            $this->session->set_flashdata("error","Você não tem permissão para acessar essa área do site!");
+            redirect(base_url(), 'refresh');
+        }
             $this->load->model("Relatorios_model","relatorio");
             $this->load->model("Groups_model","group");
             $this->load->model("Relat_coments_model","relat_coments");
@@ -264,26 +267,73 @@ class Groups extends CI_Controller
             
             $this->group->id = $this->post->group = $this->relatorio->group = $this->relat_coments->group = $id;
             $this->data["relatorios"] = $this->relatorio->select_by_group();
-            $this->data["comentarios"] = $this->relat_coments->select_by_group_with_autor();
+            //$this->data["comentarios"] = $this->relat_coments->select_by_group_with_autor();
             $this->data["group"] = $this->group->load_by_id();
             
             $this->post->user = $this->session->user_id;
              
             $this->data["group_posts"] = $this->post->select_group_posts();
             $this->load->view('mostratec/grupos/view_reports', $this->data);
-        }
+        
     }
     
-    public function save_report_coment($id)
+    public function save_report_coment($id,$grupo)
     {
-        if(logged())
+        if(!is_user($grupo))
         {
+            $this->session->set_flashdata("error","Você não tem permissão para acessar essa área do site!");
+            redirect(base_url(), 'refresh');
+        }
             $this->load->model("Relat_coments_model","relat_coments");
             $this->relat_coments->user = $this->session->userdata('user_id');
-            $this->relat_coments->group = $id;
+            $this->relat_coments->relatorio = $id;
             $this->relat_coments->recado = $this->input->post('comentario', TRUE);
             $this->relat_coments->insert();
-            redirect(base_url('grupos/relatorios/'.$id), 'refresh');
-        }
+            redirect(base_url('grupos/relatorios/discutir/'.$id.'/'.$grupo), 'refresh');
+        
     }
+    
+    public function delete_report_coment($id,$grupo)
+    {
+        if(!is_user($grupo) && !is_moderator($grupo))
+        {
+            $this->session->set_flashdata("error","Você não tem permissão para acessar essa área do site!");
+            redirect(base_url(), 'refresh');
+        }
+        $this->load->model("Relat_coments_model","relat_coments");
+        $this->relat_coments->id = $id;
+        $this->relat_coments = $this->relat_coments->load_by_id();
+        if($this->session->user_id == $this->relat_coments->user || is_moderator($grupo))
+        {
+            if($this->relat_coments->delete())
+            {
+                $this->session->set_flashdata("success","Comentário deletado com sucesso!");
+                redirect(base_url('grupos/relatorios/discutir/'.$this->relat_coments->relatorio.'/'.$grupo), 'refresh');
+            }
+            $this->session->set_flashdata("error","Algo deu errado durante a operação.");
+            redirect(base_url('grupos/relatorios/discutir/'.$this->relat_coments->relatorio.'/'.$grupo), 'refresh');
+        }
+        $this->session->set_flashdata("error","Você não tem permissão para acessar essa área do site!");
+        redirect(base_url(), 'refresh');
+    }
+    
+    public function discuss_report($id, $grupo)
+    {
+        if(!is_user($grupo))
+        {
+            $this->session->set_flashdata("error","Você não tem permissão para acessar essa área do site!");
+            redirect(base_url(), 'refresh');
+        }
+        $this->load->model("Relatorios_model","relatorio");
+        $this->load->model("Relat_coments_model","relat_coment");
+        $this->load->model("Groups_model","group");
+        $this->relatorio->id = $this->relat_coment->relatorio = $id;
+        $this->relatorio->group = $this->group->id = $grupo;
+        $this->data["relatorio"] = $this->relatorio->load_by_id();
+        $this->data["relatorios_grupo"] = $this->relatorio->select_by_group();
+        $this->data["comentarios"] = $this->relat_coment->select_by_relat_with_autor();
+        $this->data["group"] = $this->group->load_by_id();
+        $this->load->view('mostratec/grupos/discuss_report',$this->data);
+    }
+    
 }   

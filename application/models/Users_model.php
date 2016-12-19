@@ -9,6 +9,7 @@ class Users_model extends CI_Model
     var $senha;
     var $active;
     var $type;
+    var $code;
     
     function __construct()
     {
@@ -18,7 +19,7 @@ class Users_model extends CI_Model
     public function insert()
     {
         $this->db->insert("users", $this);
-        return $this->db->trans_status();
+        return $this->db->insert_id();
     }
     
     public function delete()
@@ -64,6 +65,20 @@ class Users_model extends CI_Model
 	        return true;
 	    return false;
 	}
+	
+	public function check_code()
+	{
+	    $this->db->select("*");
+	    $this->db->from("users");
+	    $this->db->where("code", $this->code);
+	    $this->db->where("active", 1);
+	    $this->db->where("type", 'teacher');
+	    $query = $this->db->get();
+	    if($query->num_rows() != 0)
+	        return true;
+	    return false;
+	}
+	
 }
 
 ?>
