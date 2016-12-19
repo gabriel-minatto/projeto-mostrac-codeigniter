@@ -12,3 +12,5 @@
 
 <!--block-ui-->
 <script src="<?= base_url('assets/js/blockui/blockUI.js')?>"></script>
+
+<script src="<?= base_url('assets/js/custom/confirmation.js')?>">//aplica confirmacao para redirecionamento na classe .confirmation</script>

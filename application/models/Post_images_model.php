@@ -50,6 +50,22 @@ class Post_images_model extends CI_Model
 	    $this->db->where("post", $this->post);
 	    $this->db->delete("post_images");
 	}
+	
+	public function delete_by_img_slug()
+	{
+	    $this->db->where("nome", $this->nome);
+	    $this->db->delete("post_images");
+	}
+	
+	public function select_last_id()
+	{
+	    $this->db->from("post_images");
+	    $this->db->order_by("id","desc");
+	    $this->db->where("post",$this->post);
+	    $query = $this->db->get();
+	    return $query->row()->id;
+	}
+	
 }
 
 ?>

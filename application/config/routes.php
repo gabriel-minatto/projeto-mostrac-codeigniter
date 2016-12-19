@@ -68,6 +68,7 @@ $route['grupos/home'] = 'groups/homepage';
 //posts
 $route['grupos/posts/novo/(:num)'] = 'groups/new_post/$1';
 $route['grupos/posts/editar/(:num)'] = 'groups/edit_post/$1';
+$route['grupos/posts/editar/deletar-img/(:num)/(:any)'] = 'groups/delete_carrossel_img/$1/$2';
 $route['grupos/posts/(:num)'] = 'groups/post_group/$1';
 $route['grupos/posts/view/(:num)'] = 'groups/view_post/$1';
 $route['grupos/posts/view/salvar-comentario/(:num)'] = 'groups/save_post_coment/$1';

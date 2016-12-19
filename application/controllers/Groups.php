@@ -141,7 +141,8 @@ class Groups extends CI_Controller
                 $imagens[$names] = $imagem;
             }
             $_FILES = $imagens;
-            echo 0;
+            //echo 0;
+            $cont = 0;
             foreach($imagens as $imagem)
             {
                 $this->load->model("Post_images_model","post_images");
@@ -237,9 +238,77 @@ class Groups extends CI_Controller
             }
             
         }
-        
+        if(isset($_FILES['carrossel']['name'][0]) && (!empty($_FILES['carrossel']['name'][0])))
+        {
+            $imagem = array();
+            $imagens = array();
+            $files = $_FILES['carrossel'];
+            
+            foreach($files['name'] as $names)
+            {
+                $imagem = array();
+                foreach($files as $key=>&$dados)
+                {
+                    $imagem[$key]= array_shift($dados);
+                }
+                $imagens[$names] = $imagem;
+            }
+            $_FILES = $imagens;
+            $this->load->model("Post_images_model","post_images");
+            $this->post_images->post = $post;
+            $cont = $this->post_images->select_last_id();
+            foreach($imagens as $imagem)
+            {
+                $nome_file = string_to_slug($this->post->title)."_".$cont.".".pathinfo($imagem['name'],PATHINFO_EXTENSION);
+                
+                $this->post_images->nome = $nome_file;
+                $this->post_images->post = $post;
+                $this->post_images->insert();
+                
+                // configurações de upload
+                $config['upload_path'] = $new_carrossel_dir;
+                $config['file_name'] = $nome_file;
+                $config['allowed_types'] = 'gif|jpg|png|jpeg';
+                $config['overwrite'] = TRUE;
+                $this->load->library('upload', $config, 'upload_image');
+                $this->upload_image->initialize($config);
+                
+                if (!$this->upload_image->do_upload($imagem["name"]))
+                {
+                    $this->post_images->delete_by_post();
+                    $this->post->delete();
+                    echo 0;
+                    exit;
+                }
+                $cont++;
+            }
+        }
         echo 1;
+    }
+    
+    public function delete_carrossel_img($post,$img_slug)
+    {
+        $this->load->model("Posts_model","post");
+        $this->load->model("Post_images_model","post_image");
+        $this->load->helper("format_helper");
         
+        $this->post->id = $post;
+        $this->post = $this->post->load_by_id();
+        if(!is_author($post, $this->post->group))
+        {
+            $this->session->set_flashdata("error","Você não tem permissão para acessar essa área do site!");
+            redirect(base_url(), 'refresh');
+        }
+        $upload_path = "./uploads/groups/posts/";
+        $post_dir = $upload_path.string_to_slug($this->post->title)."_".$post;
+        $carrossel_dir = $post_dir."/carrossel/";
+        if(unlink($carrossel_dir.'/'.$img_slug))
+        {
+            $this->post_image->nome = $img_slug;    
+            $this->post_image->delete_by_img_slug();
+            $this->session->set_flashdata("success","Imagem deletada com sucesso!");
+            redirect(base_url('grupos/posts/'.$this->post->group), 'refresh');
+        }
     }
     
     public function save_post_coment($id)

@@ -175,6 +175,8 @@
 		{
 			$CI =& get_instance();
 			//modal para cadastro de grupos
+			$CI->load->model("Post_images_model","post_image");
+			$CI->post_image->post = $post->id;
 			$CI->data = array();
 	        $edit_post = array(
 	          "formulario"=>"mostratec/forms/edit_post",
@@ -183,6 +185,7 @@
 	          "modal_id"=>"edit_group_post_".$post->id,
 	          "form_id"=>"edit_group_post_form_".$post->id,
 	          "success"=>"Post editado com sucesso, clique em ok para recarregar a página.",
+	          "carrossel_images"=>$CI->post_image->select_by_post(),
 	          "post"=>$post,
 	          "data"=>$CI->data
 	          );
