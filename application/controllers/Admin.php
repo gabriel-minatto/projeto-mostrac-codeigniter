@@ -106,6 +106,19 @@ class Admin extends CI_Controller
         exit;
     }
     
+    public function see_profile($id)
+    {
+        if(!is_teacher() || $id != $this->session->user_id)
+        {
+            $this->session->set_flashdata("error","Você não tem permissão para acessar essa área do site!");
+            redirect(base_url("admin/painel"), 'refresh');
+        }
+        $this->load->model("Users_model","user");
+        $this->user->id = $id;
+        $this->data['perfil'] = $this->user->load_by_id();
+        $this->load->view("mostratec/admin/dashboard/see_profile",$this->data);
+    }
+    
     public function add_school()
     {
         if(is_admin())

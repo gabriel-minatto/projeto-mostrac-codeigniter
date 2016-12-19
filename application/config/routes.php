@@ -88,6 +88,7 @@ $route['admin/painel'] = 'admin/dashboard';
 
 //users
 $route['admin/usuarios/salvar'] = 'admin/save_new_user';
+$route['admin/usuarios/perfil/(:num)'] = 'admin/see_profile/$1';
 
 //schools
 $route['admin/escola/adicionar'] = 'admin/add_school';
